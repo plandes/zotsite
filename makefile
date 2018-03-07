@@ -3,6 +3,7 @@
 PROJ_TYPE=	python
 
 WEB_PKG_DIR=	$(MTARG)/site
+WEB_LIB=	lib/site
 WEB_SRC=	src/site
 PYTHON_BIN_ARGS ?= export -o $(WEB_PKG_DIR)
 
@@ -20,5 +21,6 @@ web:
 .PHONY:		web-package
 web-package:
 		mkdir -p $(WEB_PKG_DIR)
-		rsync -rltpgoDuv -d $(WEB_SRC)/* $(WEB_PKG_DIR)
+		cp -r $(WEB_LIB)/* $(WEB_PKG_DIR)
+		cp -r $(WEB_SRC)/* $(WEB_PKG_DIR)
 		make run

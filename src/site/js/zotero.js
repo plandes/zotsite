@@ -1,3 +1,5 @@
+// create the metadata table, which is the key/value pairs given from a zotero
+// collection (sub folder) or attachment
 function zoteroCreateMetaTable(meta) {
     var tbl = document.createElement('table');
     var tbdy = document.createElement('tbody');
@@ -19,6 +21,7 @@ function zoteroCreateMetaTable(meta) {
     tr.appendChild(th);
     thead.appendChild(tr);
 
+    // add metadata key/value pairs as rows in the table
     for (var i = 0; i < mlen; i++) {
         var td = document.createElement('td');
 	var tval = document.createElement('div');
@@ -45,7 +48,12 @@ function zoteroCreateMetaTable(meta) {
     return tbl;
 }
 
-function zoteroCreateContentPane(node, root) {
+// create the header pane containing title of attachment, collection or note
+// params:
+// node: the node currently selected in the left nav
+// root: root element to append to, which is the table td element from the main
+// table
+function zoteroHeaderPane(node, root) {
     var topPanel = document.createElement('div');
     var head = document.createElement('h1');
     var btn = document.createElement('button');
@@ -53,30 +61,35 @@ function zoteroCreateContentPane(node, root) {
 
     root.classList.add('max-cell');
 
+    // title of content at top
     head.classList.add('bd-title')
     head.appendChild(document.createTextNode(node.item_title));
 
+    // header element
+    topElem = document.createElement('div');
+    topElem.appendChild(head);
+    topElem.classList.add('nav-item');
+    topPanel.appendChild(topElem);
+
+    // view/download button
     btn.classList.add('btn');
     btn.classList.add('btn-primary');
     btn.classList.add('btn-sm');
     btn.classList.add('content-head-pane-btn');
     btn.setAttribute('type', 'button');
     btn.appendChild(document.createTextNode('View'));
-
-    topElem = document.createElement('div');
-    topElem.appendChild(head);
-    topElem.classList.add('nav-item');
-    topPanel.appendChild(topElem);
-
     topElem = document.createElement('div');
     topElem.appendChild(btn);
     topElem.classList.add('nav-item');
     topPanel.appendChild(topElem);
 
+    // header element
     topPanel.classList.add('d-flex');
     topPanel.classList.add('justify-content-between');
     topPanel.classList.add('content-head-pane');
 
+    // add the pdf/html attachemnt if it exists, otherwise direct the user via
+    // add tool tip if no attachement
     btn.action = node.resource;
     if (!node.resource) {
 	btn.classList.add('disabled');
@@ -96,6 +109,9 @@ function zoteroCreateContentPane(node, root) {
     root.appendChild(topPanel);
 }
 
+// create the main (right) content pane in the main top level table
+// params:
+// node: the node currently selected in the left nav
 function zoteroCreateMain(node) {
     var meta = node.metadata;
     var cont = document.getElementById("zotero-main-content");
@@ -105,6 +121,7 @@ function zoteroCreateMain(node) {
 
     console.log('node: ' + node.text);
 
+    // determine the type of node in the tree we're visiting
     if (node.resource != null) {
 	nodeType = 'attachment';
     } else if (node.item_type == 'note') {
@@ -121,8 +138,9 @@ function zoteroCreateMain(node) {
     }
     cont.className = '';
 
+    // add the header pane
     if (hasContent) {
-	zoteroCreateContentPane(node, cont);
+	zoteroHeaderPane(node, cont);
     } else if (!hasNote) {
 	var noc = document.createElement('div');
 
@@ -132,12 +150,14 @@ function zoteroCreateMain(node) {
 	cont.appendChild(noc);
     }
 
+    // add metadata if there is any
     if (meta &&
 	(((nodeType == 'attachment') && sel) || !(nodeType == 'attachment'))) {
 	var metaTable = zoteroCreateMetaTable(meta);
 	cont.appendChild(metaTable);
     }
 
+    // add notes if there are any
     if (hasNote) {
 	console.log('adding note: ' + node.resource);
 	var card = document.createElement('div');
@@ -163,6 +183,7 @@ function zoteroCreateMain(node) {
 	cont.appendChild(card);
     }
 
+    // add the (usually PDF orsnapshot site) attachemnt
     if ((nodeType == 'attachment') && sel) {
 	console.log('adding resource: ' + node.resource);
 	var aelem = document.createElement('div');
@@ -182,6 +203,7 @@ function zoteroCreateMain(node) {
     }
 }
 
+// called when the user types in the search box and narrows the tree search
 function zoteroOnSearchChange(text) {
     console.log('search updated: ' + text);
     var tree = $('#tree').treeview(true);
@@ -195,7 +217,9 @@ function zoteroOnSearchChange(text) {
     }
 }
 
-function zoteroSearchMin() {
+// show the nodes given by the search and hid all others
+// used when the user uses the search button or presses enter
+function zoteroSearchNarrow() {
     var tree = $('#tree').treeview(true);
     var field = document.getElementById("termSearch");
     var text = field.value;
@@ -227,15 +251,7 @@ function zoteroSearchMin() {
     }
 }
 
-function zoteroDefaultCallback(event, node) {
-    zoteroCreateMain(node);
-}
-
-function zoteroNodeSelected(event, node) {
-    zoteroCreateMain(node);
-}
-
-function zoteroNodeUnselected(event, node) {
+function zoteroUpdateMain(event, node) {
     zoteroCreateMain(node);
 }
 
@@ -243,17 +259,17 @@ function zoteroInit(levels) {
     $('#tree').treeview({
 	data: tree,
 	levels: levels,
-	onNodeSelected: zoteroNodeSelected,
-	onNodeUnselected: zoteroNodeUnselected,
-	onNodeExpanded: zoteroDefaultCallback,
-	onNodeCollapsed: zoteroDefaultCallback,
-	nodeDisabled: zoteroDefaultCallback,
-	nodeEnabled: zoteroDefaultCallback,
+	onNodeSelected: zoteroUpdateMain,
+	onNodeUnselected: zoteroUpdateMain,
+	onNodeExpanded: zoteroUpdateMain,
+	onNodeCollapsed: zoteroUpdateMain,
+	nodeDisabled: zoteroUpdateMain,
+	nodeEnabled: zoteroUpdateMain,
     });
 
     $('#termSearch').on('keyup', function(e) {
 	if (e.keyCode == 13) {
-	    zoteroSearchMin();
+	    zoteroSearchNarrow();
 	} else {
 	    zoteroOnSearchChange(this.value);
 	}
