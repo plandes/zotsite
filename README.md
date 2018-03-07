@@ -1,4 +1,4 @@
-# Export Zotero to an HTML site.
+# Export Zotero to a web site
 
 This project exports your local [Zotero] library to a usable HTML website.
 This generated website has the following features:
@@ -14,7 +14,7 @@ This generated website has the following features:
 
 - [Obtaining](#obtaining)
 - [Usage](#usage)
-    - [Configuration](#configuration)
+    - [Show Structure](#show-structure)
     - [Website Creation](#website-creation)
     - [Configuration File](#configuration-file)
 - [Process](#process)
@@ -30,7 +30,7 @@ This generated website has the following features:
 
 ## Obtaining
 
-The easist way is via the `pip` installer:
+The easist way to install the command line program is via the `pip` installer:
 ```bash
 pip install zotsite
 ```
@@ -42,7 +42,7 @@ The program has two modes: show configuration (a good first step) and create
 the web site.
 
 
-### Configuration
+### Show Structure
 
 You can see what the program is parsing from your [Zotero] library:
 
