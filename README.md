@@ -9,6 +9,24 @@ This generated website has the following features:
 * Method to navigate to/view the paper/website snapshot directly.
 * Snazzy look and feel from the latest [Bootstrap] CSS/Javascript library.
 
+<!-- markdown-toc start - Don't edit this section. Run M-x markdown-toc-refresh-toc -->
+## Table of Contents
+
+- [Obtaining](#obtaining)
+- [Usage](#usage)
+    - [Configuration](#configuration)
+    - [Website Creation](#website-creation)
+    - [Configuration File](#configuration-file)
+- [Process](#process)
+    - [Platform](#platform)
+- [Attribution](#attribution)
+- [Todo](#todo)
+- [Changelog](#changelog)
+- [License](#license)
+
+<!-- markdown-toc end -->
+
+
 
 ## Obtaining
 
@@ -20,14 +38,31 @@ pip install zotsite
 
 ## Usage
 
-Run the application (without the angle brackets):
+The program has two modes: show configuration (a good first step) and create
+the web site.
+
+
+### Configuration
+
+You can see what the program is parsing from your [Zotero] library:
 
 ```bash
-zotsite -o <sitedir>
+zotsite print
+```
+
+
+### Website Creation
+
+Run the program (without the angle brackets):
+
+```bash
+zotsite export -o <sitedir>
 ```
 
 After the program runs, `sitedir` will be where the tool creates/generates the
-the new site.
+the new site.  Note you can also give a `--datadir` to tell the program where
+your [Zotero] library is.  This can also be configured in
+your [configuration](#configuration-file).
 
 The website will work as served from either a website or from the local file
 system.  You can pass `levels` as a URL encoded parameter to produce the number
@@ -42,6 +77,22 @@ By clicking on a non-leaf node it expands or collapses everything *and* gives
 the meta data for that collection.  Note that this behavior was decided more by
 the way [Tree View] works more than anything else since it is designed to show
 the entire tree list at once.
+
+### Configuration File
+
+All command line parameters you provide can also be given in a `ini` style
+configuration file, for example:
+
+```ini
+[default]
+data_dir=%(HOME)s/.zotero
+```
+
+tells the program where the [Zotero] data directory is located in the user's
+home directory with name `.zotero` (this defaults to the Zotero default).
+
+You can indicate where the program configuration file is with the `ZOTSITERC`
+environment variable or use the `--config` command line program.
 
 
 ## Process
@@ -68,6 +119,7 @@ This software uses:
 * Python 3
 * [Bootstrap] version 4
 * [Tree View] for Bootstrap
+* [Popper] for tooltips
 
 
 ## Todo
@@ -105,3 +157,4 @@ limitations under the License.
 [Zotero]: https://www.zotero.org
 [Bootstrap]: https://getbootstrap.com
 [Tree View]: https://github.com/jonmiles/bootstrap-treeview
+[Popper]: https://popper.js.org
