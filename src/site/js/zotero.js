@@ -255,6 +255,7 @@ function zoteroUpdateMain(event, node) {
     zoteroCreateMain(node);
 }
 
+// initialization called on page load
 function zoteroInit(levels) {
     $('#tree').treeview({
 	data: tree,
