@@ -17,7 +17,9 @@ class NavCreateWalker(object):
                     'conferencePaper': 'file',
                     'journalArticle': 'file',
                     'attachment': 'paperclip',
-                    'bookSection': 'book'}[node.type]
+                    'bookSection': 'book',
+                    'book': 'book',
+                    'webpage': 'bookmark'}[node.type]
         elif isinstance(node, Note):
             return 'text-background'
 
