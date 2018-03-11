@@ -25,16 +25,25 @@ function zoteroCreateMetaTable(meta) {
     for (var i = 0; i < mlen; i++) {
         var td = document.createElement('td');
 	var tval = document.createElement('div');
+	var key = meta[i][0];
+	var val = meta[i][1];
 
         tr = document.createElement('tr');
 
-        td.appendChild(document.createTextNode(meta[i][0]));
+        td.appendChild(document.createTextNode(key));
 	td.classList.add('meta-table-key');
         tr.appendChild(td)
 
         td = document.createElement('td');
 	td.appendChild(tval);
-	tval.appendChild(document.createTextNode(meta[i][1]));
+	if (key == 'url') {
+	    var anch = document.createElement('a');
+	    anch.setAttribute('href', val);
+	    anch.appendChild(document.createTextNode(anch));
+	    tval.appendChild(anch);
+	} else {
+	    tval.appendChild(document.createTextNode(val));
+	}
 	tval.classList.add('meta-table-val');
 	td.appendChild(tval);
 
