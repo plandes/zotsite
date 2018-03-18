@@ -1,4 +1,5 @@
 import logging, os, json, shutil
+import pkg_resources
 from zensols.zotsite.db import DatabaseReader
 from zensols.zotsite.domain import ZoteroObject
 from zensols.zotsite.nav import NavCreateWalker
@@ -45,9 +46,26 @@ class SiteExporter(object):
         else:
             fscopier.copytree(src, dst)
 
+    def _copy_static(self, src, dst):
+        logger.info('copy: {} -> {}'.format(src, dst))
+        if pkg_resources.resource_isdir(__name__, src):
+            logger.debug('mkdir: {}'.format(dst))
+            os.makedirs(dst, exist_ok=True)
+        for res in pkg_resources.resource_listdir(__name__, src):
+            dst_res = os.path.join(dst, os.path.basename(res))
+            res = '/'.join([src, res])
+            if pkg_resources.resource_isdir(__name__, res):
+                self._copy_static(res, dst_res)
+            else:
+                in_stream = pkg_resources.resource_stream(__name__, res)
+                logger.debug('copy file: {} -> {}'.format(res, dst_res))
+                with open(dst_res, 'wb') as fout:
+                    shutil.copyfileobj(in_stream, fout)
+
     def export(self):
         db = self.db
         self.lib = self.db.get_library()
         self.fscopier = PatternFsCopier('.*\.pdf$', '[ ]', '_')
+        self._copy_static('resources/site', self.out_dir)
         self._create_tree_data()
         self._copy_storage()

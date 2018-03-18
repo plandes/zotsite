@@ -2,10 +2,16 @@
 
 PROJ_TYPE=	python
 
+
 WEB_PKG_DIR=	$(MTARG)/site
 WEB_LIB=	lib/site
 WEB_SRC=	src/site
 PYTHON_BIN_ARGS ?= export -o $(WEB_PKG_DIR)
+
+MTARG_PYDIST_RES ?=	$(MTARG_PYDIST_BDIR)/zensols/zotsite/resources
+PY_RESOURCES +=	$(WEB_LIB) $(WEB_SRC)
+
+ADD_CLEAN +=	tmp1
 
 # make build dependencies
 _ :=	$(shell [ ! -d .git ] && git init ; [ ! -d zenbuild ] && \
@@ -24,3 +30,7 @@ web-package:
 		cp -r $(WEB_LIB)/* $(WEB_PKG_DIR)
 		cp -r $(WEB_SRC)/* $(WEB_PKG_DIR)
 		make run
+
+.PHONY:		tmp
+tmp:		reinstall
+		ZOTSITERC=$(HOME)/opt/etc/zotsite.conf zotsite export -o tmp1
