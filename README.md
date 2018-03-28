@@ -13,6 +13,7 @@ This generated website has the following features:
 ## Table of Contents
 
 - [Obtaining](#obtaining)
+- [Snapshot](#snapshot)
 - [Usage](#usage)
     - [Show Structure](#show-structure)
     - [Website Creation](#website-creation)
