@@ -36,6 +36,11 @@ pip install zotsite
 ```
 
 
+## Snapshot
+
+![Snapshot](doc/snapshot.png.jpg?raw=true "Zotero Snapshot")
+
+
 ## Usage
 
 The program has two modes: show configuration (a good first step) and create
