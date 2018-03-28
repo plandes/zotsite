@@ -13,7 +13,6 @@ This generated website has the following features:
 ## Table of Contents
 
 - [Obtaining](#obtaining)
-- [Snapshot](#snapshot)
 - [Usage](#usage)
     - [Show Structure](#show-structure)
     - [Website Creation](#website-creation)
@@ -21,6 +20,7 @@ This generated website has the following features:
 - [Process](#process)
     - [Platform](#platform)
 - [Attribution](#attribution)
+- [Snapshot](#snapshot)
 - [Todo](#todo)
 - [Changelog](#changelog)
 - [License](#license)
@@ -35,11 +35,6 @@ The easist way to install the command line program is via the `pip` installer:
 ```bash
 pip install zotsite
 ```
-
-
-## Snapshot
-
-![Snapshot](doc/snapshot.png?raw=true "Zotero Snapshot")
 
 
 ## Usage
@@ -126,6 +121,11 @@ This software uses:
 * [Bootstrap] version 4
 * [Tree View] for Bootstrap
 * [Popper] for tooltips
+
+
+## Snapshot
+
+![Snapshot](doc/snapshot.png?raw=true "Zotero Snapshot")
 
 
 ## Todo
