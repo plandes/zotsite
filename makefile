@@ -27,7 +27,3 @@ web-package:
 		cp -r $(WEB_LIB)/* $(WEB_PKG_DIR)
 		cp -r $(WEB_SRC)/* $(WEB_PKG_DIR)
 		make run
-
-.PHONY:		tmp
-tmp:		reinstall
-		ZOTSITERC=$(HOME)/opt/etc/zotsite.conf zotsite export -o tmp1
