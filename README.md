@@ -39,7 +39,7 @@ pip install zotsite
 
 ## Snapshot
 
-![Snapshot](doc/snapshot.png.jpg?raw=true "Zotero Snapshot")
+![Snapshot](doc/snapshot.png?raw=true "Zotero Snapshot")
 
 
 ## Usage
