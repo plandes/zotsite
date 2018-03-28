@@ -17,7 +17,7 @@ setup(
     version = '0.1',
     description = 'This project attempts to export a local Zotero library to a usable HTML website.',
     author = 'Paul Landes',
-    author_email = 'landesatmailcdtnet',
+    author_email = 'landes@mailc.net',
     url = 'https://github.com/plandes/zotsite',
     download_url = 'https://github.com/plandes/zotsite/releases/download/v0.0.1/zensols.zotsite-0.1-py3-none-any.whl',
     keywords = ['tooling'],
