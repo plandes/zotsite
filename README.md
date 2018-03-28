@@ -20,7 +20,7 @@ This generated website has the following features:
 - [Process](#process)
     - [Platform](#platform)
 - [Attribution](#attribution)
-- [Snapshot](#snapshot)
+- [Screenshot](#snapshot)
 - [Todo](#todo)
 - [Changelog](#changelog)
 - [License](#license)
@@ -123,9 +123,9 @@ This software uses:
 * [Popper] for tooltips
 
 
-## Snapshot
+## Screenshot
 
-![Snapshot](doc/snapshot.png?raw=true "Zotero Snapshot")
+![Screenshot](doc/snapshot.png?raw=true "Zotero Screenshot")
 
 
 ## Todo
