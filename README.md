@@ -20,8 +20,9 @@ This generated website has the following features:
 - [Process](#process)
     - [Platform](#platform)
 - [Attribution](#attribution)
-- [Screenshot](#snapshot)
+- [Screenshot](#screenshot)
 - [Todo](#todo)
+- [Zotero Plugin Listing](#zotero-plugin-listing)
 - [Changelog](#changelog)
 - [License](#license)
 
@@ -135,6 +136,13 @@ This software uses:
   the [main navigation/content](src/site/js/zotero.js) file.
 * Add functionality to the disabled *View* button that drills down in a paper
   and finds a PDF or site to view withouth the user having to do this.
+* Use something like zotxt to make this work with a plugin rather than directly
+  against the SQLite DB.
+
+
+## Zotero Plugin Listing
+
+This is listed as a [plugin] on the Zotero site.
 
 
 ## Changelog
@@ -166,3 +174,4 @@ limitations under the License.
 [Bootstrap]: https://getbootstrap.com
 [Tree View]: https://github.com/jonmiles/bootstrap-treeview
 [Popper]: https://popper.js.org
+[plugin]: https://www.zotero.org/support/plugins#website_integration
