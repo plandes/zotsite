@@ -14,11 +14,12 @@ class NavCreateWalker(object):
     def icon_name(self, node):
         if isinstance(node, Item):
             return {'computerProgram': 'floppy-disk',
-                    'conferencePaper': 'file',
+                    'conferencePaper': 'pencil',
                     'journalArticle': 'file',
                     'attachment': 'paperclip',
                     'bookSection': 'book',
                     'book': 'book',
+                    'report': 'font',
                     'webpage': 'bookmark'}[node.type]
         elif isinstance(node, Note):
             return 'text-background'
