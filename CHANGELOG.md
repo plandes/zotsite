@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+### Added
+- More icons for more resource types
+- Added example site.
+
+
 ## [0.0.1] - 2018-03-07
 ### Added
 - Initial version
