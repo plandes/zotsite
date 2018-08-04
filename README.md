@@ -21,6 +21,7 @@ This generated website has the following features:
     - [Website Creation](#website-creation)
     - [Configuration File](#configuration-file)
 - [Process](#process)
+    - [Keeping the Website In Sync With Zotero](#keeping-the-website-in-sync-with-zotero)
     - [Platform](#platform)
 - [Attribution](#attribution)
 - [Screenshot](#screenshot)
@@ -118,6 +119,13 @@ The tool does the following:
 2. Copies a static site that enables traversal of the exported data.
 3. Copies your [Zotero] stored papers, snapshot (sites) etc.
 4. Generates a navigation tree to easily find your papers/content.
+
+
+### Keeping the Website In Sync With Zotero
+
+Currently there is no way to do this (contributions are welcome).  However
+there is a script I use to do this when I know I'm going to need to use the
+site, which is [here](src/sh/zotsync.sh).
 
 
 ### Platform
