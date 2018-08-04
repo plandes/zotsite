@@ -1,0 +1,52 @@
+
+Cornell University
+Cornell University Library
+We gratefully acknowledge support from
+the Simons Foundation
+and member institutions
+arXiv.org > cs > arXiv:1704.03560
+( Help | Advanced search )
+Full-text links:
+Download:
+
+    PDF
+    PostScript
+    Other formats
+
+( license )
+Current browse context:
+cs.CL
+< prev  |  next >
+new  | recent  | 1704
+Change to browse by:
+cs
+References & Citations
+
+    NASA ADS
+
+DBLP - CS Bibliography
+listing | bibtex
+Robert Speer
+Joanna Lowry-Duda
+Bookmark
+( what is this? )
+CiteULike logo BibSonomy logo Mendeley logo del.icio.us logo Digg logo Reddit logo ScienceWISE logo
+Computer Science > Computation and Language
+Title: ConceptNet at SemEval-2017 Task 2: Extending Word Embeddings with Multilingual Relational Knowledge
+Authors: Robert Speer , Joanna Lowry-Duda
+(Submitted on 11 Apr 2017)
+
+    Abstract: This paper describes Luminoso's participation in SemEval 2017 Task 2, "Multilingual and Cross-lingual Semantic Word Similarity", with a system based on ConceptNet. ConceptNet is an open, multilingual knowledge graph that focuses on general knowledge that relates the meanings of words and phrases. Our submission to SemEval was an update of previous work that builds high-quality, multilingual word embeddings from a combination of ConceptNet and distributional semantics. Our system took first place in both subtasks. It ranked first in 4 out of 5 of the separate languages, and also ranked first in all 10 of the cross-lingual language pairs. 
+
+Comments: 	5 pages, accepted to the SemEval workshop at ACL 2017
+Subjects: 	Computation and Language (cs.CL)
+ACM  classes: 	I.2.7
+Cite as: 	arXiv:1704.03560 [cs.CL]
+  	(or arXiv:1704.03560v1 [cs.CL] for this version)
+Submission history
+From: Robert Speer [ view email ]
+[v1] Tue, 11 Apr 2017 22:44:35 GMT (15kb)
+Which authors of this paper are endorsers? | Disable MathJax ( What is MathJax? )
+
+Link back to: arXiv , form interface , contact .
+Twitter

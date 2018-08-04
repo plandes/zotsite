@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Required Stylesheets -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/bootstrap-3-retro.css" rel="stylesheet">
+    <link href="css/bootstrap-treeview.min.css" rel="stylesheet">
+    <link href="css/zotero.css" rel="stylesheet">
+
+    <!-- Required Javascript -->
+    <script src="js/jquery.min.js"></script>
+    <script src="js/popper.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/bootstrap-treeview.min.js"></script>
+    <script src="js/zotero-tree-data.js"></script>
+    <script src="js/zotero.js"></script>
+
+    <title>Zotero</title>
+  </head>
+  <body>
+    <!-- navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-z navbar-toggleable-md"
+	 style="height: 50px;">
+      <!-- brand -->
+      <a class="navbar-brand" href="https://www.zotero.org">
+	<img src="img/zotero-logo.svg" class="d-block" width="120" height="34" xmlns="http://www.w3.org/2000/svg" focusable="false"></img>
+      </a>
+      <!-- right side nav -->
+      <div class="collapse navbar-collapse" id="navbarResponsive">
+	<ul class="navbar-nav ml-auto">
+	  <li class="nav-item">
+	    <a class="nav-item nav-link mr-md-2" href="#" id="bd-versions">v0.1</a>
+	  </li>
+	  <li class="nav-item">
+	    <a class="nav-link" href="https://github.com/plandes/zotsite">
+	      <img src="img/github-logo.svg" class="d-block" height="26" xmlns="http://www.w3.org/2000/svg" focusable="false"></img>
+	    </a>
+	  </li>
+	  <li class="nav-item">
+	    <a class="nav-item btn btn-bd-download btn-download-z btn-outline-primary mr-md-2"
+	       href="https://github.com/plandes/zotsite/releases/tag/v0.1">Download</a>
+	  </li>
+	</ul>
+      </div>
+    </nav>
+
+    <!-- main pane -->
+    <table class="max-table">
+      <tr valign="top">
+	<!-- left tree nav -->
+	<td class="left-nav-col border">
+	    <div class="input-group container left-nav-comp">
+	      <input type="hidden" name="search_param" value="all" id="search_param">
+	      <input type="text" class="form-control" id="termSearch" autofocus
+		     placeholder="Search term...">
+	      <span class="input-group-btn">
+		<button class="btn btn-default" type="button" onClick="zoteroSearchMin();">
+		  <span class="glyphicon glyphicon-search"></span>
+		</button>
+	      </span>
+	    </div>
+	    <div class="scrollbar scrollbar-primary treelist">
+	      <div class="force-overflow">
+		<div class="container left-nav-comp treelist" id="tree"></div>
+	      </div>
+	    </div>
+	</td>
+
+	<!-- content right pane -->
+	<td id="zotero-main-content" class="center-cell">
+	  <div class="disabled-text" id="content">
+	    No Content
+	  </div>
+	</td>
+      </tr>
+    </table>
+  </body>
+</html>

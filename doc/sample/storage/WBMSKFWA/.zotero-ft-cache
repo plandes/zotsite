@@ -1,0 +1,54 @@
+
+Cornell University
+Cornell University Library
+We gratefully acknowledge support from
+the Simons Foundation
+and member institutions
+arXiv.org > cs > arXiv:1612.03975
+( Help | Advanced search )
+Full-text links:
+Download:
+
+    PDF
+    Other formats
+
+( license )
+Current browse context:
+cs.CL
+< prev  |  next >
+new  | recent  | 1612
+Change to browse by:
+cs
+References & Citations
+
+    NASA ADS
+
+DBLP - CS Bibliography
+listing | bibtex
+Robert Speer
+Joshua Chin
+Catherine Havasi
+Bookmark
+( what is this? )
+CiteULike logo BibSonomy logo Mendeley logo del.icio.us logo Digg logo Reddit logo ScienceWISE logo
+Computer Science > Computation and Language
+Title: ConceptNet 5.5: An Open Multilingual Graph of General Knowledge
+Authors: Robert Speer , Joshua Chin , Catherine Havasi
+(Submitted on 12 Dec 2016)
+
+    Abstract: Machine learning about language can be improved by supplying it with specific knowledge and sources of external information. We present here a new version of the linked open data resource ConceptNet that is particularly well suited to be used with modern NLP techniques such as word embeddings.
+    ConceptNet is a knowledge graph that connects words and phrases of natural language with labeled edges. Its knowledge is collected from many sources that include expert-created resources, crowd-sourcing, and games with a purpose. It is designed to represent the general knowledge involved in understanding language, improving natural language applications by allowing the application to better understand the meanings behind the words people use.
+    When ConceptNet is combined with word embeddings acquired from distributional semantics (such as word2vec), it provides applications with understanding that they would not acquire from distributional semantics alone, nor from narrower resources such as WordNet or DBPedia. We demonstrate this with state-of-the-art results on intrinsic evaluations of word relatedness that translate into improvements on applications of word vectors, including solving SAT-style analogies. 
+
+Subjects: 	Computation and Language (cs.CL)
+ACM  classes: 	I.2.7
+Journal reference: 	AAAI 31 (2017) 4444-4451
+Cite as: 	arXiv:1612.03975 [cs.CL]
+  	(or arXiv:1612.03975v1 [cs.CL] for this version)
+Submission history
+From: Robert Speer [ view email ]
+[v1] Mon, 12 Dec 2016 23:54:52 GMT (154kb,D)
+Which authors of this paper are endorsers? | Disable MathJax ( What is MathJax? )
+
+Link back to: arXiv , form interface , contact .
+Twitter
