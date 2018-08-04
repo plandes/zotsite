@@ -1,6 +1,7 @@
 ## makefile automates the build and deployment for python projects
 
 PROJ_TYPE=	python
+PROJ_MODULES=	doc
 
 WEB_PKG_DIR=	$(MTARG)/site
 WEB_LIB=	lib/site

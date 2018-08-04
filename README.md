@@ -13,6 +13,7 @@ This generated website has the following features:
 ## Table of Contents
 
 - [Obtaining](#obtaining)
+- [Sample Site](#sample-site)
 - [Usage](#usage)
     - [Show Structure](#show-structure)
     - [Website Creation](#website-creation)
@@ -36,6 +37,14 @@ The easist way to install the command line program is via the `pip` installer:
 ```bash
 pip install zensols.zotsite
 ```
+
+
+## Sample Site
+
+See the [example site], which provides a variety of resources found in my own
+library.  *Note:* To my knowledge, all of these resources are free to
+distribute and violate no laws.  If I've missed one,
+please [create an issue](CONTRIBUTING.md).
 
 
 ## Usage
@@ -175,3 +184,4 @@ limitations under the License.
 [Tree View]: https://github.com/jonmiles/bootstrap-treeview
 [Popper]: https://popper.js.org
 [plugin]: https://www.zotero.org/support/plugins#website_integration
+[example site]: https://plandes.github.io/zotsite/sample/index.html
