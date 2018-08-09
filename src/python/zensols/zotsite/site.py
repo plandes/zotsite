@@ -1,4 +1,7 @@
-import logging, os, json, shutil
+import logging
+import os
+import json
+import shutil
 import pkg_resources
 from zensols.zotsite.db import DatabaseReader
 from zensols.zotsite.domain import ZoteroObject
@@ -7,13 +10,15 @@ from zensols.zotsite.cptree import PatternFsCopier
 
 logger = logging.getLogger('zensols.zotsite.site')
 
+
 class SiteExporter(object):
     """
     Create the Zotero content web site.
     """
     def __init__(self, data_dir=None, out_dir=None, library_id=1, config=None):
-        logger.debug('data dir: %s, out_dir: %s, config=<%s>' % (data_dir, out_dir, config))
-        if data_dir == None:
+        logger.debug('data dir: {}, out_dir: {}, config=<{}>'.
+                     format(data_dir, out_dir, config))
+        if data_dir is None:
             home_dir = os.environ['HOME']
             data_dir = os.path.join(home_dir, 'Zotero')
         self.out_dir = out_dir
@@ -42,7 +47,8 @@ class SiteExporter(object):
         dst = os.path.join(self.out_dir, 'storage')
         logger.info('copying storage {} -> {}'.format(src, dst))
         if os.path.exists(dst):
-            logger.warn('storage directory already exists--skipping: {}'.format(dst))
+            logger.warn('storage directory already exists--skipping: {}'.
+                        format(dst))
         else:
             fscopier.copytree(src, dst)
 
@@ -63,7 +69,6 @@ class SiteExporter(object):
                     shutil.copyfileobj(in_stream, fout)
 
     def export(self):
-        db = self.db
         self.lib = self.db.get_library()
         self.fscopier = PatternFsCopier('.*\.pdf$', '[ ]', '_')
         self._copy_static('resources/site', self.out_dir)

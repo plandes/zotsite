@@ -1,12 +1,12 @@
 import os
 from zensols.actioncli import OneConfPerActionOptionsCli
-from zensols.actioncli import SimpleActionCli, Config
+from zensols.actioncli import Config
 from zensols.zotsite import SiteExporter
 
-VERSION='0.1'
-CONF_ENV_VAR='ZOTSITERC'
+VERSION = '0.1'
+CONF_ENV_VAR = 'ZOTSITERC'
 
-# recommended app command line
+
 class ConfAppCommandLine(OneConfPerActionOptionsCli):
     def __init__(self):
         if CONF_ENV_VAR in os.environ:
@@ -18,15 +18,15 @@ class ConfAppCommandLine(OneConfPerActionOptionsCli):
                       'help': 'the location of the Zotero data directory'}]
         outdir_op = ['-o', '--outputdir', True,
                      {'dest': 'out_dir', 'metavar': 'DIRECTORY',
-                      'help': 'the directory to create and output the website'}]
+                      'help': 'the directory to output the website'}]
         cnf = {'executors':
                [{'name': 'exporter',
                  'executor': lambda params: SiteExporter(**params),
-                 'actions':[{'name': 'print',
-                             'meth': 'print_structure',
-                             'opts': [datdir_op]},
-                            {'name': 'export',
-                             'opts': [datdir_op, outdir_op]}]}],
+                 'actions': [{'name': 'print',
+                              'meth': 'print_structure',
+                              'opts': [datdir_op]},
+                             {'name': 'export',
+                              'opts': [datdir_op, outdir_op]}]}],
                'config_option': {'name': 'config',
                                  'expect': False,
                                  'opt': ['-c', '--config', False,
@@ -41,6 +41,7 @@ class ConfAppCommandLine(OneConfPerActionOptionsCli):
         defs.update(default_vars)
         defs.update(os.environ)
         return Config(config_file=conf_file, default_vars=defs)
+
 
 def main():
     cl = ConfAppCommandLine()

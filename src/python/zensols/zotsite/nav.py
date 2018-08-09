@@ -1,4 +1,5 @@
-from zensols.zotsite.domain import ZoteroObject, Item, Note, Collection
+from zensols.zotsite.domain import Item, Note
+
 
 class NavCreateWalker(object):
     def __init__(self, lib, fscopier):

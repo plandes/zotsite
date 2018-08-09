@@ -1,7 +1,10 @@
-import logging, os, sqlite3
+import logging
+import os
+import sqlite3
 from zensols.zotsite.domain import Collection, Library, Item, Note
 
 logger = logging.getLogger('zensols.zotsite.db')
+
 
 class DatabaseReader(object):
     """
@@ -20,7 +23,6 @@ select c.collectionId c_id, ci.itemId c_iid, c.parentCollectionId c_pid, c.colle
     where c.libraryId = %(library_id)s and
           c.collectionName like '%(coll_name)s'
 """ % whparams
-
 
     def _item_sql(self, whparams):
         return """
@@ -105,13 +107,14 @@ select f.fieldName name, iv.value
             colls[row['c_id']] = row
         for coll in colls.values():
             c_pid = coll['c_pid']
-            if not c_pid in colls:
+            if c_pid not in colls:
                 coll['c_pid'] = None
                 c_pid = None
             if c_pid:
                 par = colls[c_pid]
                 par['subs'].append(coll)
-        return list(filter(lambda x: x['c_pid'] == None and x['c_id'], colls.values()))
+        return list(filter(lambda x: x['c_pid'] is None and x['c_id'],
+                           colls.values()))
 
     def _create_item(self, item):
         children = list(map(lambda x: self._create_item(x), item['subs']))
@@ -122,15 +125,16 @@ select f.fieldName name, iv.value
         return item
 
     def _create_collection(self, coll, by_cid):
-        logger.debug('processing: %s (%s, %s)' % (coll['c_name'], coll['c_id'], coll['c_iid']))
+        logger.debug('processing: {} ({}, {})'.
+                     format(coll['c_name'], coll['c_id'], coll['c_iid']))
         cid = coll['c_id']
-        ciid = coll['c_iid']
         items = []
         if cid in by_cid:
             toadd = by_cid[cid]
             items.extend(toadd)
             logger.debug('children items: %d' % len(toadd))
-        children = list(map(lambda x: self._create_collection(x, by_cid), coll['subs']))
+        children = list(map(lambda x: self._create_collection(x, by_cid),
+                            coll['subs']))
         items = list(map(lambda x: self._create_item(x), items))
         return Collection(coll, items, children)
 
@@ -145,7 +149,6 @@ select f.fieldName name, iv.value
                     cid_lst = []
                     by_cid[cid] = cid_lst
                 cid_lst.append(i)
-            ipid = i['i_pid']
         fcolls = []
         for coll in colls:
             fcoll = self._create_collection(coll, by_cid)

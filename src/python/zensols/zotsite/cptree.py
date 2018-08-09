@@ -1,7 +1,10 @@
-import logging, re, os
-from shutil import copytree, copy2, copystat
+import logging
+import re
+import os
+from shutil import copy2, copystat
 
 logger = logging.getLogger('zensols.zotsite.cptree')
+
 
 class PatternFsCopier(object):
     """Copy files changing names for those that match on a regular expression.
@@ -45,7 +48,7 @@ class PatternFsCopier(object):
                 errors.append((srcname, dstname, str(why)))
             # catch the Error from the recursive copytree so that we can
             # continue with other files
-            except Error as err:
+            except Exception as err:
                 errors.extend(err.args[0])
         try:
             copystat(src, dst)
@@ -54,4 +57,4 @@ class PatternFsCopier(object):
             if why.winerror is None:
                 errors.extend((src, dst, str(why)))
         if errors:
-            raise Error(errors)
+            raise Exception(errors)

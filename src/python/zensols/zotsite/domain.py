@@ -1,4 +1,6 @@
-import re, os
+import re
+import os
+
 
 class ZoteroObject(object):
     def __init__(self, children):
@@ -47,10 +49,12 @@ class ZoteroObject(object):
     @staticmethod
     def narrow_items(obj):
         items = []
-        if isinstance(obj, Item): items.append(obj)
+        if isinstance(obj, Item):
+            items.append(obj)
         for c in obj.children:
             items.extend(ZoteroObject.narrow_items(c))
         return items
+
 
 class Note(ZoteroObject):
     def __init__(self, sel):
@@ -92,7 +96,8 @@ class Item(ZoteroObject):
 
     @property
     def metadata(self):
-        if 'meta' in self.sel: return self.sel['meta']
+        if 'meta' in self.sel:
+            return self.sel['meta']
 
     @property
     def file_name(self):
@@ -101,16 +106,19 @@ class Item(ZoteroObject):
         if path:
             pdir = self.sel['key']
             m = self.storage_pat.match(path)
-            if m: fname = m.group(1)
-            else: fname = path
-            #fname = os.path.join(pdir, fname)
+            if m:
+                fname = m.group(1)
+            else:
+                fname = path
             fname = '{}/{}'.format(pdir, fname)
         return fname
 
     def __format_zobj__(self):
         fname = self.file_name
-        if fname: fname = ': ' + fname
-        else: fname = ''
+        if fname:
+            fname = ': ' + fname
+        else:
+            fname = ''
         its = self.sel.copy()
         its.update({'name': self.name, 'fname': fname})
         return '{name} [{type}]{fname}'.format(**its)
@@ -156,9 +164,6 @@ class Library(ZoteroObject):
     def id(self):
         return 'l' + str(self.library_id)
 
-    # def resolve_file_name(self, item):
-    #     return os.path.join(self.data_dir, item.file_name)
-
     def attachment_resource(self, item):
         if item.type == 'attachment':
             return '{}/{}'.format(self.storage_dirname, item.file_name)
@@ -169,5 +174,7 @@ class Library(ZoteroObject):
 
     @property
     def title(self):
-        if self.library_id == 1: return 'Personal Library'
-        else: return 'Library'
+        if self.library_id == 1:
+            return 'Personal Library'
+        else:
+            return 'Library'
