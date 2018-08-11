@@ -11,6 +11,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - More icons for more resource types
 - Added example site.
 
+### Changed
+- Fix new item type for which there is no icon.
+- Fix include trash doc.
+
 
 ## [0.0.1] - 2018-03-07
 ### Added

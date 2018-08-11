@@ -44,7 +44,7 @@ pip install zensols.zotsite
 
 ## Sample Site
 
-See the [example site], which provides a variety of resources found in my own
+See the [live demo], which provides a variety of resources found in my own
 library.  *Note:* To my knowledge, all of these resources are free to
 distribute and violate no laws.  If I've missed one,
 please [create an issue](CONTRIBUTING.md).
@@ -145,6 +145,8 @@ This software uses:
 
 ## Screenshot
 
+Also see the [live demo].
+
 ![Screenshot](doc/snapshot.png?raw=true "Zotero Screenshot")
 
 
@@ -200,4 +202,4 @@ SOFTWARE.
 [Tree View]: https://github.com/jonmiles/bootstrap-treeview
 [Popper]: https://popper.js.org
 [plugin]: https://www.zotero.org/support/plugins#website_integration
-[example site]: https://plandes.github.io/zotsite/sample/index.html
+[live demo]: https://plandes.github.io/zotsite/sample/index.html
