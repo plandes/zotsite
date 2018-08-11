@@ -36,8 +36,8 @@ def get_long_description():
 
 
 def get_requires():
-    req_dir = path.join(path.dirname(__file__))
-    with open(req_dir, REQUIREMENTS_FILE, encoding='utf-8') as f:
+    req_file = path.join(path.dirname(__file__), REQUIREMENTS_FILE)
+    with open(req_file, encoding='utf-8') as f:
         return [x.strip() for x in f.readlines()]
 
 
