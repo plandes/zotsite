@@ -3,7 +3,7 @@ from zensols.actioncli import OneConfPerActionOptionsCli
 from zensols.actioncli import Config
 from zensols.zotsite import SiteExporter
 
-VERSION = '0.1'
+VERSION = '0.2.1'
 CONF_ENV_VAR = 'ZOTSITERC'
 
 
