@@ -54,7 +54,7 @@ please [create an issue](CONTRIBUTING.md).
 
 ## Usage
 
-*Important:* You _must_ shut down [Zotero] before you invoking this script.
+**Important:** You _must_ shut down [Zotero] before you invoking this script.
 Nothing goes wrong when you don't.  However, the script uses an SQLite file
 that the program (pessimistically) locks.
 
