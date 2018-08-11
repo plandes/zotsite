@@ -14,11 +14,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Changed
 - Fix new item type for which there is no icon.
 - Fix include trash doc.
+- Move to three dimension version numbering
 
 
 ## [0.0.1] - 2018-03-07
 ### Added
 - Initial version
 
-[Unreleased]: https://github.com/plandes/zotsite/compare/v0.0.1...HEAD
-[0.0.2]: https://github.com/plandes/zotsite/compare/v0.0.1...v0.0.2
+[Unreleased]: https://github.com/plandes/zotsite/compare/v0.2.0...HEAD
+[0.2.0]: https://github.com/plandes/zotsite/compare/v0.1...v0.2.0

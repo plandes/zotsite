@@ -41,6 +41,8 @@ The easist way to install the command line program is via the `pip` installer:
 pip install zensols.zotsite
 ```
 
+Binaries are also available on [pypi].
+
 
 ## Sample Site
 
@@ -51,6 +53,10 @@ please [create an issue](CONTRIBUTING.md).
 
 
 ## Usage
+
+*Important:* You _must_ shut down [Zotero] before you invoking this script.
+Nothing goes wrong when you don't.  However, the script uses an SQLite file
+that the program (pessimistically) locks.
 
 The program has two modes: show configuration (a good first step) and create
 the web site.
@@ -197,9 +203,11 @@ SOFTWARE.
 <!-- links -->
 [travis-link]: https://travis-ci.org/plandes/zotsite
 [travis-badge]: https://travis-ci.org/plandes/zotsite.svg?branch=master
+[pypi]: https://pypi.org/project/zensols.zotsite/
+[live demo]: https://plandes.github.io/zotsite/sample/index.html
+
 [Zotero]: https://www.zotero.org
 [Bootstrap]: https://getbootstrap.com
 [Tree View]: https://github.com/jonmiles/bootstrap-treeview
 [Popper]: https://popper.js.org
 [plugin]: https://www.zotero.org/support/plugins#website_integration
-[live demo]: https://plandes.github.io/zotsite/sample/index.html

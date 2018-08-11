@@ -41,16 +41,14 @@ class SiteExporter(object):
             f.write(json.dumps(walker.primary_roots, indent=2))
 
     def _copy_storage(self):
-        lib = self.lib
-        fscopier = self.fscopier
-        src = lib.get_storage_path()
+        src = self.lib.get_storage_path()
         dst = os.path.join(self.out_dir, 'storage')
         logger.info('copying storage {} -> {}'.format(src, dst))
         if os.path.exists(dst):
             logger.warn('storage directory already exists--skipping: {}'.
                         format(dst))
         else:
-            fscopier.copytree(src, dst)
+            self.fscopier.copytree(src, dst)
 
     def _copy_static(self, src, dst):
         logger.info('copy: {} -> {}'.format(src, dst))

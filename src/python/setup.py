@@ -53,7 +53,7 @@ setup(
     download_url='https://github.com/plandes/zotsite/releases/download/v0.2.0/zensols.zotsite-0.1-py3-none-any.whl',
     long_description=get_long_description(),
     long_description_content_type='text/markdown',
-    keywords=['tooling'],
+    keywords=['academic', 'web', 'website', 'research'],
     classifiers=[],
     entry_points={
         'console_scripts': [
