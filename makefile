@@ -33,3 +33,7 @@ web-package:
 testsite:
 		mkdir -p $(MTARG)
 		make PYTHON_BIN_ARGS='export -o $(WEB_PKG_DIR)' run
+
+.PHONY:		tmp
+tmp:
+		( cd $(PY_SRC) ; $(PYTHON_BIN) setup.py bdist_wheel )
