@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+### Changed
+- Fixed pip wheel dependency auto install.
+
+
+## [0.0.1] - 2018-08-10
 ### Added
 - More icons for more resource types
 - Added example site.
