@@ -35,7 +35,8 @@ select c.collectionId c_id, c.parentCollectionId c_pid, c.collectionName c_name,
       left join collectionItems ci on ci.itemId = it.itemId
       left join collections c on c.collectionId = ci.collectionId
       left join itemNotes itn on it.itemId = itn.itemId
-  where it.itemTypeId = iy.itemTypeId
+  where it.itemTypeId = iy.itemTypeId and
+      it.itemId not in (select itemId from deletedItems)
   order by ci.orderIndex;
 """ % whparams
 
@@ -47,7 +48,8 @@ select f.fieldName name, iv.value
       i.itemId = id.itemId and
       id.valueId = iv.valueId and
       id.fieldId = f.fieldId and
-      i.itemId = %(item_id)s""" % whparams
+      i.itemId = %(item_id)s and
+      i.itemId not in (select itemId from deletedItems)""" % whparams
 
     def get_connection(self):
         def dict_factory(cursor, row):

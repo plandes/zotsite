@@ -54,7 +54,8 @@ select it.itemId, ia.parentItemId, it.key, iy.typeName, ia.contentType, ia.path,
       left join itemAttachments ia on it.itemId = ia.itemId
       left join collectionItems ci on ci.itemId = it.itemId
       left join collections c on c.collectionId = ci.collectionId
-  where it.itemTypeId = iy.itemTypeId
+  where it.itemTypeId = iy.itemTypeId and
+      it.itemId not in (select itemId from deletedItems)
   order by ci.orderIndex;
 
 -- item attachements all
@@ -64,7 +65,8 @@ select *
       left join collectionItems ci on ci.itemId = it.itemId
       left join collections c on c.collectionId = ci.collectionId
       left join itemNotes itn on it.itemId = itn.itemId
-  where it.itemTypeId = iy.itemTypeId
+  where it.itemTypeId = iy.itemTypeId and
+      it.itemId not in (select itemId from deletedItems)
   order by ci.orderIndex;
 
 -- temp

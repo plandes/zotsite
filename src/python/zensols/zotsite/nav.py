@@ -2,6 +2,15 @@ from zensols.zotsite.domain import Item, Note
 
 
 class NavCreateWalker(object):
+    ITEM_ICONS = {'computerProgram': 'floppy-disk',
+                  'conferencePaper': 'pencil',
+                  'journalArticle': 'file',
+                  'attachment': 'paperclip',
+                  'bookSection': 'book',
+                  'book': 'book',
+                  'report': 'font',
+                  'webpage': 'bookmark'}
+
     def __init__(self, lib, fscopier):
         self.lib = lib
         self.fscopier = fscopier
@@ -13,17 +22,16 @@ class NavCreateWalker(object):
         return self.root['nodes'][0]['nodes']
 
     def icon_name(self, node):
+        icon_name = None
         if isinstance(node, Item):
-            return {'computerProgram': 'floppy-disk',
-                    'conferencePaper': 'pencil',
-                    'journalArticle': 'file',
-                    'attachment': 'paperclip',
-                    'bookSection': 'book',
-                    'book': 'book',
-                    'report': 'font',
-                    'webpage': 'bookmark'}[node.type]
+            if node.type in self.ITEM_ICONS:
+                icon_name = self.ITEM_ICONS[node.type]
+            else:
+                # :(
+                icon_name = 'unchecked'
         elif isinstance(node, Note):
-            return 'text-background'
+            icon_name = 'text-background'
+        return icon_name
 
     def create_node(self, item):
         node = {'text': item.title,
