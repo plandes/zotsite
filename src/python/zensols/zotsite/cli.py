@@ -24,6 +24,7 @@ class ConfAppCommandLine(OneConfPerActionOptionsCli):
                  'actions': [{'name': 'print',
                               'meth': 'print_structure',
                               'opts': [datdir_op]},
+                             {'name': 'tmp'},
                              {'name': 'export',
                               'opts': [datdir_op, outdir_op]}]}],
                'config_option': {'name': 'config',

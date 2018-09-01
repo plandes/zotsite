@@ -23,10 +23,19 @@ class SiteExporter(object):
             data_dir = os.path.join(home_dir, 'Zotero')
         self.out_dir = out_dir
         self.db = DatabaseReader(data_dir, library_id)
+        self.config = config
 
     def print_structure(self):
         lib = self.db.get_library()
         ZoteroObject.print_zotero_object(lib)
+
+    def _write_meta(self, fname):
+        pkg = self.config.pkg
+        meta = {'version': pkg.version,
+                'project_name': pkg.project_name}
+        js = 'var zoteroMeta = {};'.format(json.dumps(meta))
+        with open(fname, 'w') as f:
+            f.write(js)
 
     def _create_tree_data(self):
         lib = self.lib
@@ -39,6 +48,9 @@ class SiteExporter(object):
         with open(nav_file, 'w') as f:
             f.write("var tree =\n")
             f.write(json.dumps(walker.primary_roots, indent=2))
+        meta_file = os.path.join(js_dir, 'zotero-meta.js')
+        logger.info('creating js metadata: {}'.format(meta_file))
+        self._write_meta(meta_file)
 
     def _copy_storage(self):
         src = self.lib.get_storage_path()

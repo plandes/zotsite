@@ -30,10 +30,7 @@ web-package:
 		make run
 
 .PHONY:		testsite
-testsite:
+testsite:	reinstall
 		mkdir -p $(MTARG)
-		make PYTHON_BIN_ARGS='export -o $(WEB_PKG_DIR)' run
-
-.PHONY:		tmp
-tmp:
-		( cd $(PY_SRC) ; $(PYTHON_BIN) setup.py bdist_wheel )
+#		make PYTHON_BIN_ARGS='export -o $(WEB_PKG_DIR)' run
+		zotsite export -o $(WEB_PKG_DIR)
