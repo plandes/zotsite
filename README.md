@@ -1,5 +1,7 @@
 # Export Zotero to a web site
 
+[![Gitter chat][gitter-badge]][gitter-link]
+
 [![Travis CI Build Status][travis-badge]][travis-link]
 
 This project exports your local [Zotero] library to a usable HTML website.
@@ -203,6 +205,9 @@ SOFTWARE.
 <!-- links -->
 [travis-link]: https://travis-ci.org/plandes/zotsite
 [travis-badge]: https://travis-ci.org/plandes/zotsite.svg?branch=master
+[gitter-link]: https://gitter.im/zoterosite/zotsite
+[gitter-badge]: https://badges.gitter.im/zoterosite/gitter.png
+
 [pypi]: https://pypi.org/project/zensols.zotsite/
 [live demo]: https://plandes.github.io/zotsite/sample/index.html
 
