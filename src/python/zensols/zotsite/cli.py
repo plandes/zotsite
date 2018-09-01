@@ -3,7 +3,6 @@ from zensols.actioncli import OneConfPerActionOptionsCli
 from zensols.actioncli import Config
 from zensols.zotsite import SiteExporter
 
-VERSION = '0.2.1'
 CONF_ENV_VAR = 'ZOTSITERC'
 
 
@@ -34,7 +33,8 @@ class ConfAppCommandLine(OneConfPerActionOptionsCli):
                                           'default': default_config_file,
                                           'help': 'configuration file'}]},
                'whine': 1}
-        super(ConfAppCommandLine, self).__init__(cnf, version=VERSION)
+        super(ConfAppCommandLine, self).__init__(
+            cnf, pkg_dist='zensols.zotsite')
 
     def _create_config(self, conf_file, default_vars):
         defs = {}
