@@ -6,7 +6,7 @@ PROJ_MODULES=		doc
 WEB_PKG_DIR=		$(MTARG)/site
 WEB_LIB=		lib/site
 WEB_SRC=		src/site
-WEB_BROWSER=		firefox
+WEB_BROWSER=		firefox-repeat
 PYTHON_BIN_ARGS ?=	export -o $(WEB_PKG_DIR)
 
 MTARG_PYDIST_RES ?=	$(MTARG_PYDIST_BDIR)/zensols/zotsite/resources
@@ -32,6 +32,8 @@ web-package:
 display:	web-package
 		if [ $(WEB_BROWSER) == 'firefox' ] ; then \
 			open -a Firefox $(WEB_PKG_DIR)/index.html ; \
+		elif [ '$(WEB_BROWSER)' == 'firefox-repeat' ] ; then \
+			osascript src/as/refresh.scpt \
 		else \
 			osascript -e 'tell application "Safari" to set URL of document 1 to URL of document 1' ; \
 		fi
