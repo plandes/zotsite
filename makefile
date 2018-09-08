@@ -28,9 +28,3 @@ web-package:
 		cp -r $(WEB_LIB)/* $(WEB_PKG_DIR)
 		cp -r $(WEB_SRC)/* $(WEB_PKG_DIR)
 		make run
-
-.PHONY:		testsite
-testsite:	reinstall
-		mkdir -p $(MTARG)
-#		make PYTHON_BIN_ARGS='export -o $(WEB_PKG_DIR)' run
-		zotsite export -o $(WEB_PKG_DIR)

@@ -17,7 +17,8 @@ class DatabaseReader(object):
 
     def _collection_sql(self, whparams):
         return """
-select c.collectionId c_id, ci.itemId c_iid, c.parentCollectionId c_pid, c.collectionName c_name
+select c.collectionId c_id, ci.itemId c_iid,
+        c.parentCollectionId c_pid, c.collectionName c_name
     from collections c
     left join collectionItems ci on c.collectionId = ci.collectionId
     where c.libraryId = %(library_id)s and
@@ -26,7 +27,8 @@ select c.collectionId c_id, ci.itemId c_iid, c.parentCollectionId c_pid, c.colle
 
     def _item_sql(self, whparams):
         return """
-select c.collectionId c_id, c.parentCollectionId c_pid, c.collectionName c_name,
+select c.collectionId c_id, c.parentCollectionId c_pid,
+           c.collectionName c_name,
        it.itemId i_id, ia.parentItemId i_pid, it.key, iy.typeName type,
        ia.contentType content_type, ia.path,
        itn.title n_title, itn.parentItemId n_pid
