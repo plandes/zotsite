@@ -16,6 +16,7 @@ class DatabaseReader(object):
         self.library_id = library_id
 
     def _collection_sql(self, whparams):
+        """Create an SQL string to get collections rows."""
         return """
 select c.collectionId c_id, ci.itemId c_iid,
         c.parentCollectionId c_pid, c.collectionName c_name
@@ -26,6 +27,7 @@ select c.collectionId c_id, ci.itemId c_iid,
 """ % whparams
 
     def _item_sql(self, whparams):
+        """Create an SQL string to get items (attachments) rows."""
         return """
 select c.collectionId c_id, c.parentCollectionId c_pid,
            c.collectionName c_name,
@@ -43,6 +45,7 @@ select c.collectionId c_id, c.parentCollectionId c_pid,
 """ % whparams
 
     def _item_meta_sql(self, whparams):
+        """Create an SQL string to get items metadata rows."""
         return """
 select f.fieldName name, iv.value
   from items i, itemTypes it, itemData id, itemDataValues iv, fields f
@@ -54,6 +57,9 @@ select f.fieldName name, iv.value
       i.itemId not in (select itemId from deletedItems)""" % whparams
 
     def get_connection(self):
+        """Return a database connection the SQLite database.
+
+        """
         def dict_factory(cursor, row):
             d = {}
             for idx, col in enumerate(cursor.description):
@@ -66,6 +72,12 @@ select f.fieldName name, iv.value
         return conn
 
     def _get_item_meta(self, item, conn, whparams):
+        """Return the item metadata from the database.
+
+        :param item: the item to fetch data for
+        :param conn: the DB connection
+        :param whparams: dict of parameters used for the metadata SQL query
+        """
         whparams['item_id'] = item['i_id']
         meta = {}
         for row in conn.execute(self._item_meta_sql(whparams)):
@@ -73,6 +85,11 @@ select f.fieldName name, iv.value
         return meta
 
     def _select_items(self, conn, name_pat='%'):
+        """Return items from the database.
+
+        :param conn: the DB connection
+        :param name_pat: the SQL pattern to match against subcollection names
+        """
         logger.debug('data_dir: %s' % self.data_dir)
         wparams = {'library_id': self.library_id}
         logger.debug('wparams: %s' % wparams)
@@ -102,6 +119,11 @@ select f.fieldName name, iv.value
         return flst
 
     def _select_collections(self, conn, name_pat='%'):
+        """Return items from the database.
+
+        :param conn: the DB connection
+        :param name_pat: the SQL pattern to match against subcollection names
+        """
         logger.debug('data_dir: %s' % self.data_dir)
         wparams = {'library_id': self.library_id, 'coll_name': name_pat}
         logger.debug('wparams: %s' % wparams)
@@ -121,6 +143,10 @@ select f.fieldName name, iv.value
                            colls.values()))
 
     def _create_item(self, item):
+        """Return a domain object that represents an item (i.e. PDF attachement, link,
+        note etc).
+
+        """
         children = list(map(lambda x: self._create_item(x), item['subs']))
         if item['n_title']:
             item = Note(item)
@@ -129,6 +155,11 @@ select f.fieldName name, iv.value
         return item
 
     def _create_collection(self, coll, by_cid):
+        """Return a domain object that represents a Zotero DB (sub)collection.
+
+        :param conn: the DB connection
+        :param by_cid: parent to child collection IDs
+        """
         logger.debug('processing: {} ({}, {})'.
                      format(coll['c_name'], coll['c_id'], coll['c_iid']))
         cid = coll['c_id']
@@ -143,6 +174,11 @@ select f.fieldName name, iv.value
         return Collection(coll, items, children)
 
     def _create_library(self, colls, items):
+        """Return a domain object that represents a Zotero DB (sub)collection.
+
+        :param conn: the DB connection
+        :param by_cid: parent to child collection IDs
+        """
         by_cid = {}
         for i in items:
             cid = i['c_id']
@@ -160,6 +196,9 @@ select f.fieldName name, iv.value
         return Library(self.data_dir, self.library_id, fcolls)
 
     def get_library(self):
+        """Get an object graph representing the data in the Zotero database.
+
+        """
         conn = self.get_connection()
         try:
             colls = self._select_collections(conn)

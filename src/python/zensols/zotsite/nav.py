@@ -1,7 +1,16 @@
-from zensols.zotsite.domain import Item, Note
+from zensols.zotsite import (
+    PatternFsCopier,
+    Item,
+    Note,
+)
 
 
 class NavCreateWalker(object):
+    """This clsas creates the data structure used by the Javascript navigation
+    widget in the created website.
+
+    """
+
     ITEM_ICONS = {'computerProgram': 'floppy-disk',
                   'conferencePaper': 'pencil',
                   'journalArticle': 'file',
@@ -11,7 +20,15 @@ class NavCreateWalker(object):
                   'report': 'font',
                   'webpage': 'bookmark'}
 
-    def __init__(self, lib, fscopier):
+    def __init__(self, lib, fscopier: PatternFsCopier):
+        """Initialize the walker object.
+
+        :param lib: the object graph returned from
+        ``DatabaseReader.get_library``.
+        :param fscopier: used for file name substitution so the widget uses the
+        correct names (i.e. underscore substitution)
+
+        """
         self.lib = lib
         self.fscopier = fscopier
         self.root = {'nodes': []}
@@ -19,9 +36,11 @@ class NavCreateWalker(object):
 
     @property
     def primary_roots(self):
+        "Return the (root level) collections."
         return self.root['nodes'][0]['nodes']
 
     def icon_name(self, node):
+        "Return the name of the icon name for ``node``."
         icon_name = None
         if isinstance(node, Item):
             if node.type in self.ITEM_ICONS:
@@ -33,7 +52,8 @@ class NavCreateWalker(object):
             icon_name = 'text-background'
         return icon_name
 
-    def create_node(self, item):
+    def create_node(self, item: Item):
+        "Create a node for an item."
         node = {'text': item.title,
                 'item-id': item.id,
                 'nodes': []}
@@ -56,15 +76,18 @@ class NavCreateWalker(object):
         return node
 
     def enter_parent(self, parent):
+        """Template method for traversing down/into a node."""
         new_par = self.create_node(parent)
         cur_par = self.parents[-1]
         cur_par['nodes'].append(new_par)
         self.parents.append(new_par)
 
     def visit_child(self, child):
+        """Template method for visiting a node."""
         pass
 
     def leave_parent(self, parent):
+        """Template method for traversing up/out of a node."""
         node = self.parents.pop()
         if len(node['nodes']) == 0:
             del node['nodes']

@@ -28,10 +28,17 @@ class SiteExporter(object):
         self.config = config
 
     def print_structure(self):
+        """Print (sub)collections and papers in those collections as a tree.
+
+        """
         lib = self.db.get_library()
         ZoteroObject.print_zotero_object(lib)
 
     def _write_meta(self, fname):
+        """Write version and other metadata to the website, which is used during
+        rending of the site.
+
+        """
         if hasattr(self.config, 'pkg'):
             pkg = self.config.pkg
             meta = {'version': pkg.version,
@@ -44,6 +51,9 @@ class SiteExporter(object):
             f.write(js)
 
     def _create_tree_data(self):
+        """Create the table of contents/tree info used by the navigation widget.
+
+        """
         lib = self.lib
         fscopier = self.fscopier
         js_dir = os.path.join(self.out_dir, 'js')
@@ -59,6 +69,10 @@ class SiteExporter(object):
         self._write_meta(meta_file)
 
     def _copy_storage(self):
+        """Copy the storage contents, which is the location of the PDF (and other)
+        documents that will be rendered in the site GUI.
+
+        """
         src = self.lib.get_storage_path()
         dst = os.path.join(self.out_dir, 'storage')
         logger.info('copying storage {} -> {}'.format(src, dst))
@@ -69,6 +83,12 @@ class SiteExporter(object):
             self.fscopier.copytree(src, dst)
 
     def _copy_static_from_resources(self, src, dst):
+        """Copy static resources from the distribution package.
+
+        :param src: the source package directory
+        :param dst: the destination on the file system
+
+        """
         logger.info('copy: {} -> {}'.format(src, dst))
         if pkg_resources.resource_isdir(__name__, src):
             logger.debug('mkdir: {}'.format(dst))
@@ -85,6 +105,11 @@ class SiteExporter(object):
                     shutil.copyfileobj(in_stream, fout)
 
     def _copy_static(self):
+        """Copy the static files.  This either copies from the package found in the
+        distribution package (i.e. wheel/egg) or from the local file system
+        (debugging use case).
+
+        """
         if self.static_dirs is None:
             self._copy_static_from_resources('resources/site', self.out_dir)
         else:
@@ -95,6 +120,9 @@ class SiteExporter(object):
                 fscopier.copytree(dname, self.out_dir)
 
     def export(self):
+        """Entry point method to export (create) the website.
+
+        """
         self.lib = self.db.get_library()
         self.fscopier = PatternFsCopier('.*\.pdf$', '[ ]')
         self._copy_static()

@@ -24,11 +24,20 @@ class PatternFsCopier(object):
             self.repl_re = None
 
     def update_file(self, fname):
+        """Return the regular expression matched/modified string of ``fname``.'
+
+        """
         if self.fmatch_re and self.repl_re and self.fmatch_re.match(fname):
             fname = self.repl_re.sub('_', fname)
         return fname
 
     def copytree(self, src, dst, symlinks=False):
+        """Recursively copy a file sysetm directory structure.
+
+        :param src: the file or directory to copy from
+        :param dst: the destination directory to copy into
+        :param symlinks: if True then copy symbolic links as well
+        """
         logger.debug('copying dir recursively {} -> {}'.format(src, dst))
         names = os.listdir(src)
         os.makedirs(dst, exist_ok=True)

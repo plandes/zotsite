@@ -3,6 +3,7 @@ import os
 
 
 class ZoteroObject(object):
+    """Represents any collection, item etc. Zotero data object."""
     def __init__(self, children):
         self._children = children
 
@@ -24,16 +25,19 @@ class ZoteroObject(object):
         return self.name
 
     def short_title(self, str_len):
+        """Return the short name of this object."""
         lstr = self.title
         return (lstr[:str_len] + '...') if len(lstr) > str_len else lstr
 
     @property
     def type(self):
+        """Return the type this item is."""
         if hasattr(self, 'sel') and 'type' in self.sel:
             return self.sel['type']
 
     @staticmethod
     def walk(parent, walker):
+        """Recursively traverse the object graph."""
         walker.enter_parent(parent)
         for c in parent.children:
             walker.visit_child(c)
@@ -48,6 +52,7 @@ class ZoteroObject(object):
 
     @staticmethod
     def narrow_items(obj):
+        """Return an object graph of only Item instances."""
         items = []
         if isinstance(obj, Item):
             items.append(obj)
@@ -57,6 +62,7 @@ class ZoteroObject(object):
 
 
 class Note(ZoteroObject):
+    """Represents a note Zotero data object."""
     def __init__(self, sel):
         self.sel = sel
         super(Note, self).__init__([])
@@ -75,6 +81,7 @@ class Note(ZoteroObject):
 
 
 class Item(ZoteroObject):
+    """Represents an attachement object, like PDFs, site links etc."""
     def __init__(self, sel, children):
         self.sel = sel
         super(Item, self).__init__(children)
@@ -125,6 +132,10 @@ class Item(ZoteroObject):
 
 
 class Collection(ZoteroObject):
+    """Represents a (sub)collection, which is a container for other collections and
+    items.
+
+    """
     def __init__(self, sel, items, collections):
         self.sel = sel
         self.items = items
@@ -148,6 +159,9 @@ class Collection(ZoteroObject):
 
 
 class Library(ZoteroObject):
+    """Represents the top level object that contains the root level collections.
+
+    """
     def __init__(self, data_dir, library_id, collections):
         self.data_dir = data_dir
         self.library_id = library_id
