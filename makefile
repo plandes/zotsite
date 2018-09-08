@@ -6,7 +6,7 @@ PROJ_MODULES=		doc
 WEB_PKG_DIR=		$(MTARG)/site
 WEB_LIB=		lib/site
 WEB_SRC=		src/site
-WEB_BROWSER=		firefoxx
+WEB_BROWSER=		firefox
 PYTHON_BIN_ARGS ?=	export -o $(WEB_PKG_DIR)
 
 MTARG_PYDIST_RES ?=	$(MTARG_PYDIST_BDIR)/zensols/zotsite/resources
