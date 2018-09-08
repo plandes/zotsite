@@ -13,20 +13,25 @@ class PatternFsCopier(object):
       https://docs.python.org/3/library/shutil.html
     and then modified to change destination file names.
     """
-    def __init__(self, fmatch_re, repl_re, dst_re):
-        self.fmatch_re = re.compile(fmatch_re)
-        self.repl_re = re.compile(repl_re)
-        self.dst_re = dst_re
+    def __init__(self, fmatch_re=None, repl_re=None):
+        if fmatch_re is not None:
+            self.fmatch_re = re.compile(fmatch_re)
+        else:
+            self.fmatch_re = None
+        if repl_re is not None:
+            self.repl_re = re.compile(repl_re)
+        else:
+            self.repl_re = None
 
     def update_file(self, fname):
-        if self.fmatch_re.match(fname):
+        if self.fmatch_re and self.repl_re and self.fmatch_re.match(fname):
             fname = self.repl_re.sub('_', fname)
         return fname
 
     def copytree(self, src, dst, symlinks=False):
         logger.debug('copying dir recursively {} -> {}'.format(src, dst))
         names = os.listdir(src)
-        os.makedirs(dst)
+        os.makedirs(dst, exist_ok=True)
         errors = []
         for name in names:
             srcname = os.path.join(src, name)

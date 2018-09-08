@@ -15,12 +15,14 @@ class SiteExporter(object):
     """
     Create the Zotero content web site.
     """
-    def __init__(self, data_dir=None, out_dir=None, library_id=1, config=None):
+    def __init__(self, data_dir=None, static_dirs=None,
+                 out_dir=None, library_id=1, config=None):
         logger.debug('data dir: {}, out_dir: {}, config=<{}>'.
                      format(data_dir, out_dir, config))
         if data_dir is None:
             home_dir = os.environ['HOME']
             data_dir = os.path.join(home_dir, 'Zotero')
+        self.static_dirs = static_dirs
         self.out_dir = out_dir
         self.db = DatabaseReader(data_dir, library_id)
         self.config = config
@@ -30,9 +32,13 @@ class SiteExporter(object):
         ZoteroObject.print_zotero_object(lib)
 
     def _write_meta(self, fname):
-        pkg = self.config.pkg
-        meta = {'version': pkg.version,
-                'project_name': pkg.project_name}
+        if hasattr(self.config, 'pkg'):
+            pkg = self.config.pkg
+            meta = {'version': pkg.version,
+                    'project_name': pkg.project_name}
+        else:
+            meta = {'version': '<none>',
+                    'project_name': '<none>'}
         js = 'var zoteroMeta = {};'.format(json.dumps(meta))
         with open(fname, 'w') as f:
             f.write(js)
@@ -62,7 +68,7 @@ class SiteExporter(object):
         else:
             self.fscopier.copytree(src, dst)
 
-    def _copy_static(self, src, dst):
+    def _copy_static_from_resources(self, src, dst):
         logger.info('copy: {} -> {}'.format(src, dst))
         if pkg_resources.resource_isdir(__name__, src):
             logger.debug('mkdir: {}'.format(dst))
@@ -78,9 +84,19 @@ class SiteExporter(object):
                 with open(dst_res, 'wb') as fout:
                     shutil.copyfileobj(in_stream, fout)
 
+    def _copy_static(self):
+        if self.static_dirs is None:
+            self._copy_static_from_resources('resources/site', self.out_dir)
+        else:
+            fscopier = PatternFsCopier()
+            for dname in self.static_dirs.split(','):
+                logger.info('coping static tree {} -> {}'.format(
+                    dname, self.out_dir))
+                fscopier.copytree(dname, self.out_dir)
+
     def export(self):
         self.lib = self.db.get_library()
-        self.fscopier = PatternFsCopier('.*\.pdf$', '[ ]', '_')
-        self._copy_static('resources/site', self.out_dir)
+        self.fscopier = PatternFsCopier('.*\.pdf$', '[ ]')
+        self._copy_static()
         self._create_tree_data()
         self._copy_storage()

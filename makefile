@@ -6,6 +6,7 @@ PROJ_MODULES=		doc
 WEB_PKG_DIR=		$(MTARG)/site
 WEB_LIB=		lib/site
 WEB_SRC=		src/site
+WEB_BROWSER=		firefoxx
 PYTHON_BIN_ARGS ?=	export -o $(WEB_PKG_DIR)
 
 MTARG_PYDIST_RES ?=	$(MTARG_PYDIST_BDIR)/zensols/zotsite/resources
@@ -24,7 +25,13 @@ web:
 
 .PHONY:		web-package
 web-package:
-		mkdir -p $(WEB_PKG_DIR)
-		cp -r $(WEB_LIB)/* $(WEB_PKG_DIR)
-		cp -r $(WEB_SRC)/* $(WEB_PKG_DIR)
-		make run
+		mkdir -p $(MTARG)
+		make PYTHON_BIN_ARGS='export -o $(WEB_PKG_DIR) --staticdirs $(WEB_LIB),$(WEB_SRC)' run
+
+.PHONY:		display
+display:	web-package
+		if [ $(WEB_BROWSER) == 'firefox' ] ; then \
+			open -a Firefox $(WEB_PKG_DIR)/index.html ; \
+		else \
+			osascript -e 'tell application "Safari" to set URL of document 1 to URL of document 1' ; \
+		fi

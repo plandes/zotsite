@@ -18,6 +18,10 @@ class ConfAppCommandLine(OneConfPerActionOptionsCli):
         outdir_op = ['-o', '--outputdir', True,
                      {'dest': 'out_dir', 'metavar': 'DIRECTORY',
                       'help': 'the directory to output the website'}]
+        staticdir_op = [None, '--staticdirs', False,
+                        {'dest': 'static_dirs', 'metavar': 'STRING',
+                         'help': 'comma separated directories to ' +
+                         'static files (you probably don\'t want to set)'}]
         cnf = {'executors':
                [{'name': 'exporter',
                  'executor': lambda params: SiteExporter(**params),
@@ -26,7 +30,7 @@ class ConfAppCommandLine(OneConfPerActionOptionsCli):
                               'opts': [datdir_op]},
                              {'name': 'tmp'},
                              {'name': 'export',
-                              'opts': [datdir_op, outdir_op]}]}],
+                              'opts': [datdir_op, outdir_op, staticdir_op]}]}],
                'config_option': {'name': 'config',
                                  'expect': False,
                                  'opt': ['-c', '--config', False,
