@@ -7,3 +7,7 @@ tell application "System Events"
 		keystroke "r" using {command down}
 	end tell
 end tell
+
+tell application "Emacs"
+	activate
+end tell
