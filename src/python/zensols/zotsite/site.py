@@ -81,20 +81,6 @@ class SiteExporter(object):
         logger.info('creating js metadata: {}'.format(meta_file))
         self._write_meta(meta_file)
 
-    def _copy_storage_all(self):
-        """Copy the storage contents, which is the location of the PDF (and other)
-        documents that will be rendered in the site GUI.
-
-        """
-        src = self.lib.get_storage_path()
-        dst = os.path.join(self.out_dir, 'storage')
-        logger.info('copying storage {} -> {}'.format(src, dst))
-        if os.path.exists(dst):
-            logger.warn('storage directory already exists--skipping: {}'.
-                        format(dst))
-        else:
-            self.fscopier.copytree(src, dst)
-
     def _copy_storage(self):
         """Copy the storage contents, which is the location of the PDF (and other)
         documents that will be rendered in the site GUI.
