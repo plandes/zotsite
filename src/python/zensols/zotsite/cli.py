@@ -12,6 +12,9 @@ class ConfAppCommandLine(OneConfPerActionOptionsCli):
             default_config_file = os.environ[CONF_ENV_VAR]
         else:
             default_config_file = '%s/.zotsiterc' % os.environ['HOME']
+        coll_op = [None, '--collection', False,
+                   {'dest': 'name_pat', 'metavar': 'DB PATTERN',
+                    'help': 'SQL like pattern to match collections'}]
         datdir_op = ['-d', '--datadir', False,
                      {'dest': 'data_dir', 'metavar': 'FILE',
                       'help': 'the location of the Zotero data directory'}]
@@ -27,10 +30,11 @@ class ConfAppCommandLine(OneConfPerActionOptionsCli):
                  'executor': lambda params: SiteExporter(**params),
                  'actions': [{'name': 'print',
                               'meth': 'print_structure',
-                              'opts': [datdir_op]},
+                              'opts': [datdir_op, coll_op]},
                              {'name': 'tmp'},
                              {'name': 'export',
-                              'opts': [datdir_op, outdir_op, staticdir_op]}]}],
+                              'opts': [datdir_op, outdir_op, coll_op,
+                                       staticdir_op]}]}],
                'config_option': {'name': 'config',
                                  'expect': False,
                                  'opt': ['-c', '--config', False,

@@ -21,10 +21,12 @@ This generated website has the following features:
 - [Usage](#usage)
     - [Show Structure](#show-structure)
     - [Website Creation](#website-creation)
+    - [Export Subcollections](#export-subcollections)
     - [Configuration File](#configuration-file)
 - [Process](#process)
     - [Keeping the Website In Sync With Zotero](#keeping-the-website-in-sync-with-zotero)
     - [Platform](#platform)
+- [Command Line Help](#command-line-help)
 - [Attribution](#attribution)
 - [Screenshot](#screenshot)
 - [Todo](#todo)
@@ -100,6 +102,15 @@ the meta data for that collection.  Note that this behavior was decided more by
 the way [Tree View] works more than anything else since it is designed to show
 the entire tree list at once.
 
+
+### Export Subcollections
+
+The folder directory structure in [Zotero] are called *collections*.  You can
+export only collections given a regular expression with the `--collection`
+flag.
+
+
+
 ### Configuration File
 
 All command line parameters you provide can also be given in a `ini` style
@@ -140,6 +151,33 @@ site, which is [here](src/sh/zotsync.sh).
 
 This project uses the SQLite Python library and should run on other platforms
 but assumes a directory structure that's been tested on OSX.
+
+
+## Command Line Help
+
+Command line usage as provided with the `--help` option:
+
+```sql
+Usage: usage: zotsite <list|export|print> [options]
+
+Options:
+  --version             show program's version number and exit
+  -h, --help            show this help message and exit
+  -w NUMBER, --whine=NUMBER
+                        add verbosity to logging
+  -c FILE, --config=FILE
+                        configuration file
+Actions:
+  export  Export
+  -d, --datadir <string>      the location of the Zotero data directory
+  -o, --outputdir <string>    the directory to output the website
+  --collection <string>       SQL like pattern to match collections
+  --staticdirs <string>       comma separated directories to static files (you probably don't want to set)
+
+  print   Print structure
+  -d, --datadir <string>      the location of the Zotero data directory
+  --collection <string>       SQL like pattern to match collections
+```
 
 
 ## Attribution

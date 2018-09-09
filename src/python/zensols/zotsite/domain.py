@@ -2,6 +2,20 @@ import re
 import os
 
 
+class Walker(object):
+    def enter_parent(self, parent):
+        """Template method for traversing down/into a node."""
+        pass
+
+    def visit_child(self, child):
+        """Template method for visiting a node."""
+        pass
+
+    def leave_parent(self, parent):
+        """Template method for traversing up/out of a node."""
+        pass
+
+
 class ZoteroObject(object):
     """Represents any collection, item etc. Zotero data object."""
     def __init__(self, children):
@@ -36,7 +50,7 @@ class ZoteroObject(object):
             return self.sel['type']
 
     @staticmethod
-    def walk(parent, walker):
+    def walk(parent, walker: Walker):
         """Recursively traverse the object graph."""
         walker.enter_parent(parent)
         for c in parent.children:
@@ -131,23 +145,29 @@ class Item(ZoteroObject):
         return '{name} [{type}]{fname}'.format(**its)
 
 
-class Collection(ZoteroObject):
+class Container(ZoteroObject):
+    """Container class holds items and sub-collections."""
+    def __init__(self, items, collections):
+        self.items = items
+        self.collections = collections
+        super(Container, self).__init__(None)
+
+    @property
+    def children(self):
+        ret = []
+        ret.extend(self.collections)
+        ret.extend(self.items)
+        return ret
+
+
+class Collection(Container):
     """Represents a (sub)collection, which is a container for other collections and
     items.
 
     """
     def __init__(self, sel, items, collections):
         self.sel = sel
-        self.items = items
-        self.collections = collections
-        super(Collection, self).__init__(collections)
-
-    @property
-    def children(self):
-        ret = []
-        ret.extend(super(Collection, self).children)
-        ret.extend(self.items)
-        return ret
+        super(Collection, self).__init__(items, collections)
 
     @property
     def id(self):
@@ -158,7 +178,7 @@ class Collection(ZoteroObject):
         return self.sel['c_name']
 
 
-class Library(ZoteroObject):
+class Library(Container):
     """Represents the top level object that contains the root level collections.
 
     """
@@ -166,7 +186,7 @@ class Library(ZoteroObject):
         self.data_dir = data_dir
         self.library_id = library_id
         self.storage_dirname = 'storage'
-        super(Library, self).__init__(collections)
+        super(Library, self).__init__([], collections)
 
     def get_storage_path(self, fname=None):
         path = os.path.join(self.data_dir, self.storage_dirname)

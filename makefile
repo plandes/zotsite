@@ -28,6 +28,15 @@ web-package:
 		mkdir -p $(MTARG)
 		make PYTHON_BIN_ARGS='export -o $(WEB_PKG_DIR) --staticdirs $(WEB_LIB),$(WEB_SRC)' run
 
+.PHONY:		print
+print:
+		make PYTHON_BIN_ARGS='print --collection Detection$$' run
+
+.PHONY:		selection
+selection:
+		mkdir -p $(MTARG)
+		make PYTHON_BIN_ARGS='export -o $(WEB_PKG_DIR) --staticdirs $(WEB_LIB),$(WEB_SRC) --collection Detection$$' run
+
 .PHONY:		display
 display:	web-package
 		if [ $(WEB_BROWSER) == 'firefox' ] ; then \

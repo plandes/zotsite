@@ -10,9 +10,18 @@ class DatabaseReader(object):
     """
     Database access to Zotero store.
     """
-    def __init__(self, data_dir, library_id=1):
-        logger.debug('data dir: %s' % data_dir)
+    def __init__(self, data_dir, name_pat='%', library_id=1):
+        """Initialize
+
+        :param data_dir: directory containing the Zotero DB files (sqlite and
+        collections)
+        :param name_pat: the SQL pattern to match against subcollection names
+        :param library_id: the DB ide of the library to export
+
+        """
+        logger.debug('data dir: {}'.format(data_dir))
         self.data_dir = data_dir
+        self.name_pat = name_pat
         self.library_id = library_id
 
     def _collection_sql(self, whparams):
@@ -84,11 +93,10 @@ select f.fieldName name, iv.value
             meta[row['name']] = row['value']
         return meta
 
-    def _select_items(self, conn, name_pat='%'):
+    def _select_items(self, conn):
         """Return items from the database.
 
         :param conn: the DB connection
-        :param name_pat: the SQL pattern to match against subcollection names
         """
         logger.debug('data_dir: %s' % self.data_dir)
         wparams = {'library_id': self.library_id}
@@ -118,14 +126,13 @@ select f.fieldName name, iv.value
             flst.extend(itemlst)
         return flst
 
-    def _select_collections(self, conn, name_pat='%'):
+    def _select_collections(self, conn):
         """Return items from the database.
 
         :param conn: the DB connection
-        :param name_pat: the SQL pattern to match against subcollection names
         """
         logger.debug('data_dir: %s' % self.data_dir)
-        wparams = {'library_id': self.library_id, 'coll_name': name_pat}
+        wparams = {'library_id': self.library_id, 'coll_name': self.name_pat}
         logger.debug('wparams: %s' % wparams)
         colls = {}
         for row in conn.execute(self._collection_sql(wparams)):

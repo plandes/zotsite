@@ -6,6 +6,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 
 ## [Unreleased]
+### Added
+- Feature to export collections based on an regular expression match on name.
 
 
 ## [0.2.2] - 2018-08-31

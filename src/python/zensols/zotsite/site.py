@@ -3,10 +3,14 @@ import os
 import json
 import shutil
 import pkg_resources
-from zensols.zotsite.db import DatabaseReader
-from zensols.zotsite.domain import ZoteroObject
-from zensols.zotsite.nav import NavCreateWalker
-from zensols.zotsite.cptree import PatternFsCopier
+from zensols.zotsite import (
+    DatabaseReader,
+    ZoteroObject,
+    NavCreateWalker,
+    PatternFsCopier,
+    FileSystemCopyWalker,
+    PruneWalker,
+)
 
 logger = logging.getLogger('zensols.zotsite.site')
 
@@ -16,22 +20,31 @@ class SiteExporter(object):
     Create the Zotero content web site.
     """
     def __init__(self, data_dir=None, static_dirs=None,
-                 out_dir=None, library_id=1, config=None):
+                 out_dir=None, name_pat=None, library_id=1, config=None):
         logger.debug('data dir: {}, out_dir: {}, config=<{}>'.
                      format(data_dir, out_dir, config))
         if data_dir is None:
             home_dir = os.environ['HOME']
             data_dir = os.path.join(home_dir, 'Zotero')
+        self.data_dir = data_dir
         self.static_dirs = static_dirs
         self.out_dir = out_dir
-        self.db = DatabaseReader(data_dir, library_id)
+        self.name_pat = name_pat
         self.config = config
+        self.db = DatabaseReader(data_dir, library_id=library_id)
+
+    def _get_library(self):
+        lib = self.db.get_library()
+        if self.name_pat is not None:
+            walker = PruneWalker(self.name_pat)
+            ZoteroObject.walk(lib, walker)
+        return lib
 
     def print_structure(self):
         """Print (sub)collections and papers in those collections as a tree.
 
         """
-        lib = self.db.get_library()
+        lib = self._get_library()
         ZoteroObject.print_zotero_object(lib)
 
     def _write_meta(self, fname):
@@ -68,7 +81,7 @@ class SiteExporter(object):
         logger.info('creating js metadata: {}'.format(meta_file))
         self._write_meta(meta_file)
 
-    def _copy_storage(self):
+    def _copy_storage_all(self):
         """Copy the storage contents, which is the location of the PDF (and other)
         documents that will be rendered in the site GUI.
 
@@ -81,6 +94,18 @@ class SiteExporter(object):
                         format(dst))
         else:
             self.fscopier.copytree(src, dst)
+
+    def _copy_storage(self):
+        """Copy the storage contents, which is the location of the PDF (and other)
+        documents that will be rendered in the site GUI.
+
+        """
+        lib = self.db.get_library()
+        src = self.lib.get_storage_path()
+        dst = os.path.join(self.out_dir, 'storage')
+        fswalker = FileSystemCopyWalker(lib, src, dst, self.fscopier)
+        logger.info('copying storage {} -> {}'.format(src, dst))
+        ZoteroObject.walk(lib, fswalker)
 
     def _copy_static_from_resources(self, src, dst):
         """Copy static resources from the distribution package.
@@ -119,12 +144,16 @@ class SiteExporter(object):
                     dname, self.out_dir))
                 fscopier.copytree(dname, self.out_dir)
 
+    @staticmethod
+    def _create_fscopier():
+        return PatternFsCopier('.*\.pdf$', '[ ]')
+
     def export(self):
         """Entry point method to export (create) the website.
 
         """
-        self.lib = self.db.get_library()
-        self.fscopier = PatternFsCopier('.*\.pdf$', '[ ]')
+        self.lib = self._get_library()
+        self.fscopier = self._create_fscopier()
         self._copy_static()
         self._create_tree_data()
         self._copy_storage()

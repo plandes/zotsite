@@ -1,12 +1,17 @@
+import re
+import logging
 from zensols.zotsite import (
+    Walker,
     PatternFsCopier,
     Item,
     Note,
 )
 
+logger = logging.getLogger('zensols.zotsite.nav')
 
-class NavCreateWalker(object):
-    """This clsas creates the data structure used by the Javascript navigation
+
+class NavCreateWalker(Walker):
+    """This class creates the data structure used by the Javascript navigation
     widget in the created website.
 
     """
@@ -76,18 +81,12 @@ class NavCreateWalker(object):
         return node
 
     def enter_parent(self, parent):
-        """Template method for traversing down/into a node."""
         new_par = self.create_node(parent)
         cur_par = self.parents[-1]
         cur_par['nodes'].append(new_par)
         self.parents.append(new_par)
 
-    def visit_child(self, child):
-        """Template method for visiting a node."""
-        pass
-
     def leave_parent(self, parent):
-        """Template method for traversing up/out of a node."""
         node = self.parents.pop()
         if len(node['nodes']) == 0:
             del node['nodes']
