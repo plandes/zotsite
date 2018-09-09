@@ -182,13 +182,16 @@ function ZoteroManager(levels, meta) {
 	    card.classList.add('note-pane');
 
 	    h.classList.add('card-header');
-	    h.appendChild(document.createTextNode('Note'));
+	    h.appendChild(document.createTextNode(node.item_title));
 	    card.appendChild(h);
 
 	    cardBlock.classList.add('card-block');
 	    var p = document.createElement('p');
 	    p.classList.add('card-text');
-	    p.appendChild(document.createTextNode(node.item_title));
+	    var divElem = document.createElement('div');
+	    var text = node.item_note;
+	    divElem.innerHTML = text;
+	    p.appendChild(divElem);
 	    cardBlock.appendChild(p);
 	    card.appendChild(cardBlock);
 

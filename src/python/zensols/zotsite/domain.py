@@ -38,6 +38,11 @@ class ZoteroObject(object):
     def title(self):
         return self.name
 
+    @property
+    def note(self):
+        if hasattr(self, 'sel') and 'n_note' in self.sel:
+            return self.sel['n_note']
+
     def short_title(self, str_len):
         """Return the short name of this object."""
         lstr = self.title

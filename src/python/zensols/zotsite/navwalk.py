@@ -57,7 +57,7 @@ class NavCreateWalker(Walker):
             icon_name = 'text-background'
         return icon_name
 
-    def create_node(self, item: Item):
+    def create_node(self, item):
         "Create a node for an item."
         node = {'text': item.title,
                 'item-id': item.id,
@@ -67,6 +67,7 @@ class NavCreateWalker(Walker):
             node['icon'] = 'glyphicon glyphicon-{}'.format(icon)
         node['item_title'] = item.title
         node['item_type'] = item.type
+        node['item_note'] = item.note
         if isinstance(item, Item):
             meta = item.metadata
             mdarr = []

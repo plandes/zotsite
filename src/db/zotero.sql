@@ -73,3 +73,29 @@ select *
 select c.collectionId c_id, c.parentCollectionId c_pid, c.collectionName c_name
     from collections c
     where c.libraryId = 1;
+
+-- items
+select c.collectionId c_id, c.parentCollectionId c_pid,
+           c.collectionName c_name,
+       it.itemId i_id, ia.parentItemId i_pid, it.key, iy.typeName type,
+       ia.contentType content_type, ia.path,
+       itn.title n_title, itn.note n_note, itn.parentItemId n_pid
+  from items it, itemTypes iy
+      left join itemAttachments ia on it.itemId = ia.itemId
+      left join collectionItems ci on ci.itemId = it.itemId
+      left join collections c on c.collectionId = ci.collectionId
+      left join itemNotes itn on it.itemId = itn.itemId
+  where it.itemTypeId = iy.itemTypeId and
+      it.itemId not in (select itemId from deletedItems)
+  order by ci.orderIndex;
+
+-- 453
+select count(*)
+  from items it, itemTypes iy
+      left join itemAttachments ia on it.itemId = ia.itemId
+      left join collectionItems ci on ci.itemId = it.itemId
+      left join collections c on c.collectionId = ci.collectionId
+      left join itemNotes itn on it.itemId = itn.itemId
+  where it.itemTypeId = iy.itemTypeId and
+      it.itemId not in (select itemId from deletedItems)
+  order by ci.orderIndex;

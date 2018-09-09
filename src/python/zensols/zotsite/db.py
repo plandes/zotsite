@@ -42,7 +42,7 @@ select c.collectionId c_id, c.parentCollectionId c_pid,
            c.collectionName c_name,
        it.itemId i_id, ia.parentItemId i_pid, it.key, iy.typeName type,
        ia.contentType content_type, ia.path,
-       itn.title n_title, itn.parentItemId n_pid
+       itn.title n_title, itn.note n_note, itn.parentItemId n_pid
   from items it, itemTypes iy
       left join itemAttachments ia on it.itemId = ia.itemId
       left join collectionItems ci on ci.itemId = it.itemId
@@ -155,7 +155,8 @@ select f.fieldName name, iv.value
 
         """
         children = list(map(lambda x: self._create_item(x), item['subs']))
-        if item['n_title']:
+        #if item['n_title']:
+        if item['type'] == 'note':
             item = Note(item)
         else:
             item = Item(item, children)
