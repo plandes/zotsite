@@ -14,7 +14,7 @@ class ConfAppCommandLine(OneConfPerActionOptionsCli):
             default_config_file = '%s/.zotsiterc' % os.environ['HOME']
         coll_op = [None, '--collection', False,
                    {'dest': 'name_pat', 'metavar': 'DB PATTERN',
-                    'help': 'SQL like pattern to match collections'}]
+                    'help': 'regular expression pattern to match collections'}]
         datdir_op = ['-d', '--datadir', False,
                      {'dest': 'data_dir', 'metavar': 'FILE',
                       'help': 'the location of the Zotero data directory'}]

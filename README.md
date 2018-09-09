@@ -171,8 +171,8 @@ Actions:
   export  Export
   -d, --datadir <string>      the location of the Zotero data directory
   -o, --outputdir <string>    the directory to output the website
-  --collection <string>       SQL like pattern to match collections
-  --staticdirs <string>       comma separated directories to static files (you probably don't want to set)
+  --collection <string>       regular expression to match collections
+  --staticdirs <string>       comma separated directories to static files
 
   print   Print structure
   -d, --datadir <string>      the location of the Zotero data directory
