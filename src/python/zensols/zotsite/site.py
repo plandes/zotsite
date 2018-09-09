@@ -122,7 +122,7 @@ class SiteExporter(object):
             dst_res = os.path.join(dst, os.path.basename(res))
             res = '/'.join([src, res])
             if pkg_resources.resource_isdir(__name__, res):
-                self._copy_static(res, dst_res)
+                self._copy_static_from_resources(res, dst_res)
             else:
                 in_stream = pkg_resources.resource_stream(__name__, res)
                 logger.debug('copy file: {} -> {}'.format(res, dst_res))
