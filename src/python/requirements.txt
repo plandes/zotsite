@@ -1,1 +1,1 @@
-zensols.actioncli>=1.0.5
+actioncli.zensols>=1.0.6
