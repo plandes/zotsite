@@ -1,6 +1,4 @@
-import os
 from zensols.actioncli import OneConfPerActionOptionsCliEnv
-from zensols.actioncli import Config
 from zensols.zotsite import SiteExporter
 
 
@@ -38,12 +36,6 @@ class ConfAppCommandLine(OneConfPerActionOptionsCliEnv):
                'whine': 1}
         super(ConfAppCommandLine, self).__init__(
             cnf, config_env_name='zotsiterc', pkg_dist='zensols.zotsite')
-
-    def _create_config(self, conf_file, default_vars):
-        defs = {}
-        defs.update(default_vars)
-        defs.update(os.environ)
-        return Config(config_file=conf_file, default_vars=defs)
 
 
 def main():
