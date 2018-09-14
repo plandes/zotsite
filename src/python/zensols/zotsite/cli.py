@@ -1,17 +1,11 @@
 import os
-from zensols.actioncli import OneConfPerActionOptionsCli
+from zensols.actioncli import OneConfPerActionOptionsCliEnv
 from zensols.actioncli import Config
 from zensols.zotsite import SiteExporter
 
-CONF_ENV_VAR = 'ZOTSITERC'
 
-
-class ConfAppCommandLine(OneConfPerActionOptionsCli):
+class ConfAppCommandLine(OneConfPerActionOptionsCliEnv):
     def __init__(self):
-        if CONF_ENV_VAR in os.environ:
-            default_config_file = os.environ[CONF_ENV_VAR]
-        else:
-            default_config_file = '%s/.zotsiterc' % os.environ['HOME']
         coll_op = [None, '--collection', False,
                    {'dest': 'name_pat', 'metavar': 'DB PATTERN',
                     'help': 'regular expression pattern to match collections'}]
@@ -38,12 +32,12 @@ class ConfAppCommandLine(OneConfPerActionOptionsCli):
                'config_option': {'name': 'config',
                                  'expect': False,
                                  'opt': ['-c', '--config', False,
-                                         {'dest': 'config', 'metavar': 'FILE',
-                                          'default': default_config_file,
+                                         {'dest': 'config',
+                                          'metavar': 'FILE',
                                           'help': 'configuration file'}]},
                'whine': 1}
         super(ConfAppCommandLine, self).__init__(
-            cnf, pkg_dist='zensols.zotsite')
+            cnf, config_env_name='zotsiterc', pkg_dist='zensols.zotsite')
 
     def _create_config(self, conf_file, default_vars):
         defs = {}
