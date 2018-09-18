@@ -10,7 +10,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Retrofit new actioncli features.
 
 
-## [0.2.2] - 2018-09-08
+## [0.2.3] - 2018-09-08
 ### Added
 - Feature to export collections based on an regular expression match on name.
 
