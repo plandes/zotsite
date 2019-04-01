@@ -42,7 +42,7 @@ This generated website has the following features:
 
 The easist way to install the command line program is via the `pip` installer:
 ```bash
-pip install zensols.zotsite
+pip3 install zensols.zotsite
 ```
 
 Binaries are also available on [pypi].
