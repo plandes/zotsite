@@ -1,8 +1,8 @@
 # Export Zotero to a web site
 
 [![Gitter chat][gitter-badge]][gitter-link]
-
 [![Travis CI Build Status][travis-badge]][travis-link]
+[![Python 3.6](https://img.shields.io/badge/python-3.6-blue.svg)](https://www.python.org/downloads/release/python-360/)
 
 This project exports your local [Zotero] library to a usable HTML website.
 This generated website has the following features:
