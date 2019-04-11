@@ -49,10 +49,11 @@ pip3 install zensols.zotsite
 Binaries are also available on [pypi].
 
 
-### Zotero Plugin Listing
+## Ubuntu and Linux Systems with Python 3.5 or Previous Version
 
-This is listed as a [plugin] on the Zotero site.
-
+Please [read this issue](https://github.com/plandes/zotsite/issues/4) if you
+are installing a Ubuntu or any Linux system with Python 3.5 or previous
+version.
 
 
 ## Sample Site
@@ -214,11 +215,9 @@ Also see the [live demo].
   against the SQLite DB.
 
 
-## Ubuntu and Linux Systems with Python 3.5 or Previous Version
+## Zotero Plugin Listing
 
-Please [read this issue](https://github.com/plandes/zotsite/issues/4) if you
-are installing a Ubuntu or any Linux system with Python 3.5 or previous
-version.
+This is listed as a [plugin] on the Zotero site.
 
 
 ## Changelog
