@@ -17,7 +17,7 @@ This generated website has the following features:
 ## Table of Contents
 
 - [Obtaining](#obtaining)
-    - [Zotero Plugin Listing](#zotero-plugin-listing)
+- [Ubuntu and Linux Systems with Python 3.5 or Previous Version](#ubuntu-and-linux-systems-with-python-35-or-previous-version)
 - [Sample Site](#sample-site)
 - [Usage](#usage)
     - [Show Structure](#show-structure)
@@ -31,7 +31,7 @@ This generated website has the following features:
 - [Attribution](#attribution)
 - [Screenshot](#screenshot)
 - [Todo](#todo)
-- [Ubuntu and Linux Systems with Python 3.5 or Previous Version](#ubuntu-and-linux-systems-with-python-35-or-previous-version)
+- [Zotero Plugin Listing](#zotero-plugin-listing)
 - [Changelog](#changelog)
 - [License](#license)
 
