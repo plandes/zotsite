@@ -17,6 +17,7 @@ This generated website has the following features:
 ## Table of Contents
 
 - [Obtaining](#obtaining)
+    - [Zotero Plugin Listing](#zotero-plugin-listing)
 - [Sample Site](#sample-site)
 - [Usage](#usage)
     - [Show Structure](#show-structure)
@@ -30,7 +31,6 @@ This generated website has the following features:
 - [Attribution](#attribution)
 - [Screenshot](#screenshot)
 - [Todo](#todo)
-- [Zotero Plugin Listing](#zotero-plugin-listing)
 - [Ubuntu and Linux Systems with Python 3.5 or Previous Version](#ubuntu-and-linux-systems-with-python-35-or-previous-version)
 - [Changelog](#changelog)
 - [License](#license)
@@ -47,6 +47,12 @@ pip3 install zensols.zotsite
 ```
 
 Binaries are also available on [pypi].
+
+
+### Zotero Plugin Listing
+
+This is listed as a [plugin] on the Zotero site.
+
 
 
 ## Sample Site
@@ -206,11 +212,6 @@ Also see the [live demo].
   and finds a PDF or site to view withouth the user having to do this.
 * Use something like zotxt to make this work with a plugin rather than directly
   against the SQLite DB.
-
-
-## Zotero Plugin Listing
-
-This is listed as a [plugin] on the Zotero site.
 
 
 ## Ubuntu and Linux Systems with Python 3.5 or Previous Version
