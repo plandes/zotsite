@@ -31,6 +31,7 @@ This generated website has the following features:
 - [Screenshot](#screenshot)
 - [Todo](#todo)
 - [Zotero Plugin Listing](#zotero-plugin-listing)
+- [Ubuntu and Linux Systems with Python 3.5 or Previous Version](#ubuntu-and-linux-systems-with-python-35-or-previous-version)
 - [Changelog](#changelog)
 - [License](#license)
 
@@ -210,6 +211,13 @@ Also see the [live demo].
 ## Zotero Plugin Listing
 
 This is listed as a [plugin] on the Zotero site.
+
+
+## Ubuntu and Linux Systems with Python 3.5 or Previous Version
+
+Please [read this issue](https://github.com/plandes/zotsite/issues/4) if you
+are installing a Ubuntu or any Linux system with Python 3.5 or previous
+version.
 
 
 ## Changelog
