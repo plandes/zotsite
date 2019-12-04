@@ -111,12 +111,17 @@ the way [Tree View] works more than anything else since it is designed to show
 the entire tree list at once.
 
 
-### Export Subcollections
+### Print Subcollections
 
 The folder directory structure in [Zotero] are called *collections*.  You can
-export only collections given a regular expression with the `--collection`
-flag.
+print only collections given a regular expression with the `--collection`
+flag.  Currently, only a hierarchically information printing is available.  A
+future enhancement is to export a collection.
 
+An example of the print functionality is:
+```bash
+zotsite print --collection '.*Deep\s*Learning.*'
+```
 
 
 ### Configuration File
