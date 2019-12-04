@@ -22,7 +22,7 @@ This generated website has the following features:
 - [Usage](#usage)
     - [Show Structure](#show-structure)
     - [Website Creation](#website-creation)
-    - [Export Subcollections](#export-subcollections)
+    - [Print Subcollections](#print-subcollections)
     - [Configuration File](#configuration-file)
 - [Process](#process)
     - [Keeping the Website In Sync With Zotero](#keeping-the-website-in-sync-with-zotero)
