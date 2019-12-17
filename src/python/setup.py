@@ -7,7 +7,8 @@ su = SetupUtil(
     name='zensols.zotsite',
     user='plandes',
     project='zotsite',
-    package_data={'': ['*.html', '*.js', '*.css', '*.map', '*.svg', 'glyphicons*']},
+    package_data={'': []}
+#    package_data={'': ['*.html', '*.js', '*.css', '*.map', '*.svg', 'glyphicons*']},
     description='This project attempts to export a local Zotero library to a usable HTML website.',
     keywords=['academic', 'web', 'website', 'research'],
 )

@@ -1,5 +1,5 @@
 import logging
-import os
+from pathlib import Path
 import sqlite3
 from zensols.zotsite.domain import Collection, Library, Item, Note
 
@@ -74,8 +74,10 @@ select f.fieldName name, iv.value
             for idx, col in enumerate(cursor.description):
                 d[col[0]] = row[idx]
             return d
-        db_file = os.path.join(self.data_dir, 'zotero.sqlite')
-        logger.info('reading SQLite file: %s' % db_file)
+        db_file = Path(self.data_dir, 'zotero.sqlite')
+        logger.info(f'reading SQLite file: {db_file}')
+        if not db_file.exists():
+            raise OSError(f'no such data file: {db_file}')
         conn = sqlite3.connect(db_file)
         conn.row_factory = dict_factory
         return conn

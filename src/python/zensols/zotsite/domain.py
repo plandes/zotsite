@@ -17,7 +17,9 @@ class Walker(object):
 
 
 class ZoteroObject(object):
-    """Represents any collection, item etc. Zotero data object."""
+    """Represents any collection, item etc. Zotero data object.
+
+    """
     def __init__(self, children):
         self._children = children
 
@@ -81,7 +83,9 @@ class ZoteroObject(object):
 
 
 class Note(ZoteroObject):
-    """Represents a note Zotero data object."""
+    """Represents a note Zotero data object.
+
+    """
     def __init__(self, sel):
         self.sel = sel
         super(Note, self).__init__([])
@@ -100,7 +104,9 @@ class Note(ZoteroObject):
 
 
 class Item(ZoteroObject):
-    """Represents an attachement object, like PDFs, site links etc."""
+    """Represents an attachement object, like PDFs, site links etc.
+
+    """
     def __init__(self, sel, children):
         self.sel = sel
         super(Item, self).__init__(children)
@@ -151,7 +157,9 @@ class Item(ZoteroObject):
 
 
 class Container(ZoteroObject):
-    """Container class holds items and sub-collections."""
+    """Container class holds items and sub-collections.
+
+    """
     def __init__(self, items, collections):
         self.items = items
         self.collections = collections

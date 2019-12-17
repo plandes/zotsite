@@ -1,9 +1,9 @@
 import logging
-import os
+from pathlib import Path
 import json
 import shutil
-import pkg_resources
 from zensols.zotsite import (
+    AppConfig,
     DatabaseReader,
     ZoteroObject,
     NavCreateWalker,
@@ -15,23 +15,17 @@ from zensols.zotsite import (
 logger = logging.getLogger('zensols.zotsite.site')
 
 
-class SiteExporter(object):
+class SiteCreator(object):
+    """Create the Zotero content web site.
+
     """
-    Create the Zotero content web site.
-    """
-    def __init__(self, data_dir=None, static_dirs=None,
-                 out_dir=None, name_pat=None, library_id=1, config=None):
-        logger.debug('data dir: {}, out_dir: {}, config=<{}>'.
-                     format(data_dir, out_dir, config))
-        if data_dir is None:
-            home_dir = os.environ['HOME']
-            data_dir = os.path.join(home_dir, 'Zotero')
-        self.data_dir = data_dir
-        self.static_dirs = static_dirs
-        self.out_dir = out_dir
-        self.name_pat = name_pat
+    def __init__(self, config: AppConfig = None):
+        cnf = config.populate()
+        self.db = DatabaseReader(config.get_option_path('data_dir'),
+                                 library_id=cnf.library_id)
+        self.out_dir = config.get_option_path('out_dir')
+        self.name_pat = config.get_option('name_pat', expect=False)
         self.config = config
-        self.db = DatabaseReader(data_dir, library_id=library_id)
 
     def _get_library(self):
         lib = self.db.get_library()
@@ -69,15 +63,15 @@ class SiteExporter(object):
         """
         lib = self.lib
         fscopier = self.fscopier
-        js_dir = os.path.join(self.out_dir, 'js')
-        nav_file = os.path.join(js_dir, 'zotero-tree-data.js')
+        js_dir = self.out_dir / 'js'
+        nav_file = js_dir / 'zotero-tree-data.js'
         logger.info('creating js nav tree: {}'.format(nav_file))
         walker = NavCreateWalker(lib, fscopier)
         ZoteroObject.walk(lib, walker)
         with open(nav_file, 'w') as f:
             f.write("var tree =\n")
             f.write(json.dumps(walker.primary_roots, indent=2))
-        meta_file = os.path.join(js_dir, 'zotero-meta.js')
+        meta_file = Path(js_dir, 'zotero-meta.js')
         logger.info('creating js metadata: {}'.format(meta_file))
         self._write_meta(meta_file)
 
@@ -88,47 +82,34 @@ class SiteExporter(object):
         """
         lib = self.db.get_library()
         src = self.lib.get_storage_path()
-        dst = os.path.join(self.out_dir, 'storage')
+        dst = self.out_dir / 'storage'
         fswalker = FileSystemCopyWalker(lib, src, dst, self.fscopier)
         logger.info('copying storage {} -> {}'.format(src, dst))
         ZoteroObject.walk(lib, fswalker)
 
-    def _copy_static_from_resources(self, src, dst):
+    def _copy_static_res(self, src: Path, dst: Path):
         """Copy static resources from the distribution package.
 
         :param src: the source package directory
         :param dst: the destination on the file system
 
         """
-        logger.info('copy: {} -> {}'.format(src, dst))
-        if pkg_resources.resource_isdir(__name__, src):
-            logger.debug('mkdir: {}'.format(dst))
-            os.makedirs(dst, exist_ok=True)
-        for res in pkg_resources.resource_listdir(__name__, src):
-            dst_res = os.path.join(dst, os.path.basename(res))
-            res = '/'.join([src, res])
-            if pkg_resources.resource_isdir(__name__, res):
-                self._copy_static_from_resources(res, dst_res)
+        logger.info(f'copy: {src} -> {dst}'.format(src, dst))
+        dst.mkdir(parents=True, exist_ok=True)
+        for res in src.iterdir():
+            res = res.name
+            src_file = src / res
+            dst_file = dst / res
+            if src_file.is_dir():
+                self._copy_static_res(src_file, dst_file)
             else:
-                in_stream = pkg_resources.resource_stream(__name__, res)
-                logger.debug('copy file: {} -> {}'.format(res, dst_res))
-                with open(dst_res, 'wb') as fout:
-                    shutil.copyfileobj(in_stream, fout)
+                logger.info(f'copy file: {src_file} -> {dst_file}')
+                shutil.copyfile(src_file, dst_file)
 
     def _copy_static(self):
-        """Copy the static files.  This either copies from the package found in the
-        distribution package (i.e. wheel/egg) or from the local file system
-        (debugging use case).
-
-        """
-        if self.static_dirs is None:
-            self._copy_static_from_resources('resources/site', self.out_dir)
-        else:
-            fscopier = PatternFsCopier()
-            for dname in self.static_dirs.split(','):
-                logger.info('coping static tree {} -> {}'.format(
-                    dname, self.out_dir))
-                fscopier.copytree(dname, self.out_dir)
+        for src in 'src lib'.split():
+            src_dir = self.config.resource_filename(f'resources/{src}')
+            self._copy_static_res(src_dir, self.out_dir)
 
     @staticmethod
     def _create_fscopier():
@@ -143,3 +124,6 @@ class SiteExporter(object):
         self._copy_static()
         self._create_tree_data()
         self._copy_storage()
+
+    def tmp(self):
+        self.print_structure()

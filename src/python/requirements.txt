@@ -1,1 +1,1 @@
-zensols.actioncli>=1.0.10
+zensols.actioncli>=1.0.18

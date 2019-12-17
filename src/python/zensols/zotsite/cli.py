@@ -1,32 +1,42 @@
 from zensols.actioncli import OneConfPerActionOptionsCliEnv
-from zensols.zotsite import SiteExporter
+from zensols.zotsite import (
+    SiteCreator,
+    AppConfig,
+)
+
+
+class SiteCli(object):
+    def __init__(self, *args, **kwargs):
+        config = AppConfig.from_args(*args, **kwargs)
+        self.site = SiteCreator(config)
+
+    def print_structure(self):
+        self.site.print_structure()
+
+    def export(self):
+        self.site.export()
 
 
 class ConfAppCommandLine(OneConfPerActionOptionsCliEnv):
     def __init__(self):
         coll_op = [None, '--collection', False,
-                   {'dest': 'name_pat', 'metavar': 'DB PATTERN',
+                   {'dest': 'name_pat',
+                    'metavar': 'DB PATTERN',
                     'help': 'regular expression pattern to match collections'}]
-        datdir_op = ['-d', '--datadir', False,
-                     {'dest': 'data_dir', 'metavar': 'FILE',
-                      'help': 'the location of the Zotero data directory'}]
         outdir_op = ['-o', '--outputdir', True,
-                     {'dest': 'out_dir', 'metavar': 'DIRECTORY',
+                     {'dest': 'out_dir',
+                      'default': './zotsite',
+                      'metavar': 'DIRECTORY',
                       'help': 'the directory to output the website'}]
-        staticdir_op = [None, '--staticdirs', False,
-                        {'dest': 'static_dirs', 'metavar': 'STRING',
-                         'help': 'comma separated directories to ' +
-                         'static files (you probably don\'t want to set)'}]
         cnf = {'executors':
                [{'name': 'exporter',
-                 'executor': lambda params: SiteExporter(**params),
+                 'executor': lambda params: SiteCli(**params),
                  'actions': [{'name': 'print',
                               'meth': 'print_structure',
-                              'opts': [datdir_op, coll_op]},
+                              'opts': [coll_op]},
                              {'name': 'tmp'},
                              {'name': 'export',
-                              'opts': [datdir_op, outdir_op, coll_op,
-                                       staticdir_op]}]}],
+                              'opts': [outdir_op, coll_op]}]}],
                'config_option': {'name': 'config',
                                  'expect': False,
                                  'opt': ['-c', '--config', False,
@@ -35,7 +45,8 @@ class ConfAppCommandLine(OneConfPerActionOptionsCliEnv):
                                           'help': 'configuration file'}]},
                'whine': 1}
         super(ConfAppCommandLine, self).__init__(
-            cnf, config_env_name='zotsiterc', pkg_dist='zensols.zotsite')
+            cnf, config_env_name='zotsiterc', pkg_dist='zensols.zotsite',
+            config_type=AppConfig)
 
 
 def main():

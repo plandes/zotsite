@@ -15,7 +15,6 @@ class NavCreateWalker(Walker):
     widget in the created website.
 
     """
-
     ITEM_ICONS = {'computerProgram': 'floppy-disk',
                   'conferencePaper': 'pencil',
                   'journalArticle': 'file',

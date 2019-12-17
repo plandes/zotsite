@@ -1,3 +1,4 @@
+from zensols.zotsite.config import *
 from zensols.zotsite.domain import *
 from zensols.zotsite.db import *
 from zensols.zotsite.cptree import *
