@@ -1,7 +1,7 @@
 import re
 import logging
 from zensols.zotsite import (
-    Walker,
+    Visitor,
     PatternFsCopier,
     Item,
     Note,
@@ -10,7 +10,7 @@ from zensols.zotsite import (
 logger = logging.getLogger('zensols.zotsite.nav')
 
 
-class NavCreateWalker(Walker):
+class NavCreateVisitor(Visitor):
     """This class creates the data structure used by the Javascript navigation
     widget in the created website.
 
@@ -25,7 +25,7 @@ class NavCreateWalker(Walker):
                   'webpage': 'bookmark'}
 
     def __init__(self, lib, fscopier: PatternFsCopier):
-        """Initialize the walker object.
+        """Initialize the visitor object.
 
         :param lib: the object graph returned from
         ``DatabaseReader.get_library``.

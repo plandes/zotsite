@@ -1,19 +1,6 @@
+from abc import ABC, abstractmethod
 import re
 import os
-
-
-class Walker(object):
-    def enter_parent(self, parent):
-        """Template method for traversing down/into a node."""
-        pass
-
-    def visit_child(self, child):
-        """Template method for visiting a node."""
-        pass
-
-    def leave_parent(self, parent):
-        """Template method for traversing up/out of a node."""
-        pass
 
 
 class ZoteroObject(object):
@@ -55,31 +42,6 @@ class ZoteroObject(object):
         """Return the type this item is."""
         if hasattr(self, 'sel') and 'type' in self.sel:
             return self.sel['type']
-
-    @staticmethod
-    def walk(parent, walker: Walker):
-        """Recursively traverse the object graph."""
-        walker.enter_parent(parent)
-        for c in parent.children:
-            walker.visit_child(c)
-            ZoteroObject.walk(c, walker)
-        walker.leave_parent(parent)
-
-    @staticmethod
-    def print_zotero_object(obj, depth=0):
-        print(''.ljust(depth * 4) + str(obj))
-        for c in obj.children:
-            ZoteroObject.print_zotero_object(c, depth + 1)
-
-    @staticmethod
-    def narrow_items(obj):
-        """Return an object graph of only Item instances."""
-        items = []
-        if isinstance(obj, Item):
-            items.append(obj)
-        for c in obj.children:
-            items.extend(ZoteroObject.narrow_items(c))
-        return items
 
 
 class Note(ZoteroObject):
@@ -225,3 +187,45 @@ class Library(Container):
             return 'Personal Library'
         else:
             return 'Library'
+
+
+class Visitor(object):
+    @abstractmethod
+    def enter_parent(self, parent: ZoteroObject):
+        """Template method for traversing down/into a node."""
+        pass
+
+    @abstractmethod
+    def visit_child(self, child: ZoteroObject):
+        """Template method for visiting a node."""
+        pass
+
+    @abstractmethod
+    def leave_parent(self, parent: ZoteroObject):
+        """Template method for traversing up/out of a node."""
+        pass
+
+
+class PrintVisitor(Visitor):
+    def __init__(self):
+        self.depth = 0
+
+    def enter_parent(self, parent: ZoteroObject):
+        print(''.ljust(self.depth * 4) + str(parent))
+        self.depth += 1
+
+    def visit_child(self, child: ZoteroObject):
+        pass
+
+    def leave_parent(self, parent: ZoteroObject):
+        self.depth -= 1
+
+
+class Walker(object):
+    def walk(self, parent, visitor: Visitor):
+        """Recursively traverse the object graph."""
+        visitor.enter_parent(parent)
+        for c in parent.children:
+            visitor.visit_child(c)
+            self.walk(c, visitor)
+        visitor.leave_parent(parent)

@@ -29,4 +29,5 @@ class AppConfig(ExtendedInterpolationConfig):
         self.set_default('data_dir', '~/Zotero', data_dir)
         self.set_default('out_dir', None, out_dir)
         self.set_default('library_id', '1', None)
+        self.set_default('name_pat', None, name_pat)
         return self

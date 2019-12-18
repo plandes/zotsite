@@ -2,7 +2,7 @@ import logging
 import shutil
 from pathlib import Path
 from zensols.zotsite import (
-    Walker,
+    Visitor,
     PatternFsCopier,
     Item,
 )
@@ -10,12 +10,12 @@ from zensols.zotsite import (
 logger = logging.getLogger('zensols.zotsite.fswalk')
 
 
-class FileSystemCopyWalker(Walker):
+class FileSystemCopyVisitor(Visitor):
     """This class copies all Item objects to their destination.
 
     """
     def __init__(self, lib, data_dir, out_dir, fscopier: PatternFsCopier):
-        """Initialize the walker object.
+        """Initialize the visitor object.
 
         :param lib: the object graph returned from
         ``DatabaseReader.get_library``.

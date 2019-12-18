@@ -30,7 +30,9 @@ export:
 
 .PHONY:		print
 print:
-		make PYTHON_BIN_ARGS='print -w 2 --collection Detection$$' run
+		make PYTHON_BIN_ARGS='print --collection GANN$$' run
+#		make PYTHON_BIN_ARGS='print --collection $$Toward$$' run
+#		make PYTHON_BIN_ARGS='print --collection Detection$$' run
 
 .PHONY:		selection
 selection:

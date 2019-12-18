@@ -1,7 +1,7 @@
 import logging
 import re
 from zensols.zotsite import (
-    Walker,
+    Visitor,
     Library,
     Collection,
 )
@@ -9,16 +9,16 @@ from zensols.zotsite import (
 logger = logging.getLogger('zensols.zotsite.fswalk')
 
 
-class PruneWalker(Walker):
+class PruneVisitor(Visitor):
     """This class copies all Item objects to their destination.
 
     """
 
     def __init__(self, name_pat):
-        """Initialize the walker object.
+        """Initialize the visitor object.
 
         :param lib: the object graph returned from
-        ``DatabaseReader.get_library``.
+                    ``DatabaseReader.get_library``.
         :param data_dir: the directory where the Zotero storage directory is
         :param out_dir: the target directory to copy data
         :param fscopier: used for file name substitution so the widget uses the

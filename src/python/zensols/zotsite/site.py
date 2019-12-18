@@ -2,14 +2,18 @@ import logging
 from pathlib import Path
 import json
 import shutil
+from zensols.actioncli import persisted
 from zensols.zotsite import (
     AppConfig,
     DatabaseReader,
     ZoteroObject,
-    NavCreateWalker,
+    NavCreateVisitor,
     PatternFsCopier,
-    FileSystemCopyWalker,
-    PruneWalker,
+    FileSystemCopyVisitor,
+    PruneVisitor,
+    Library,
+    PrintVisitor,
+    Walker,
 )
 
 logger = logging.getLogger('zensols.zotsite.site')
@@ -23,23 +27,28 @@ class SiteCreator(object):
         cnf = config.populate()
         self.db = DatabaseReader(config.get_option_path('data_dir'),
                                  library_id=cnf.library_id)
-        self.out_dir = config.get_option_path('out_dir')
+        self.out_dir = config.get_option_path('out_dir', expect=False)
         self.name_pat = config.get_option('name_pat', expect=False)
         self.config = config
 
-    def _get_library(self):
+    @property
+    def walker(self) -> Walker:
+        return Walker()
+
+    @property
+    @persisted('_library')
+    def library(self) -> Library:
         lib = self.db.get_library()
         if self.name_pat is not None:
-            walker = PruneWalker(self.name_pat)
-            ZoteroObject.walk(lib, walker)
+            visitor = PruneVisitor(self.name_pat)
+            self.walker.walk(lib, visitor)
         return lib
 
     def print_structure(self):
         """Print (sub)collections and papers in those collections as a tree.
 
         """
-        lib = self._get_library()
-        ZoteroObject.print_zotero_object(lib)
+        self.walker.walk(self.library, PrintVisitor())
 
     def _write_meta(self, fname):
         """Write version and other metadata to the website, which is used during
@@ -61,16 +70,15 @@ class SiteCreator(object):
         """Create the table of contents/tree info used by the navigation widget.
 
         """
-        lib = self.lib
         fscopier = self.fscopier
         js_dir = self.out_dir / 'js'
         nav_file = js_dir / 'zotero-tree-data.js'
         logger.info('creating js nav tree: {}'.format(nav_file))
-        walker = NavCreateWalker(lib, fscopier)
-        ZoteroObject.walk(lib, walker)
+        visitor = NavCreateVisitor(self.library, fscopier)
+        self.walker.walk(self.library, visitor)
         with open(nav_file, 'w') as f:
             f.write("var tree =\n")
-            f.write(json.dumps(walker.primary_roots, indent=2))
+            f.write(json.dumps(visitor.primary_roots, indent=2))
         meta_file = Path(js_dir, 'zotero-meta.js')
         logger.info('creating js metadata: {}'.format(meta_file))
         self._write_meta(meta_file)
@@ -80,12 +88,11 @@ class SiteCreator(object):
         documents that will be rendered in the site GUI.
 
         """
-        lib = self.db.get_library()
-        src = self.lib.get_storage_path()
+        src = self.library.get_storage_path()
         dst = self.out_dir / 'storage'
-        fswalker = FileSystemCopyWalker(lib, src, dst, self.fscopier)
+        fsvisitor = FileSystemCopyVisitor(self.library, src, dst, self.fscopier)
         logger.info('copying storage {} -> {}'.format(src, dst))
-        ZoteroObject.walk(lib, fswalker)
+        self.walker.walk(self.library, fsvisitor)
 
     def _copy_static_res(self, src: Path, dst: Path):
         """Copy static resources from the distribution package.
@@ -119,7 +126,6 @@ class SiteCreator(object):
         """Entry point method to export (create) the website.
 
         """
-        self.lib = self._get_library()
         self.fscopier = self._create_fscopier()
         self._copy_static()
         self._create_tree_data()

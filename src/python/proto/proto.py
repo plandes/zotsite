@@ -6,8 +6,10 @@ logger = logging.getLogger(__name__)
 
 
 def tmp():
-    conf = AppConfig('test-resources/zotsite.conf')
-    app = ClassImporter('zensols.zotsite.site.SiteExporter').instance(conf)
+    import os
+    conf = AppConfig('test-resources/zotsite.conf', default_vars=os.environ)
+    print(conf.get_option('data_dir'))
+    app = ClassImporter('zensols.zotsite.site.SiteCreator').instance(conf)
     app.tmp()
 
 
