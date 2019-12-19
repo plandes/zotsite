@@ -40,7 +40,7 @@ function ZoteroManager(levels, meta) {
 
             td = document.createElement('td');
 	    td.appendChild(tval);
-	    if (key == 'url') {
+	    if (key == 'URL') {
 		var anch = document.createElement('a');
 		anch.setAttribute('href', val);
 		anch.appendChild(document.createTextNode(anch));
@@ -118,8 +118,6 @@ function ZoteroManager(levels, meta) {
     		$('[data-toggle="tooltip"]').tooltip()
 	    });
 	}
-
-	updateLink(node);
 
 	root.appendChild(topPanel);
     }
@@ -274,20 +272,34 @@ function ZoteroManager(levels, meta) {
 	if ((nodeType == 'attachment') && sel) {
 	    console.log('adding resource: ' + node.resource);
 	    var aelem = document.createElement('div');
-	    var objElem = document.createElement('object');
+	    if (node.resource.endsWith('.html')) {
+		// var html = $('#stage').load(node.resource);
+		// console.log(html)
+		$.ajax({
+		    url: node.resource,
+		    type: 'GET',
+		    dataType: 'html',
+		    success: function(data) {              
+			aelem.innerHTML = data;
+		    }});
+	    } else {
+		var objElem = document.createElement('object');
 
-	    aelem.classList.add('embed-responsive');
-	    aelem.classList.add('border');
-	    aelem.classList.add('rounded');
-	    aelem.classList.add('pdf-pane');
+		aelem.classList.add('embed-responsive');
+		aelem.classList.add('border');
+		aelem.classList.add('rounded');
+		aelem.classList.add('pdf-pane');
 
-	    objElem.setAttribute('data', node.resource);
-	    objElem.setAttribute('type', 'application/pdf');
-	    objElem.appendChild(document.createTextNode('No PDF plugin'));
+		objElem.setAttribute('data', node.resource);
+		objElem.setAttribute('type', 'application/pdf');
+		objElem.appendChild(document.createTextNode('No PDF plugin'));
 
-	    aelem.appendChild(objElem);
+		aelem.appendChild(objElem);
+	    }
 	    cont.appendChild(aelem);
 	}
+
+	updateLink(node);
     }
 
     // called when the user types in the search box and narrows the tree search

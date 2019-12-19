@@ -25,6 +25,7 @@ class NavCreateVisitor(Visitor):
                   'report': 'font',
                   'webpage': 'bookmark'}
     UPPER = re.compile(r'([A-Z][a-z]+)')
+    CAPS_META_KEYS = set('url'.split())
 
     def __init__(self, lib, itemmapper: ItemMapper):
         """Initialize the visitor object.
@@ -59,7 +60,9 @@ class NavCreateVisitor(Visitor):
         return icon_name
 
     def _munge_meta_key(self, name: str):
-        if not name.isupper():
+        if name in self.CAPS_META_KEYS:
+            name = name.upper()
+        elif not name.isupper():
             parts = re.split(self.UPPER, name)
             parts = filter(lambda s: len(s) > 0, parts)
             parts = map(lambda s: s.capitalize(), parts)
@@ -75,8 +78,8 @@ class NavCreateVisitor(Visitor):
                 mdarr.append((k, v))
             return mdarr
 
-    def _find_child_resource(self, item: Item):
-        res = tuple(filter(lambda p: p is not None and p.endswith('.pdf'),
+    def _find_child_resource(self, item: Item, ext: str):
+        res = tuple(filter(lambda p: p is not None and p.endswith(ext),
                            map(lambda c: self.itemmapper.get_resource_name(c),
                                item.children)))
         if len(res) == 1:
@@ -100,7 +103,7 @@ class NavCreateVisitor(Visitor):
                 node['metadata'] = meta
                 res = self.itemmapper.get_resource_name(item)
                 if res is None:
-                    res = self._find_child_resource(item)
+                    res = self._find_child_resource(item, '.pdf')
                 if res is not None:
                     node['resource'] = res
         return node
