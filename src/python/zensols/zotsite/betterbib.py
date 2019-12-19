@@ -4,10 +4,8 @@ import json
 import sqlite3
 from zensols.actioncli import persisted
 from zensols.zotsite import (
-    ItemMapper,
     ZoteroObject,
     Item,
-    Library,
     Visitor,
 )
 
@@ -15,6 +13,10 @@ logger = logging.getLogger(__name__)
 
 
 class BetterBibtexMapper(object):
+    """Read the BetterBibtex database and create a mapping from item DB ids to
+    citation keys.
+
+    """
     def __init__(self, data_dir: Path):
         self.data_dir = data_dir
 
@@ -44,6 +46,10 @@ class BetterBibtexMapper(object):
 
 
 class BetterBibtexVisitor(Visitor):
+    """Use the ``BetterBibtexMapper`` to change the keys in mapped items to the
+    respective citation keys.
+
+    """
     def __init__(self, data_dir: Path):
         self.mapper = BetterBibtexMapper(data_dir)
 

@@ -1,4 +1,5 @@
 import logging
+import re
 from zensols.zotsite import (
     Visitor,
     ItemMapper,
@@ -23,6 +24,7 @@ class NavCreateVisitor(Visitor):
                   'book': 'book',
                   'report': 'font',
                   'webpage': 'bookmark'}
+    UPPER = re.compile(r'([A-Z][a-z]+)')
 
     def __init__(self, lib, itemmapper: ItemMapper):
         """Initialize the visitor object.
@@ -56,7 +58,24 @@ class NavCreateVisitor(Visitor):
             icon_name = 'text-background'
         return icon_name
 
-    def create_node(self, item):
+    def _munge_meta_key(self, name: str):
+        if not name.isupper():
+            parts = re.split(self.UPPER, name)
+            parts = filter(lambda s: len(s) > 0, parts)
+            parts = map(lambda s: s.capitalize(), parts)
+            name = ' '.join(parts)
+        return name
+
+    def _node_metadata(self, item: Item):
+        meta = item.metadata
+        if meta is not None:
+            mdarr = []
+            for k, v in meta.items():
+                k = self._munge_meta_key(k)
+                mdarr.append((k, v))
+            return mdarr
+
+    def create_node(self, item: Item):
         "Create a node for an item."
         node = {'text': item.title,
                 'item-id': item.id,
@@ -69,12 +88,9 @@ class NavCreateVisitor(Visitor):
         node['item_note'] = item.note
         node['node_type'] = item.__class__.__name__.lower()
         if isinstance(item, Item):
-            meta = item.metadata
-            mdarr = []
+            meta = self._node_metadata(item)
             if meta:
-                for k, v in meta.items():
-                    mdarr.append([k, v])
-                node['metadata'] = mdarr
+                node['metadata'] = meta
                 res = self.itemmapper.get_resource_name(item)
                 if res:
                     node['resource'] = res

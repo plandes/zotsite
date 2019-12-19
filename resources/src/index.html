@@ -5,6 +5,8 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
+    <title>Zotero</title>
+
     <!-- Required Stylesheets -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <link href="css/bootstrap-3-retro.css" rel="stylesheet">
@@ -22,7 +24,18 @@
     <script src="js/zotero-meta.js"></script>
     <script src="js/zotero.js"></script>
 
-    <title>Zotero</title>
+    <script>
+window.onload = function() {
+    var url = new URL(window.location.href);
+    var treeLevels = url.searchParams.get('levels') || 1;
+    var nodeId = url.searchParams.get('id');
+    var zot = new ZoteroManager(treeLevels, zoteroMeta);
+    zot.init(nodeId);
+
+    $('#init-button').click(function() { zot.reset(); })
+}
+    </script>
+
   </head>
   <body>
 
@@ -31,7 +44,8 @@
 	 style="height: 50px;">
       <!-- brand -->
       <a class="navbar-brand" href="https://www.zotero.org">
-	<img src="img/zotero-logo.svg" class="d-block" width="120" height="34" xmlns="http://www.w3.org/2000/svg" focusable="false"></img>
+	<img src="img/zotero-logo.svg" class="d-block" width="120" height="34"
+	     xmlns="http://www.w3.org/2000/svg" focusable="false"></img>
       </a>
       <!-- right side nav -->
       <div class="collapse navbar-collapse" id="navbarResponsive">
@@ -53,6 +67,9 @@
 	  <li class="nav-item" id="project-link-version">
 	    <a class="nav-item btn btn-bd-download btn-download-z btn-outline-primary mr-md-2"
 	       href="https://github.com/plandes/zotsite/releases/tag/">Download</a>
+	  </li>
+	  <li class="nav-item" id="init-button">
+	    <a class="nav-item btn btn-bd-download btn-download-z btn-outline-primary mr-md-2" href="#">Clear</a>
 	  </li>
 	</ul>
       </div>

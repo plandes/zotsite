@@ -121,9 +121,18 @@ function ZoteroManager(levels, meta) {
 	    btn.setAttribute('onClick', "location.href='" + node.resource + "'");
 	}
 
-	// populate the link button and update main screen link
+	updateLink(node);
+
+	root.appendChild(topPanel);
+    }
+
+    // populate the link button and update main screen link
+    function updateLink(node) {
 	var itemDocLinkButton = document.getElementById("item-document-link-button");
-	link = createDocumentLink(node);
+	var link = null;
+	if (node) {
+	    link = createDocumentLink(node);
+	}
 	if (link) {
 	    itemDocLinkButton.setAttribute('data-original-title', link);
 	    itemDocLinkButton.classList.remove('disabled');
@@ -131,8 +140,6 @@ function ZoteroManager(levels, meta) {
 	    itemDocLinkButton.removeAttribute('data-original-title');
 	    itemDocLinkButton.classList.add('disabled');
 	}
-
-	root.appendChild(topPanel);
     }
 
     // create a link that points to the current document
@@ -182,30 +189,39 @@ function ZoteroManager(levels, meta) {
     // params:
     // node: the node currently selected in the left nav
     function createMain(node) {
-	var meta = node.metadata;
+	console.log('create main: ' + node);
 	var cont = document.getElementById("zotero-main-content");
-	var sel = node.state.selected;
-	var nodeType;
-	var hasContent;
-
-	console.log('node: ' + node.text);
-
-	// determine the type of node in the tree we're visiting
-	if (node.resource != null) {
-	    nodeType = 'attachment';
-	} else if (node.item_type == 'note') {
-	    nodeType = 'note';
-	} else if (meta != null) {
-	    nodeType = 'meta';
-	}
-	hasNote = ((nodeType == 'note') && sel);
-	hasContent = (((nodeType == 'attachment') && sel) ||
-		      (nodeType == 'meta'));
 
 	while (cont.firstChild) {
 	    cont.removeChild(cont.firstChild);
 	}
-	cont.className = '';
+
+	if (node) {
+	    var meta = node.metadata;
+	    var sel = node.state.selected;
+	    var nodeType;
+	    var hasContent;
+
+	    console.log('node: ' + node.text);
+
+	    // determine the type of node in the tree we're visiting
+	    if (node.resource != null) {
+		nodeType = 'attachment';
+	    } else if (node.item_type == 'note') {
+		nodeType = 'note';
+	    } else if (meta != null) {
+		nodeType = 'meta';
+	    }
+	    hasNote = ((nodeType == 'note') && sel);
+	    hasContent = (((nodeType == 'attachment') && sel) ||
+			  (nodeType == 'meta'));
+
+	    cont.className = '';
+	} else {
+	    hasContent = false;
+	    hasNote = false;
+	    nodeType = null;
+	}
 
 	// add the header pane
 	if (hasContent) {
@@ -371,6 +387,15 @@ function ZoteroManager(levels, meta) {
 	verTextElem.text(verText);
     }
 
+    this.reset = function() {
+	console.log('resetting');
+	var tree = $('#tree').treeview(true);
+	tree.collapseAll();
+	createMain(null);
+	updateLink(null);
+	lastNode = null;
+    }
+
     // initialization called on page load
     this.init = function(itemId) {
 	console.log('version: ' + meta.version);
@@ -417,12 +442,4 @@ function ZoteroManager(levels, meta) {
 	    showItem(itemId, itemToJs);
 	}
     }
-}
-
-window.onload = function() {
-    var url = new URL(window.location.href);
-    var treeLevels = url.searchParams.get('levels') || 1;
-    var nodeId = url.searchParams.get('id');
-    var zot = new ZoteroManager(treeLevels, zoteroMeta);
-    zot.init(nodeId);
 }
