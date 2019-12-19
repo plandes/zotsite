@@ -392,7 +392,7 @@ function ZoteroManager(levels, meta) {
     }
 
     function insertVersion() {
-	var verTextElem = $('#project-text-version a');
+	var verTextElem = $('#project-link-version a');
 	var verAnch = $('#project-link-version a')[0];
 	var verText = 'v' + meta.version;
 	verAnch.href = verAnch.href + verText;
