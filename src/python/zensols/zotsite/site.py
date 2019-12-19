@@ -46,11 +46,13 @@ class SiteCreator(object):
             visitor = PruneVisitor(name_pat, match_children)
             self.walker.walk(lib, visitor)
             id_mapping = self.config.get_option('id_mapping', expect=False)
-            if id_mapping == 'none':
-                pass
-            elif id_mapping == 'betterbib':
-                visitor = BetterBibtexVisitor(self.config.data_dir)
-                self.walker.walk(lib, visitor)
+        if id_mapping == 'none':
+            pass
+        elif id_mapping == 'betterbib':
+            visitor = BetterBibtexVisitor(self.config.data_dir)
+            self.walker.walk(lib, visitor)
+        else:
+            raise ValueError(f'unknown ID mapping: {id_mapping}')
         return lib
 
     @property
