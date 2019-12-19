@@ -3,7 +3,7 @@ from pathlib import Path
 import sqlite3
 from zensols.zotsite.domain import Collection, Library, Item, Note
 
-logger = logging.getLogger('zensols.zotsite.db')
+logger = logging.getLogger(__name__)
 
 
 class DatabaseReader(object):

@@ -1,13 +1,13 @@
-import re
 import logging
 from zensols.zotsite import (
     Visitor,
-    PatternFsCopier,
+    ItemMapper,
     Item,
     Note,
+    ZoteroObject,
 )
 
-logger = logging.getLogger('zensols.zotsite.nav')
+logger = logging.getLogger(__name__)
 
 
 class NavCreateVisitor(Visitor):
@@ -24,17 +24,17 @@ class NavCreateVisitor(Visitor):
                   'report': 'font',
                   'webpage': 'bookmark'}
 
-    def __init__(self, lib, fscopier: PatternFsCopier):
+    def __init__(self, lib, itemmapper: ItemMapper):
         """Initialize the visitor object.
 
         :param lib: the object graph returned from
         ``DatabaseReader.get_library``.
-        :param fscopier: used for file name substitution so the widget uses the
+        :param itemmapper: used for file name substitution so the widget uses the
         correct names (i.e. underscore substitution)
 
         """
         self.lib = lib
-        self.fscopier = fscopier
+        self.itemmapper = itemmapper
         self.root = {'nodes': []}
         self.parents = [self.root]
 
@@ -74,19 +74,21 @@ class NavCreateVisitor(Visitor):
                 for k, v in meta.items():
                     mdarr.append([k, v])
                 node['metadata'] = mdarr
-                res = self.lib.attachment_resource(item)
+                res = self.itemmapper.get_resource_name(item)
                 if res:
-                    res = self.fscopier.update_file(res)
                     node['resource'] = res
         return node
 
-    def enter_parent(self, parent):
+    def enter_parent(self, parent: ZoteroObject):
         new_par = self.create_node(parent)
         cur_par = self.parents[-1]
         cur_par['nodes'].append(new_par)
         self.parents.append(new_par)
 
-    def leave_parent(self, parent):
+    def visit_child(self, child: ZoteroObject):
+        pass
+
+    def leave_parent(self, parent: ZoteroObject):
         node = self.parents.pop()
         if len(node['nodes']) == 0:
             del node['nodes']

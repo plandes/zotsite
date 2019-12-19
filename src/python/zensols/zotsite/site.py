@@ -6,9 +6,9 @@ from zensols.actioncli import persisted
 from zensols.zotsite import (
     AppConfig,
     DatabaseReader,
-    ZoteroObject,
     NavCreateVisitor,
-    PatternFsCopier,
+    RegexItemMapper,
+    IdItemMapper,
     FileSystemCopyVisitor,
     PruneVisitor,
     Library,
@@ -16,7 +16,7 @@ from zensols.zotsite import (
     Walker,
 )
 
-logger = logging.getLogger('zensols.zotsite.site')
+logger = logging.getLogger(__name__)
 
 
 class SiteCreator(object):
@@ -28,7 +28,6 @@ class SiteCreator(object):
         self.db = DatabaseReader(config.get_option_path('data_dir'),
                                  library_id=cnf.library_id)
         self.out_dir = config.get_option_path('out_dir', expect=False)
-        self.name_pat = config.get_option('name_pat', expect=False)
         self.config = config
 
     @property
@@ -39,10 +38,22 @@ class SiteCreator(object):
     @persisted('_library')
     def library(self) -> Library:
         lib = self.db.get_library()
-        if self.name_pat is not None:
-            visitor = PruneVisitor(self.name_pat)
+        name_pat = self.config.get_option('name_pat', expect=False)
+        if name_pat is not None:
+            logger.info(f'filtering on \'{name_pat}\'')
+            match_children = self.config.get_option_boolean(
+                'match_children', expect=False)
+            visitor = PruneVisitor(name_pat, match_children)
             self.walker.walk(lib, visitor)
         return lib
+
+    @property
+    @persisted('_itemmapper')
+    def itemmapper(self):
+        if 0:
+            return RegexItemMapper(self.library, '.*\.pdf$', '[ ]')
+        else:
+            return IdItemMapper(self.library)
 
     def print_structure(self):
         """Print (sub)collections and papers in those collections as a tree.
@@ -70,11 +81,11 @@ class SiteCreator(object):
         """Create the table of contents/tree info used by the navigation widget.
 
         """
-        fscopier = self.fscopier
+        itemmapper = self.itemmapper
         js_dir = self.out_dir / 'js'
         nav_file = js_dir / 'zotero-tree-data.js'
         logger.info('creating js nav tree: {}'.format(nav_file))
-        visitor = NavCreateVisitor(self.library, fscopier)
+        visitor = NavCreateVisitor(self.library, itemmapper)
         self.walker.walk(self.library, visitor)
         with open(nav_file, 'w') as f:
             f.write("var tree =\n")
@@ -88,10 +99,9 @@ class SiteCreator(object):
         documents that will be rendered in the site GUI.
 
         """
-        src = self.library.get_storage_path()
-        dst = self.out_dir / 'storage'
-        fsvisitor = FileSystemCopyVisitor(self.library, src, dst, self.fscopier)
-        logger.info('copying storage {} -> {}'.format(src, dst))
+        dst = self.out_dir
+        fsvisitor = FileSystemCopyVisitor(self.library, dst, self.itemmapper)
+        logger.info(f'copying storage to {dst}')
         self.walker.walk(self.library, fsvisitor)
 
     def _copy_static_res(self, src: Path, dst: Path):
@@ -110,7 +120,7 @@ class SiteCreator(object):
             if src_file.is_dir():
                 self._copy_static_res(src_file, dst_file)
             else:
-                logger.info(f'copy file: {src_file} -> {dst_file}')
+                logger.info(f'copy: {src_file} -> {dst_file}')
                 shutil.copyfile(src_file, dst_file)
 
     def _copy_static(self):
@@ -118,15 +128,11 @@ class SiteCreator(object):
             src_dir = self.config.resource_filename(f'resources/{src}')
             self._copy_static_res(src_dir, self.out_dir)
 
-    @staticmethod
-    def _create_fscopier():
-        return PatternFsCopier('.*\.pdf$', '[ ]')
-
     def export(self):
         """Entry point method to export (create) the website.
 
         """
-        self.fscopier = self._create_fscopier()
+        #self.itemmapper = self._create_itemmapper()
         self._copy_static()
         self._create_tree_data()
         self._copy_storage()

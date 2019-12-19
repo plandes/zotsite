@@ -3,43 +3,48 @@ import shutil
 from pathlib import Path
 from zensols.zotsite import (
     Visitor,
-    PatternFsCopier,
+    ItemMapper,
     Item,
+    ZoteroObject,
 )
 
-logger = logging.getLogger('zensols.zotsite.fswalk')
+logger = logging.getLogger(__name__)
 
 
 class FileSystemCopyVisitor(Visitor):
     """This class copies all Item objects to their destination.
 
     """
-    def __init__(self, lib, data_dir, out_dir, fscopier: PatternFsCopier):
+    def __init__(self, lib, out_dir, itemmapper: ItemMapper):
         """Initialize the visitor object.
 
         :param lib: the object graph returned from
-        ``DatabaseReader.get_library``.
-        :param data_dir: the directory where the Zotero storage directory is
+                   ``DatabaseReader.get_library``.
         :param out_dir: the target directory to copy data
-        :param fscopier: used for file name substitution so the widget uses the
-        correct names (i.e. underscore substitution)
+        :param itemmapper: used for file name substitution so the widget uses the
+                             correct names (i.e. underscore substitution)
 
         """
         self.lib = lib
-        self.data_path = Path(data_dir)
+        self.data_path = Path(lib.get_storage_path())
         self.out_path = Path(out_dir)
-        self.fscopier = fscopier
+        self.itemmapper = itemmapper
 
-    def visit_child(self, child):
+    def enter_parent(self, parent: ZoteroObject):
+        pass
+
+    def visit_child(self, child: ZoteroObject):
         if isinstance(child, Item):
-            fname = child.file_name
-            if fname is not None:
-                src = Path(self.data_path, fname)
-                dst = Path(self.out_path, self.fscopier.update_file(fname))
+            if child.file_name is not None:
+                src = Path(self.data_path, child.file_name)
+                dst = Path(self.out_path, self.itemmapper.get_file_name(child))
                 parent = dst.parent
                 if not dst.is_file():
                     if not parent.is_dir():
-                        logger.debug('creating directory: {}'.format(parent))
-                        parent.mkdir(mode=0o0755, parents=True, exist_ok=True)
-                    logger.debug('copying {} -> {}'.format(src, dst))
+                        logger.info('create: {}'.format(parent))
+                        parent.mkdir(parents=True, exist_ok=True)
+                    logger.info('copy: {} -> {}'.format(src, dst))
                     shutil.copy(str(src), str(dst))
+
+    def leave_parent(self, parent: ZoteroObject):
+        pass

@@ -11,7 +11,7 @@ class AppConfig(ExtendedInterpolationConfig):
     def __init__(self, *args, **kwargs):
         super(AppConfig, self).__init__(*args, default_expect=True, **kwargs)
 
-    def set_default(self, name, value, clobber):
+    def set_default(self, name: str, value: str, clobber: bool = None):
         if clobber is not None:
             self.set_option(name, clobber, self.default_section)
         elif name not in self.options and value is not None:
@@ -27,7 +27,8 @@ class AppConfig(ExtendedInterpolationConfig):
         else:
             self = config
         self.set_default('data_dir', '~/Zotero', data_dir)
+        self.set_default('library_id', '1')
+        self.set_default('match_children', 'False')
         self.set_default('out_dir', None, out_dir)
-        self.set_default('library_id', '1', None)
         self.set_default('name_pat', None, name_pat)
         return self

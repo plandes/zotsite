@@ -3,7 +3,7 @@ import re
 import os
 
 
-class ZoteroObject(object):
+class ZoteroObject(ABC):
     """Represents any collection, item etc. Zotero data object.
 
     """
@@ -13,6 +13,14 @@ class ZoteroObject(object):
     @property
     def children(self):
         return self._children
+
+    @abstractmethod
+    def get_id(self):
+        pass
+
+    @property
+    def id(self):
+        return self.get_id()
 
     def __str__(self):
         return '{} ({})'.format(self.__format_zobj__(), self.id)
@@ -52,8 +60,7 @@ class Note(ZoteroObject):
         self.sel = sel
         super(Note, self).__init__([])
 
-    @property
-    def id(self):
+    def get_id(self):
         return 'n' + str(self.sel['i_id'])
 
     @property
@@ -74,8 +81,7 @@ class Item(ZoteroObject):
         super(Item, self).__init__(children)
         self.storage_pat = re.compile('^storage:(.+)$')
 
-    @property
-    def id(self):
+    def get_id(self):
         return 'i' + str(self.sel['i_id'])
 
     @property
@@ -144,8 +150,7 @@ class Collection(Container):
         self.sel = sel
         super(Collection, self).__init__(items, collections)
 
-    @property
-    def id(self):
+    def get_id(self):
         return 'c{},i{}'.format(self.sel['c_id'], self.sel['c_iid'])
 
     @property
@@ -169,13 +174,12 @@ class Library(Container):
             path = os.path.join(path, fname)
         return path
 
-    @property
-    def id(self):
+    def get_id(self):
         return 'l' + str(self.library_id)
 
     def attachment_resource(self, item):
         if item.type == 'attachment':
-            return '{}/{}'.format(self.storage_dirname, item.file_name)
+            return f'{self.storage_dirname}/{item.file_name}'
 
     @property
     def name(self):
@@ -189,7 +193,7 @@ class Library(Container):
             return 'Library'
 
 
-class Visitor(object):
+class Visitor(ABC):
     @abstractmethod
     def enter_parent(self, parent: ZoteroObject):
         """Template method for traversing down/into a node."""
@@ -211,7 +215,8 @@ class PrintVisitor(Visitor):
         self.depth = 0
 
     def enter_parent(self, parent: ZoteroObject):
-        print(''.ljust(self.depth * 4) + str(parent))
+        print(f"{' ' * (self.depth * 4)}{str(parent)} " +
+              f'({parent.__class__.__name__})')
         self.depth += 1
 
     def visit_child(self, child: ZoteroObject):
