@@ -72,8 +72,6 @@ function ZoteroManager(levels, meta) {
 	var btn = document.createElement('button');
 	var topElem;
 
-	//lastNode = node;
-
 	root.classList.add('max-cell');
 
 	// title of content at top
@@ -106,7 +104,10 @@ function ZoteroManager(levels, meta) {
 	// add the pdf/html attachemnt if it exists, otherwise direct the user via
 	// add tool tip if no attachement
 	btn.action = node.resource;
-	if (!node.resource) {
+	if (node.resource) {//node.item_type == 'attachment') {
+	    btn.onClick = node.resource;
+	    btn.setAttribute('onClick', "location.href='" + node.resource + "'");
+	} else {
 	    btn.classList.add('disabled');
 	    btn.setAttribute('data-toggle', 'tooltip');
 	    btn.setAttribute('data-placement', 'left');
@@ -116,9 +117,6 @@ function ZoteroManager(levels, meta) {
 	    $(function () {
     		$('[data-toggle="tooltip"]').tooltip()
 	    });
-	} else {
-	    btn.onClick = node.resource;
-	    btn.setAttribute('onClick', "location.href='" + node.resource + "'");
 	}
 
 	updateLink(node);
@@ -146,6 +144,7 @@ function ZoteroManager(levels, meta) {
     function createDocumentLink(node) {
 	type = 'item';
 	if (node['node_type'] == 'item') {
+	    var link;
 	    if (type == 'doc') {
 		var link = document.location.href;
 		var idx = link.lastIndexOf('/');
@@ -155,8 +154,7 @@ function ZoteroManager(levels, meta) {
 		var proto = window.location.protocol;
 		var host = window.location.host;
 		var path = window.location.pathname;
-		path = path.substring(0, path.length - 1);
-		var link = proto + "//" + host + path + '?id=' + node['item-id'];
+		link = proto + "//" + host + path + '?id=' + node['item-id'];
 	    }
 	    return link;
 	}
@@ -205,7 +203,8 @@ function ZoteroManager(levels, meta) {
 	    console.log('node: ' + node.text);
 
 	    // determine the type of node in the tree we're visiting
-	    if (node.resource != null) {
+	    //if (node.resource != null) {
+	    if (node.item_type == 'attachment') {
 		nodeType = 'attachment';
 	    } else if (node.item_type == 'note') {
 		nodeType = 'note';
@@ -375,6 +374,7 @@ function ZoteroManager(levels, meta) {
 
     function updateMain(event, node) {
 	console.log('updating: ' + node.nodeId + '( ' + node['item-id'] + ')');
+	console.log(node);
 	createMain(node);
 	lastNode = node;
     }

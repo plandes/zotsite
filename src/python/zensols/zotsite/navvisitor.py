@@ -75,6 +75,13 @@ class NavCreateVisitor(Visitor):
                 mdarr.append((k, v))
             return mdarr
 
+    def _find_child_resource(self, item: Item):
+        res = tuple(filter(lambda p: p is not None and p.endswith('.pdf'),
+                           map(lambda c: self.itemmapper.get_resource_name(c),
+                               item.children)))
+        if len(res) == 1:
+            return res[0]
+
     def create_node(self, item: Item):
         "Create a node for an item."
         node = {'text': item.title,
@@ -92,7 +99,9 @@ class NavCreateVisitor(Visitor):
             if meta:
                 node['metadata'] = meta
                 res = self.itemmapper.get_resource_name(item)
-                if res:
+                if res is None:
+                    res = self._find_child_resource(item)
+                if res is not None:
                     node['resource'] = res
         return node
 
