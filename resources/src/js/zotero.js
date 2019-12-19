@@ -72,6 +72,8 @@ function ZoteroManager(levels, meta) {
 	var btn = document.createElement('button');
 	var topElem;
 
+	//lastNode = node;
+
 	root.classList.add('max-cell');
 
 	// title of content at top
@@ -101,6 +103,8 @@ function ZoteroManager(levels, meta) {
 	topPanel.classList.add('justify-content-between');
 	topPanel.classList.add('content-head-pane');
 
+	linkButton = document.getElementById("item-document-link-button");
+
 	// add the pdf/html attachemnt if it exists, otherwise direct the user via
 	// add tool tip if no attachement
 	btn.action = node.resource;
@@ -113,13 +117,63 @@ function ZoteroManager(levels, meta) {
 	    // there's got to be a better way...
 	    $(function () {
     		$('[data-toggle="tooltip"]').tooltip()
-	    })
+	    });
+
+	    btn = linkButton;
+	    btn.removeAttribute('data-original-title');
 	} else {
 	    btn.onClick = node.resource;
 	    btn.setAttribute('onClick', "location.href='" + node.resource + "'");
+
+	    btn = linkButton;
+	    link = createDocumentLink(node);
+	    btn.setAttribute('data-original-title', link);
 	}
 
+	// update main screen link
+	var itemDocLinkButton = document.getElementById("item-document-link-button");
+	if (!node.resource) {
+	    itemDocLinkButton.classList.add('disabled');
+	} else {
+	    itemDocLinkButton.classList.remove('disabled');
+	    
+	}	
+
 	root.appendChild(topPanel);
+    }
+
+    // create a link that points to the current document
+    function createDocumentLink(node) {
+	if (node.resource) {
+	    var link = document.location.href;
+	    var idx = link.lastIndexOf('/');
+	    link = link.substring(0, idx);
+	    link = link + '/' + node.resource;
+	    return link;
+	}
+    }
+
+
+    function showAlert(message, subMessage, type) {
+	var alertClass = 'alert-' + type;
+	$("#alert-box").html('<strong>' + message + '</strong>: ' + subMessage);
+	$("#alert-box").removeClass(alertClass).addClass(alertClass);
+	$('#alert-box').slideDown("fast");
+	setTimeout(function() {
+	    $('#alert-box').slideUp("fast");
+	}, 2000);
+    }
+
+    // when clicking the link button to copy the link
+    function itemDocLinkClicked(node) {
+	console.log('item document link clicked: ' + node);
+	link = createDocumentLink(node);
+	if (link) {
+	    console.log('copying link : ' + link);
+	    setClipboardText(link);
+	    linkButton = document.getElementById("item-document-link-button");
+	    showAlert('Link copied', link, 'success');
+	}
     }
 
     // create the main (right) content pane in the main top level table
@@ -233,7 +287,13 @@ function ZoteroManager(levels, meta) {
 	}
     }
 
-    // show the nodes given by the search and hid all others
+    function showNodeById(nodeId) {
+	console.log('show node by id: ' + nodeId);
+	var tree = $('#tree').treeview(true);
+	tree.selectNode(nodeId);
+    }
+
+    // show the nodes given by the search and hidw all others
     // used when the user uses the search button or presses enter
     function searchNarrow() {
 	var tree = $('#tree').treeview(true);
@@ -269,6 +329,7 @@ function ZoteroManager(levels, meta) {
 
     function updateMain(event, node) {
 	createMain(node);
+	lastNode = node;
     }
 
     function insertVersion() {
@@ -280,7 +341,7 @@ function ZoteroManager(levels, meta) {
     }
 
     // initialization called on page load
-    this.init = function() {
+    this.init = function(nodeId) {
 	console.log('version: ' + meta.version);
 
 	$('#tree').treeview({
@@ -302,17 +363,33 @@ function ZoteroManager(levels, meta) {
 	    }
 	});
 
+	$('#item-document-link-button').click(function() {
+	    if (typeof lastNode != 'undefined') {
+		itemDocLinkClicked(lastNode);
+	    }
+	});
+
+	linkButton = document.getElementById("item-document-link-button");
+	    btn = linkButton;
+	    btn.setAttribute('link-data-toggle', 'tooltip');
+	    btn.setAttribute('link-data-placement', 'right');
+	    btn.setAttribute('link-data-html', 'true');
 	$(function () {
-	    $('[data-toggle="tooltip"]').tooltip()
-	})
+	    $('[link-data-toggle="tooltip"]').tooltip()
+	});
 
 	insertVersion();
+
+	if (nodeId) {
+	    showNodeById(nodeId);
+	}
     }
 }
 
 window.onload = function() {
     var url = new URL(window.location.href);
     var treeLevels = url.searchParams.get('levels') || 1;
+    var nodeId = url.searchParams.get('id');
     var zot = new ZoteroManager(treeLevels, zoteroMeta);
     zot.init();
 }
