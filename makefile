@@ -6,6 +6,8 @@ PROJ_MODULES=		doc
 WEB_PKG_DIR=		$(MTARG)/site
 WEB_BROWSER=		firefox-repeat
 PYTHON_BIN_ARGS ?=	export -o $(WEB_PKG_DIR)
+COLL_ARGS =		.*generalized\ distance\|Weighted\|.*Imperative\|Semantics
+SITE_SAMPLE =		doc/sample
 
 include ./zenbuild/main.mk
 
@@ -17,20 +19,16 @@ web:
 .PHONY:		export
 export:
 		mkdir -p $(MTARG)
-#		make PYTHON_BIN_ARGS='export -o $(WEB_PKG_DIR)' run
-		make PYTHON_BIN_ARGS='export -o $(WEB_PKG_DIR) --collection Detection$$' run
+		make PYTHON_BIN_ARGS='export -o $(WEB_PKG_DIR)' run
 
 .PHONY:		print
 print:
-#		make PYTHON_BIN_ARGS='print --collection GANN$$' run
-		make PYTHON_BIN_ARGS='print --collection .*Toward' run
-#		make PYTHON_BIN_ARGS='print --collection Detection$$' run
+		make PYTHON_BIN_ARGS='print --collection $(COLL_ARGS)' run
 
 .PHONY:		selection
 selection:
 		mkdir -p $(MTARG)
-#		make PYTHON_BIN_ARGS='export -o $(WEB_PKG_DIR) --collection .*Toward' run
-		make PYTHON_BIN_ARGS='export -o $(WEB_PKG_DIR) --collection Detection$$' run
+		make PYTHON_BIN_ARGS='export -o $(WEB_PKG_DIR) $(COLL_ARGS)' run
 
 .PHONY:		display
 display:	export
@@ -41,3 +39,8 @@ display:	export
 		else \
 			osascript -e 'tell application "Safari" to set URL of document 1 to URL of document 1' ; \
 		fi
+
+.PHONY:		smaple
+sample:		clean
+		rm -fr $(SITE_SAMPLE)
+		make PYTHON_BIN_ARGS='export -o $(SITE_SAMPLE) --collection $(COLL_ARGS)' run

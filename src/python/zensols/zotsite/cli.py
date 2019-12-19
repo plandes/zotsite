@@ -34,7 +34,6 @@ class ConfAppCommandLine(OneConfPerActionOptionsCliEnv):
                  'actions': [{'name': 'print',
                               'meth': 'print_structure',
                               'opts': [coll_op]},
-                             {'name': 'tmp'},
                              {'name': 'export',
                               'opts': [outdir_op, coll_op]}]}],
                'config_option': {'name': 'config',

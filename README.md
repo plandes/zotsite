@@ -10,6 +10,7 @@ This generated website has the following features:
 * Easily access your papers, site snapshots, notes from a navigation tree.
 * Provides metadata from collections and attachments (i.e. referenes etc).
 * Display PDF papers and website snapshot (the latter as framed).
+* Search function dynamically narrows down the papers you're looking for.
 * Embed links to a specific collection, article, item, note etc.
 * Export only a portion of your collection with regular expressions using the
   collection name.
@@ -130,6 +131,9 @@ to a colleague or shared project etc.  To include entries at the time level
 (i.e. find those actual papers by name), see the `match_children` configuration
 in the [configuration file].
 
+The [Python regular expression] syntax.  One gotcha is a `.*` is needed at the
+front of a string to match anything.
+
 
 ### Configuration File
 
@@ -180,7 +184,7 @@ but assumes a directory structure that's been tested on OSX.
 Command line usage as provided with the `--help` option:
 
 ```sql
-Usage: usage: zotsite <list|export|print> [options]
+Usage: zotsite <list|export|print|tmp> [options]
 
 Options:
   --version             show program's version number and exit
@@ -191,14 +195,11 @@ Options:
                         configuration file
 Actions:
   export  Export
-  -d, --datadir <string>      the location of the Zotero data directory
-  -o, --outputdir <string>    the directory to output the website
-  --collection <string>       regular expression to match collections
-  --staticdirs <string>       comma separated directories to static files
+  -o, --outputdir <string>  ./zotsite  the directory to output the website
+  --collection <string>                regular expression pattern to match collections
 
   print   Print structure
-  -d, --datadir <string>      the location of the Zotero data directory
-  --collection <string>       SQL like pattern to match collections
+  --collection <string>                regular expression pattern to match collections
 ```
 
 
@@ -280,3 +281,4 @@ SOFTWARE.
 [Copy to Clipboard]: https://ourcodeworld.com/articles/read/143/how-to-copy-text-to-clipboard-with-javascript-easily
 [BetterBibtex]: https://github.com/retorquere/zotero-better-bibtex
 [configuration file]: test-resources/zotsite.conf
+[Python regular expression]: https://docs.python.org/3/library/re.html
