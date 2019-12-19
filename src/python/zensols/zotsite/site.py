@@ -45,7 +45,7 @@ class SiteCreator(object):
                 'match_children', expect=False)
             visitor = PruneVisitor(name_pat, match_children)
             self.walker.walk(lib, visitor)
-            id_mapping = self.config.get_option('id_mapping', expect=False)
+        id_mapping = self.config.get_option('id_mapping', expect=False)
         if id_mapping == 'none':
             pass
         elif id_mapping == 'betterbib':
