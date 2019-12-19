@@ -41,9 +41,9 @@ class FileSystemCopyVisitor(Visitor):
                 parent = dst.parent
                 if not dst.is_file():
                     if not parent.is_dir():
-                        logger.info('create: {}'.format(parent))
+                        logger.debug('create: {}'.format(parent))
                         parent.mkdir(parents=True, exist_ok=True)
-                    logger.info('copy: {} -> {}'.format(src, dst))
+                    logger.debug('copy: {} -> {}'.format(src, dst))
                     shutil.copy(str(src), str(dst))
 
     def leave_parent(self, parent: ZoteroObject):

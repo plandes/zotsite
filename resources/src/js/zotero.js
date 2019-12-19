@@ -144,16 +144,23 @@ function ZoteroManager(levels, meta) {
 
     // create a link that points to the current document
     function createDocumentLink(node) {
+	type = 'item';
 	if (node.resource) {
-	    var link = document.location.href;
-	    var idx = link.lastIndexOf('/');
-	    link = link.substring(0, idx);
-	    link = link + '/' + node.resource;
+	    if (type == 'doc') {
+		var link = document.location.href;
+		var idx = link.lastIndexOf('/');
+		link = link.substring(0, idx);
+		link = link + '/' + node.resource;
+	    } else {
+		var link = window.location.protocol + "//" +
+		    window.location.host +// "/" +
+		    window.location.pathname + '?id=' + node['item-id'];
+	    }
 	    return link;
 	}
     }
 
-
+    // show an alert message on the screen for 2s
     function showAlert(message, subMessage, type) {
 	var alertClass = 'alert-' + type;
 	$("#alert-box").html('<strong>' + message + '</strong>: ' + subMessage);
@@ -287,10 +294,38 @@ function ZoteroManager(levels, meta) {
 	}
     }
 
-    function showNodeById(nodeId) {
-	console.log('show node by id: ' + nodeId);
+    // map item zotero IDs to tree node IDs
+    function mapItemToJsNodes(itemToJs, nodes) {
+	for (var i = 0; i < nodes.length; i++) {
+	    node = nodes[i]
+	    key = node['item-id'];
+	    itemToJs[key] = node.nodeId;
+	    if (typeof node.nodes != 'undefined') {
+		mapItemToJsNodes(itemToJs, node.nodes);
+	    }
+	}
+	return itemToJs;
+    }
+
+    function mapItemToJs() {
 	var tree = $('#tree').treeview(true);
-	tree.selectNode(nodeId);
+	var itemToJs = {};
+	var sibs = tree.getSiblings(0);
+	mapItemToJsNodes(itemToJs, [tree.getNode(0)]);
+	mapItemToJsNodes(itemToJs, tree.getSiblings(0));
+	return itemToJs;
+    }
+
+    function showItem(itemId, itemToJs) {
+	console.log('show item by id: ' + itemId);
+	var tree = $('#tree').treeview(true);
+	if (itemToJs[itemId] == undefined) {
+	    console.log(' no such item ID: ' + itemId);
+	} else {
+	    var nodeId = itemToJs[itemId];
+	    tree.revealNode(nodeId);
+	    tree.selectNode(nodeId);
+	}
     }
 
     // show the nodes given by the search and hidw all others
@@ -328,6 +363,7 @@ function ZoteroManager(levels, meta) {
     }
 
     function updateMain(event, node) {
+	console.log('updating: ' + node.nodeId + '( ' + node['item-id'] + ')');
 	createMain(node);
 	lastNode = node;
     }
@@ -341,7 +377,7 @@ function ZoteroManager(levels, meta) {
     }
 
     // initialization called on page load
-    this.init = function(nodeId) {
+    this.init = function(itemId) {
 	console.log('version: ' + meta.version);
 
 	$('#tree').treeview({
@@ -380,8 +416,10 @@ function ZoteroManager(levels, meta) {
 
 	insertVersion();
 
-	if (nodeId) {
-	    showNodeById(nodeId);
+	var itemToJs = mapItemToJs()
+	console.log(itemToJs);
+	if (itemId) {
+	    showItem(itemId, itemToJs);
 	}
     }
 }
@@ -391,5 +429,5 @@ window.onload = function() {
     var treeLevels = url.searchParams.get('levels') || 1;
     var nodeId = url.searchParams.get('id');
     var zot = new ZoteroManager(treeLevels, zoteroMeta);
-    zot.init();
+    zot.init(nodeId);
 }

@@ -111,7 +111,7 @@ class SiteCreator(object):
         :param dst: the destination on the file system
 
         """
-        logger.info(f'copy: {src} -> {dst}'.format(src, dst))
+        logger.debug(f'copy: {src} -> {dst}'.format(src, dst))
         dst.mkdir(parents=True, exist_ok=True)
         for res in src.iterdir():
             res = res.name
@@ -120,10 +120,11 @@ class SiteCreator(object):
             if src_file.is_dir():
                 self._copy_static_res(src_file, dst_file)
             else:
-                logger.info(f'copy: {src_file} -> {dst_file}')
+                logger.debug(f'copy: {src_file} -> {dst_file}')
                 shutil.copyfile(src_file, dst_file)
 
     def _copy_static(self):
+        logger.info('copying static data -> {self.out_dir}')
         for src in 'src lib'.split():
             src_dir = self.config.resource_filename(f'resources/{src}')
             self._copy_static_res(src_dir, self.out_dir)
