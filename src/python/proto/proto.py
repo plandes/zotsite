@@ -7,9 +7,11 @@ logger = logging.getLogger(__name__)
 
 def tmp():
     import os
+    import zensols.zotsite.betterbib
     conf = AppConfig('test-resources/zotsite.conf', default_vars=os.environ)
-    print(conf.get_option('data_dir'))
-    app = ClassImporter('zensols.zotsite.site.SiteCreator').instance(conf)
+    ci = ClassImporter('zensols.zotsite.betterbib.BetterBibtexMapper')
+    ci.set_log_level(logging.DEBUG)
+    app = ci.instance(conf.data_dir)
     app.tmp()
 
 

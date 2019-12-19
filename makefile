@@ -17,7 +17,8 @@ web:
 .PHONY:		export
 export:
 		mkdir -p $(MTARG)
-		make PYTHON_BIN_ARGS='export -o $(WEB_PKG_DIR)' run
+#		make PYTHON_BIN_ARGS='export -o $(WEB_PKG_DIR)' run
+		make PYTHON_BIN_ARGS='export -o $(WEB_PKG_DIR) --collection Detection$$' run
 
 .PHONY:		print
 print:

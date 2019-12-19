@@ -81,8 +81,16 @@ class Item(ZoteroObject):
         super(Item, self).__init__(children)
         self.storage_pat = re.compile('^storage:(.+)$')
 
+    def get_db_id(self):
+        return self.sel['i_id']
+
     def get_id(self):
-        return 'i' + str(self.sel['i_id'])
+        if not hasattr(self, '_id'):
+            self._id = 'i' + str(self.get_db_id())
+        return self._id
+
+    def set_id(self, id):
+        self._id = id
 
     @property
     def name(self):

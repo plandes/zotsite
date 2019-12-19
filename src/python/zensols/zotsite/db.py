@@ -7,10 +7,11 @@ logger = logging.getLogger(__name__)
 
 
 class DatabaseReader(object):
+    """Database access to Zotero store.
+
     """
-    Database access to Zotero store.
-    """
-    def __init__(self, data_dir, name_pat='%', library_id=1):
+    def __init__(self, data_dir: Path, name_pat: str = '%',
+                 library_id: int = 1):
         """Initialize
 
         :param data_dir: directory containing the Zotero DB files (sqlite and
@@ -19,7 +20,7 @@ class DatabaseReader(object):
         :param library_id: the DB ide of the library to export
 
         """
-        logger.debug('data dir: {}'.format(data_dir))
+        logger.debug(f'data {format(data_dir)}')
         self.data_dir = data_dir
         self.name_pat = name_pat
         self.library_id = library_id
@@ -100,7 +101,7 @@ select f.fieldName name, iv.value
 
         :param conn: the DB connection
         """
-        logger.debug('data_dir: %s' % self.data_dir)
+        logger.debug(f'data_dir: {self.data_dir}')
         wparams = {'library_id': self.library_id}
         logger.debug('wparams: %s' % wparams)
         items = {}
@@ -132,8 +133,9 @@ select f.fieldName name, iv.value
         """Return items from the database.
 
         :param conn: the DB connection
+
         """
-        logger.debug('data_dir: %s' % self.data_dir)
+        logger.debug(f'data_dir: {self.data_dir}')
         wparams = {'library_id': self.library_id, 'coll_name': self.name_pat}
         logger.debug('wparams: %s' % wparams)
         colls = {}
@@ -169,6 +171,7 @@ select f.fieldName name, iv.value
 
         :param conn: the DB connection
         :param by_cid: parent to child collection IDs
+
         """
         logger.debug('processing: {} ({}, {})'.
                      format(coll['c_name'], coll['c_id'], coll['c_iid']))
@@ -188,6 +191,7 @@ select f.fieldName name, iv.value
 
         :param conn: the DB connection
         :param by_cid: parent to child collection IDs
+
         """
         by_cid = {}
         for i in items:

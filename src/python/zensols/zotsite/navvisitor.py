@@ -67,6 +67,7 @@ class NavCreateVisitor(Visitor):
         node['item_title'] = item.title
         node['item_type'] = item.type
         node['item_note'] = item.note
+        node['node_type'] = item.__class__.__name__.lower()
         if isinstance(item, Item):
             meta = item.metadata
             mdarr = []

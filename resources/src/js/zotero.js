@@ -103,8 +103,6 @@ function ZoteroManager(levels, meta) {
 	topPanel.classList.add('justify-content-between');
 	topPanel.classList.add('content-head-pane');
 
-	linkButton = document.getElementById("item-document-link-button");
-
 	// add the pdf/html attachemnt if it exists, otherwise direct the user via
 	// add tool tip if no attachement
 	btn.action = node.resource;
@@ -118,26 +116,21 @@ function ZoteroManager(levels, meta) {
 	    $(function () {
     		$('[data-toggle="tooltip"]').tooltip()
 	    });
-
-	    btn = linkButton;
-	    btn.removeAttribute('data-original-title');
 	} else {
 	    btn.onClick = node.resource;
 	    btn.setAttribute('onClick', "location.href='" + node.resource + "'");
-
-	    btn = linkButton;
-	    link = createDocumentLink(node);
-	    btn.setAttribute('data-original-title', link);
 	}
 
-	// update main screen link
+	// populate the link button and update main screen link
 	var itemDocLinkButton = document.getElementById("item-document-link-button");
-	if (!node.resource) {
-	    itemDocLinkButton.classList.add('disabled');
-	} else {
+	link = createDocumentLink(node);
+	if (link) {
+	    itemDocLinkButton.setAttribute('data-original-title', link);
 	    itemDocLinkButton.classList.remove('disabled');
-	    
-	}	
+	} else {
+	    itemDocLinkButton.removeAttribute('data-original-title');
+	    itemDocLinkButton.classList.add('disabled');
+	}
 
 	root.appendChild(topPanel);
     }
@@ -145,16 +138,18 @@ function ZoteroManager(levels, meta) {
     // create a link that points to the current document
     function createDocumentLink(node) {
 	type = 'item';
-	if (node.resource) {
+	if (node['node_type'] == 'item') {
 	    if (type == 'doc') {
 		var link = document.location.href;
 		var idx = link.lastIndexOf('/');
 		link = link.substring(0, idx);
 		link = link + '/' + node.resource;
 	    } else {
-		var link = window.location.protocol + "//" +
-		    window.location.host +// "/" +
-		    window.location.pathname + '?id=' + node['item-id'];
+		var proto = window.location.protocol;
+		var host = window.location.host;
+		var path = window.location.pathname;
+		path = path.substring(0, path.length - 1);
+		var link = proto + "//" + host + path + '?id=' + node['item-id'];
 	    }
 	    return link;
 	}
@@ -406,10 +401,10 @@ function ZoteroManager(levels, meta) {
 	});
 
 	linkButton = document.getElementById("item-document-link-button");
-	    btn = linkButton;
-	    btn.setAttribute('link-data-toggle', 'tooltip');
-	    btn.setAttribute('link-data-placement', 'right');
-	    btn.setAttribute('link-data-html', 'true');
+	btn = linkButton;
+	btn.setAttribute('link-data-toggle', 'tooltip');
+	btn.setAttribute('link-data-placement', 'right');
+	btn.setAttribute('link-data-html', 'true');
 	$(function () {
 	    $('[link-data-toggle="tooltip"]').tooltip()
 	});

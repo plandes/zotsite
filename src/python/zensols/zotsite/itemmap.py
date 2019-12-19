@@ -7,6 +7,12 @@ logger = logging.getLogger(__name__)
 
 
 class ItemMapper(ABC):
+    EXT_RE = re.compile(r'.+\.(.+)?$')
+
+    def _item_to_ext(self, item: Item):
+        m = self.EXT_RE.match(item.file_name)
+        return f'.{m.group(1)}' if m is not None else ''
+
     @abstractmethod
     def get_resource_name(self, item: Item) -> str:
         pass
@@ -52,8 +58,6 @@ class IdItemMapper(ItemMapper):
     """Map by using ids.
 
     """
-    EXT_RE = re.compile(r'.+\.(.+)?$')
-
     def __init__(self, lib: Library, fmatch_re=None, repl_re=None):
         self.lib = lib
         if fmatch_re is not None:
@@ -70,8 +74,7 @@ class IdItemMapper(ItemMapper):
 
         """
         if item.type == 'attachment' and item.file_name is not None:
-            m = self.EXT_RE.match(item.file_name)
-            ext = f'.{m.group(1)}' if m is not None else ''
+            ext = self._item_to_ext(item)
             return f'{self.lib.storage_dirname}/{item.id}{ext}'
 
     def get_resource_name(self, item: Item) -> str:

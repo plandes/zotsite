@@ -14,6 +14,7 @@ from zensols.zotsite import (
     Library,
     PrintVisitor,
     Walker,
+    BetterBibtexVisitor,
 )
 
 logger = logging.getLogger(__name__)
@@ -25,8 +26,7 @@ class SiteCreator(object):
     """
     def __init__(self, config: AppConfig = None):
         cnf = config.populate()
-        self.db = DatabaseReader(config.get_option_path('data_dir'),
-                                 library_id=cnf.library_id)
+        self.db = DatabaseReader(config.data_dir, library_id=cnf.library_id)
         self.out_dir = config.get_option_path('out_dir', expect=False)
         self.config = config
 
@@ -45,15 +45,25 @@ class SiteCreator(object):
                 'match_children', expect=False)
             visitor = PruneVisitor(name_pat, match_children)
             self.walker.walk(lib, visitor)
+            id_mapping = self.config.get_option('id_mapping', expect=False)
+            if id_mapping == 'none':
+                pass
+            elif id_mapping == 'betterbib':
+                visitor = BetterBibtexVisitor(self.config.data_dir)
+                self.walker.walk(lib, visitor)
         return lib
 
     @property
     @persisted('_itemmapper')
     def itemmapper(self):
-        if 0:
-            return RegexItemMapper(self.library, '.*\.pdf$', '[ ]')
+        name = self.config.get_option('file_mapping')
+        if name == 'long':
+            mapper = RegexItemMapper(self.library, '.*\.pdf$', '[ ]')
+        elif name == 'item':
+            mapper = IdItemMapper(self.library)
         else:
-            return IdItemMapper(self.library)
+            raise ValueError(f'unknown file mapping: {name}')
+        return mapper
 
     def print_structure(self):
         """Print (sub)collections and papers in those collections as a tree.
@@ -124,7 +134,7 @@ class SiteCreator(object):
                 shutil.copyfile(src_file, dst_file)
 
     def _copy_static(self):
-        logger.info('copying static data -> {self.out_dir}')
+        logger.info(f'copying static data -> {self.out_dir}')
         for src in 'src lib'.split():
             src_dir = self.config.resource_filename(f'resources/{src}')
             self._copy_static_res(src_dir, self.out_dir)
@@ -133,7 +143,6 @@ class SiteCreator(object):
         """Entry point method to export (create) the website.
 
         """
-        #self.itemmapper = self._create_itemmapper()
         self._copy_static()
         self._create_tree_data()
         self._copy_storage()
