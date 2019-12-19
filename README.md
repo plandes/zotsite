@@ -10,7 +10,10 @@ This generated website has the following features:
 * Easily access your papers, site snapshots, notes from a navigation tree.
 * Provides metadata from collections and attachments (i.e. referenes etc).
 * Display PDF papers and website snapshot (the latter as framed).
-* Method to navigate to/view the paper/website snapshot directly.
+* Embed links to a specific collection, article, item, note etc.
+* Export only a portion of your collection with regular expressions using the
+  collection name.
+* [BetterBibtex] integration.
 * Snazzy look and feel from the latest [Bootstrap] CSS/Javascript library.
 
 <!-- markdown-toc start - Don't edit this section. Run M-x markdown-toc-refresh-toc -->
@@ -111,17 +114,21 @@ the way [Tree View] works more than anything else since it is designed to show
 the entire tree list at once.
 
 
-### Print Subcollections
+### Subcollections
 
 The folder directory structure in [Zotero] are called *collections*.  You can
-print only collections given a regular expression with the `--collection`
-flag.  Currently, only a hierarchically information printing is available.  A
-future enhancement is to export a collection.
+export and print only collections given a regular expression with the
+`--collection` flag.
 
-An example of the print functionality is:
+To export only collections with the *Deep* and *Learning*, use the following.
 ```bash
-zotsite print --collection '.*Deep\s*Learning.*'
+zotsite export --collection '.*Deep\s*Learning.*'
 ```
+
+This option is handy if you want to hand off a particular set of collection(s)
+to a colleague or shared project etc.  To include entries at the time level
+(i.e. find those actual papers by name), see the `match_children` configuration
+in the [configuration file].
 
 
 ### Configuration File
@@ -131,7 +138,7 @@ configuration file, for example:
 
 ```ini
 [default]
-data_dir=%(HOME)s/.zotero
+data_dir={HOME}/.zotero
 ```
 
 tells the program where the [Zotero] data directory is located in the user's
@@ -139,6 +146,8 @@ home directory with name `.zotero` (this defaults to the Zotero default).
 
 You can indicate where the program configuration file is with the `ZOTSITERC`
 environment variable or use the `--config` command line program.
+
+See the full [configuration file] for all options and documentation.
 
 
 ## Process
@@ -200,6 +209,7 @@ This software uses:
 * [Bootstrap] version 4
 * [Tree View] for Bootstrap
 * [Popper] for tooltips
+* [Copy to Clipboard] function
 
 
 ## Screenshot
@@ -267,3 +277,6 @@ SOFTWARE.
 [Tree View]: https://github.com/jonmiles/bootstrap-treeview
 [Popper]: https://popper.js.org
 [plugin]: https://www.zotero.org/support/plugins#website_integration
+[Copy to Clipboard]: https://ourcodeworld.com/articles/read/143/how-to-copy-text-to-clipboard-with-javascript-easily
+[BetterBibtex]: https://github.com/retorquere/zotero-better-bibtex
+[configuration file]: test-resources/zotsite.conf

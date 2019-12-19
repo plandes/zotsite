@@ -6,8 +6,25 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 
 ## [Unreleased]
+
+
+### Added
+- Collections filtering using regular expressions is now fully supported.
+- Ability to link directly to any item in the hierarchy.
+- Link button that copies the current page URL to the clipboard.
+- Added [BetterBibtex] references for easy linking to the site with citation
+  keys.
+- HTML (i.e. snapshots) are now visible in the pane PDFs are displayed.
+- Short files to reduce character/file system conflicts.
+- Clear button to reset the interface.
+
 ### Changed
+- Refactored: cleaned up class structure and graph iteration OO class patterns.
+- Changed default naming to use short files.
 - Retrofit new actioncli features.
+- Simpler command line by moving configuration to the configuration file.
+- Move to more advanced configparser, which uses new notation (example:
+  `$(HOME)s` -> `${HOME}`).
 
 
 ## [0.2.3] - 2018-09-08
@@ -52,3 +69,6 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 [0.2.2]: https://github.com/plandes/zotsite/compare/v0.2.1...v0.2.2
 [0.2.1]: https://github.com/plandes/zotsite/compare/v0.2.0...v0.2.1
 [0.2.0]: https://github.com/plandes/zotsite/compare/v0.1...v0.2.0
+
+<!-- links -->
+[BetterBibtex]: https://github.com/retorquere/zotero-better-bibtex

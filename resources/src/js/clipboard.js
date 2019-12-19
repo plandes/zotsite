@@ -1,3 +1,5 @@
+// attribution: "How to copy text to clipboard with Javascript easily"
+// https://ourcodeworld.com/articles/read/143/how-to-copy-text-to-clipboard-with-javascript-easily
 function setClipboardText(text){
     var id = "mycustom-clipboard-textarea-hidden-id";
     var existsTextarea = document.getElementById(id);
