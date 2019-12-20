@@ -285,5 +285,6 @@ SOFTWARE.
 [Python regular expression]: https://docs.python.org/3/library/re.html
 
 [python36-link]: https://www.python.org/downloads/release/python-360
+[python36-badge]: https://img.shields.io/badge/python-3.6-blue.svg
 [pypi-badge]: https://img.shields.io/pypi/v/zensols.actioncli.svg
 [pypi-link]: https://pypi.python.org/pypi/zensols.zotsite
