@@ -7,6 +7,7 @@ from zensols.zotsite import (
     ZoteroObject,
     Item,
     Visitor,
+    Library,
 )
 
 logger = logging.getLogger(__name__)
@@ -17,12 +18,12 @@ class BetterBibtexMapper(object):
     citation keys.
 
     """
-    def __init__(self, data_dir: Path):
-        self.data_dir = data_dir
+    def __init__(self, lib: Library):
+        self.lib = lib
 
     @property
     def data(self):
-        path = self.data_dir / 'better-bibtex.sqlite'
+        path = self.lib.data_dir / 'better-bibtex.sqlite'
         logger.info(f'reading bibtex DB at {path}')
         conn = sqlite3.connect(path)
         try:
@@ -38,7 +39,10 @@ class BetterBibtexMapper(object):
     @property
     @persisted('_mapping')
     def mapping(self):
-        return {x['itemID']: x['citekey'] for x in self.data['data']}
+        lib_id = self.lib.library_id
+        data = self.data['data']
+        data = filter(lambda x: x['libraryID'] == lib_id, data)
+        return {x['itemID']: x['citekey'] for x in data}
 
     def tmp(self):
         from pprint import pprint
@@ -50,8 +54,8 @@ class BetterBibtexVisitor(Visitor):
     respective citation keys.
 
     """
-    def __init__(self, data_dir: Path):
-        self.mapper = BetterBibtexMapper(data_dir)
+    def __init__(self, lib: Library):
+        self.mapper = BetterBibtexMapper(lib)
 
     def enter_parent(self, parent: ZoteroObject):
         pass

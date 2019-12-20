@@ -99,13 +99,21 @@ class NavCreateVisitor(Visitor):
         node['node_type'] = item.__class__.__name__.lower()
         if isinstance(item, Item):
             meta = self._node_metadata(item)
-            if meta:
+            creators = item.creators
+            if meta is not None:
                 node['metadata'] = meta
                 res = self.itemmapper.get_resource_name(item)
                 if res is None:
                     res = self._find_child_resource(item, '.pdf')
                 if res is not None:
                     node['resource'] = res
+            if creators is not None:
+                if meta is None:
+                    meta = []
+                    node['metadata'] = meta
+                meta.append(('Creators', ', '.join(map(str, creators))))
+            if meta is not None:
+                meta.sort()
         return node
 
     def enter_parent(self, parent: ZoteroObject):

@@ -49,7 +49,7 @@ class SiteCreator(object):
         if id_mapping == 'none':
             pass
         elif id_mapping == 'betterbib':
-            visitor = BetterBibtexVisitor(self.config.data_dir)
+            visitor = BetterBibtexVisitor(lib)
             self.walker.walk(lib, visitor)
         else:
             raise ValueError(f'unknown ID mapping: {id_mapping}')

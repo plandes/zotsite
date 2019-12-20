@@ -1,7 +1,13 @@
 import logging
 from pathlib import Path
 import sqlite3
-from zensols.zotsite.domain import Collection, Library, Item, Note
+from zensols.zotsite.domain import (
+    Collection,
+    Library,
+    Item,
+    Note,
+    Name,
+)
 
 logger = logging.getLogger(__name__)
 
@@ -66,6 +72,15 @@ select f.fieldName name, iv.value
       i.itemId = %(item_id)s and
       i.itemId not in (select itemId from deletedItems)""" % whparams
 
+    def _item_creators_sql(self, whparams):
+        """Return SQL for creators (authors) across several items"""
+        return """
+select c.firstName, c.lastName
+  from itemCreators ic, creators c
+  where ic.creatorID = c.creatorID and
+    ic.itemID = %(item_id)s
+    order by ic.orderIndex""" % whparams
+
     def get_connection(self):
         """Return a database connection the SQLite database.
 
@@ -96,6 +111,21 @@ select f.fieldName name, iv.value
             meta[row['name']] = row['value']
         return meta
 
+    def _get_item_creators(self, item, conn, whparams):
+        """Return the item metadata from the database.
+
+        :param item: the item to fetch data for
+        :param conn: the DB connection
+        :param whparams: dict of parameters used for the metadata SQL query
+        """
+        whparams['item_id'] = item['i_id']
+        creators = []
+        for row in conn.execute(self._item_creators_sql(whparams)):
+            name = Name(row['firstName'], row['lastName'])
+            creators.append(name)
+        if len(creators) > 0:
+            return creators
+
     def _select_items(self, conn):
         """Return items from the database.
 
@@ -118,6 +148,8 @@ select f.fieldName name, iv.value
             for item in itemlst:
                 meta = self._get_item_meta(item, conn, wparams)
                 item['meta'] = meta
+                creators = self._get_item_creators(item, conn, wparams)
+                item['creators'] = creators
         for itemlst in items.values():
             for item in itemlst:
                 i_pid = item['i_pid']

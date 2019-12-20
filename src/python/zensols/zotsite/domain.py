@@ -72,6 +72,18 @@ class Note(ZoteroObject):
         return '<{}> [note]'.format(self.title)
 
 
+class Name(object):
+    def __init__(self, first: str, last: str):
+        self.first = first
+        self.last = last
+
+    def __str__(self):
+        return f'{self.first} {self.last}'
+
+    def __repr__(self):
+        return self.__str__()
+
+
 class Item(ZoteroObject):
     """Represents an attachement object, like PDFs, site links etc.
 
@@ -104,8 +116,11 @@ class Item(ZoteroObject):
 
     @property
     def metadata(self):
-        if 'meta' in self.sel:
-            return self.sel['meta']
+        return self.sel.get('meta')
+
+    @property
+    def creators(self) -> (list, Name):
+        return self.sel.get('creators')
 
     @property
     def file_name(self):

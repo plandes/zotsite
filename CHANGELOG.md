@@ -17,14 +17,17 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - HTML (i.e. snapshots) are now visible in the pane PDFs are displayed.
 - Short files to reduce character/file system conflicts.
 - Clear button to reset the interface.
+- Added creators (authors) to metadata pane.
 
 ### Changed
-- Refactored: cleaned up class structure and graph iteration OO class patterns.
+- Beautification of the metadata keys in the item table view.
 - Changed default naming to use short files.
-- Retrofit new actioncli features.
 - Simpler command line by moving configuration to the configuration file.
+- Refactored: cleaned up class structure and graph iteration OO class patterns.
+- Retrofit new actioncli features.
 - Move to more advanced configparser, which uses new notation (example:
   `$(HOME)s` -> `${HOME}`).
+- Metadata is sorted.
 
 
 ## [0.2.3] - 2018-09-08
