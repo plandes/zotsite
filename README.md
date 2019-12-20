@@ -1,8 +1,9 @@
 # Export Zotero to a web site
 
-[![Gitter chat][gitter-badge]][gitter-link]
+[![PyPI][pypi-badge]][pypi-link]
 [![Travis CI Build Status][travis-badge]][travis-link]
-[![Python 3.6](https://img.shields.io/badge/python-3.6-blue.svg)](https://www.python.org/downloads/release/python-360/)
+[![Python 3.6][python37-badge]][python36-link]
+[![Gitter chat][gitter-badge]][gitter-link]
 
 This project exports your local [Zotero] library to a usable HTML website.
 This generated website has the following features:
@@ -282,3 +283,5 @@ SOFTWARE.
 [BetterBibtex]: https://github.com/retorquere/zotero-better-bibtex
 [configuration file]: test-resources/zotsite.conf
 [Python regular expression]: https://docs.python.org/3/library/re.html
+[python36-link]: https://www.python.org/downloads/release/python-360
+[pypi-link]: https://pypi.python.org/pypi/zensols.zotsite
