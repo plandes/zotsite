@@ -138,7 +138,10 @@ class SiteCreator(object):
     def _copy_static(self):
         logger.info(f'copying static data -> {self.out_dir}')
         for src in 'src lib'.split():
-            src_dir = self.config.resource_filename(f'resources/{src}')
+            res_path = f'resources/{src}'
+            src_dir = self.config.resource_filename(res_path)
+            if not src_dir.exists():
+                raise OSError(f'missing resource directory {res_path}')
             self._copy_static_res(src_dir, self.out_dir)
 
     def export(self):

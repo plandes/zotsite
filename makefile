@@ -1,7 +1,7 @@
 ## makefile automates the build and deployment for python projects
 
 PROJ_TYPE=		python
-PROJ_MODULES=		doc
+PROJ_MODULES=		python-resources gitdoc
 
 WEB_PKG_DIR=		$(MTARG)/site
 WEB_BROWSER=		firefox-repeat
