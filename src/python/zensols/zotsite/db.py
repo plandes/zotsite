@@ -239,7 +239,8 @@ select c.firstName, c.lastName
         for coll in colls:
             fcoll = self._create_collection(coll, by_cid)
             fcolls.append(fcoll)
-        return Library(self.data_dir, self.library_id, fcolls)
+        lib = Library(self.data_dir, self.library_id, fcolls)
+        return lib
 
     def get_library(self):
         """Get an object graph representing the data in the Zotero database.

@@ -1,6 +1,10 @@
+import logging
 from abc import ABC, abstractmethod
 import re
-import os
+from pathlib import Path
+from zensols.actioncli import persisted
+
+logger = logging.getLogger(__name__)
 
 
 class ZoteroObject(ABC):
@@ -123,28 +127,29 @@ class Item(ZoteroObject):
         return self.sel.get('creators')
 
     @property
-    def file_name(self):
+    @persisted('_path')
+    def path(self):
+        abs_path = None
         path = self.sel['path']
-        fname = None
         if path:
-            pdir = self.sel['key']
             m = self.storage_pat.match(path)
-            if m:
-                fname = m.group(1)
+            if m is None:
+                # assume ZoteroFile is used
+                abs_path = Path(path)
+                if not abs_path.exist():
+                    raise ValueError(f'unknown storage and not a file: {path}')
             else:
-                fname = path
-            fname = '{}/{}'.format(pdir, fname)
-        return fname
+                pdir = self.sel['key']
+                fpart = m.group(1)
+                abs_path = self.lib.get_storage_path() / f'{pdir}/{fpart}'
+                logger.debug(f'pdir={pdir}, fpart={fpart}, abs={abs_path}')
+        return abs_path
 
     def __format_zobj__(self):
-        fname = self.file_name
-        if fname:
-            fname = ': ' + fname
-        else:
-            fname = ''
+        abs_path = self.path
         its = self.sel.copy()
-        its.update({'name': self.name, 'fname': fname})
-        return '{name} [{type}]{fname}'.format(**its)
+        its.update({'name': self.name, 'abs_path': abs_path})
+        return '{name} [{type}]{abs_path}'.format(**its)
 
 
 class Container(ZoteroObject):
@@ -190,11 +195,19 @@ class Library(Container):
         self.library_id = library_id
         self.storage_dirname = 'storage'
         super(Library, self).__init__([], collections)
+        for c in collections:
+            self._init_child(c)
+
+    def _init_child(self, parent):
+        if isinstance(parent, Item):
+            parent.lib = self
+        for c in parent.children:
+            self._init_child(c)
 
     def get_storage_path(self, fname=None):
-        path = os.path.join(self.data_dir, self.storage_dirname)
+        path = Path(self.data_dir, self.storage_dirname)
         if fname:
-            path = os.path.join(path, fname)
+            path = Path(path, fname)
         return path
 
     def get_id(self):
@@ -202,7 +215,7 @@ class Library(Container):
 
     def attachment_resource(self, item):
         if item.type == 'attachment':
-            return f'{self.storage_dirname}/{item.file_name}'
+            return f'{self.storage_dirname}/{item.path}'
 
     @property
     def name(self):

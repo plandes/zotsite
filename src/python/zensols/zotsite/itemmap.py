@@ -10,7 +10,7 @@ class ItemMapper(ABC):
     EXT_RE = re.compile(r'.+\.(.+)?$')
 
     def _item_to_ext(self, item: Item):
-        m = self.EXT_RE.match(item.file_name)
+        m = self.EXT_RE.match(item.path.name)
         return f'.{m.group(1)}' if m is not None else ''
 
     @abstractmethod
@@ -73,7 +73,7 @@ class IdItemMapper(ItemMapper):
         """Return the regular expression matched/modified string of ``fname``.'
 
         """
-        if item.type == 'attachment' and item.file_name is not None:
+        if item.type == 'attachment' and item.path is not None:
             ext = self._item_to_ext(item)
             return f'{self.lib.storage_dirname}/{item.id}{ext}'
 

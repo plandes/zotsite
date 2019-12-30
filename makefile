@@ -16,19 +16,19 @@ web:
 		open $(WEB_PKG_DIR)/index.html
 		osascript -e 'tell application "Emacs" to activate'
 
+.PHONY:		print
+print:
+		make PYTHON_BIN_ARGS='print --collection $(COLL_ARGS)' run
+
 .PHONY:		export
 export:
 		mkdir -p $(MTARG)
 		make PYTHON_BIN_ARGS='export -o $(WEB_PKG_DIR)' run
 
-.PHONY:		print
-print:
-		make PYTHON_BIN_ARGS='print --collection $(COLL_ARGS)' run
-
 .PHONY:		selection
 selection:
 		mkdir -p $(MTARG)
-		make PYTHON_BIN_ARGS='export -o $(WEB_PKG_DIR) $(COLL_ARGS)' run
+		make PYTHON_BIN_ARGS='export -o $(WEB_PKG_DIR) --collection $(COLL_ARGS)' run
 
 .PHONY:		display
 display:	export

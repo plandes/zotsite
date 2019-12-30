@@ -20,31 +20,38 @@ class FileSystemCopyVisitor(Visitor):
 
         :param lib: the object graph returned from
                    ``DatabaseReader.get_library``.
+
         :param out_dir: the target directory to copy data
-        :param itemmapper: used for file name substitution so the widget uses the
-                             correct names (i.e. underscore substitution)
+
+        :param itemmapper: used for file name substitution so the widget uses
+                           the correct names (i.e. underscore substitution)
 
         """
         self.lib = lib
-        self.data_path = Path(lib.get_storage_path())
+        #self.data_path = Path(lib.get_storage_path())
         self.out_path = Path(out_dir)
         self.itemmapper = itemmapper
+        logger.debug(f'out_path: {self.out_path}')
 
     def enter_parent(self, parent: ZoteroObject):
         pass
 
     def visit_child(self, child: ZoteroObject):
         if isinstance(child, Item):
-            if child.file_name is not None:
-                src = Path(self.data_path, child.file_name)
+            logger.debug(f'child: {child.path}')
+            if child.path is not None:
+                #src = Path(self.data_path, child.file_name)
+                src = child.path
                 dst = Path(self.out_path, self.itemmapper.get_file_name(child))
+                logger.debug(f'copy: {src} -> {dst}')
                 parent = dst.parent
                 if not dst.is_file():
                     if not parent.is_dir():
-                        logger.debug('create: {}'.format(parent))
+                        logger.debug(f'create: {parent}')
                         parent.mkdir(parents=True, exist_ok=True)
-                    logger.debug('copy: {} -> {}'.format(src, dst))
-                    shutil.copy(str(src), str(dst))
+                    src, dst = str(src), str(dst)
+                    logger.debug(f'shcopy: {src} -> {dst}')
+                    shutil.copy(src, dst)
 
     def leave_parent(self, parent: ZoteroObject):
         pass

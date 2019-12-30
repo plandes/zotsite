@@ -13,7 +13,7 @@ class AppConfig(ExtendedInterpolationConfig):
 
     @property
     def data_dir(self):
-        return self.get_option_path('data_dir')
+        return self.get_option_path('data_dir').expanduser()
 
     def set_default(self, name: str, value: str, clobber: bool = None):
         if clobber is not None:
