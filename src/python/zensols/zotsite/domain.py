@@ -136,7 +136,7 @@ class Item(ZoteroObject):
             if m is None:
                 # assume ZoteroFile is used
                 abs_path = Path(path)
-                if not abs_path.exist():
+                if not abs_path.exists():
                     raise ValueError(f'unknown storage and not a file: {path}')
             else:
                 pdir = self.sel['key']
