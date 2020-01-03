@@ -1,7 +1,7 @@
 # Export Zotero to a web site
 
-[![PyPI][pypi-badge]][pypi-link]
 [![Travis CI Build Status][travis-badge]][travis-link]
+[![PyPI][pypi-badge]][pypi-link]
 [![Python 3.6][python36-badge]][python36-link]
 [![Gitter chat][gitter-badge]][gitter-link]
 
