@@ -3,7 +3,7 @@
 [![Travis CI Build Status][travis-badge]][travis-link]
 [![PyPI][pypi-badge]][pypi-link]
 [![Python 3.6][python36-badge]][python36-link]
-[![Python 3.6][python37-badge]][python37-link]
+[![Python 3.7][python37-badge]][python37-link]
 [![Gitter chat][gitter-badge]][gitter-link]
 
 This project exports your local [Zotero] library to a usable HTML website.
