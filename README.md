@@ -3,6 +3,7 @@
 [![Travis CI Build Status][travis-badge]][travis-link]
 [![PyPI][pypi-badge]][pypi-link]
 [![Python 3.6][python36-badge]][python36-link]
+[![Python 3.6][python37-badge]][python37-link]
 [![Gitter chat][gitter-badge]][gitter-link]
 
 This project exports your local [Zotero] library to a usable HTML website.
@@ -244,7 +245,7 @@ An extensive changelog is available [here](CHANGELOG.md).
 
 ## License
 
-Copyright © 2018 Paul Landes
+Copyright © 2018 - 2020 Paul Landes
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of
 this software and associated documentation files (the "Software"), to deal in
@@ -286,5 +287,7 @@ SOFTWARE.
 
 [python36-link]: https://www.python.org/downloads/release/python-360
 [python36-badge]: https://img.shields.io/badge/python-3.6-blue.svg
+[python37-link]: https://www.python.org/downloads/release/python-370
+[python37-badge]: https://img.shields.io/badge/python-3.7-blue.svg
 [pypi-badge]: https://img.shields.io/pypi/v/zensols.zotsite.svg
 [pypi-link]: https://pypi.python.org/pypi/zensols.zotsite
