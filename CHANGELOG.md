@@ -8,6 +8,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ## [Unreleased]
 
 
+### Added
+- Added icons for thesis, patents and blog posts.
+
+
 ## [0.3.2] - 2020-01-03
 ### Added
 - Compatibility with [ZotFile].  Specifically, now storage locations are used
