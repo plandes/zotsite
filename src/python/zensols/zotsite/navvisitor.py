@@ -23,7 +23,10 @@ class NavCreateVisitor(Visitor):
                   'bookSection': 'book',
                   'book': 'book',
                   'report': 'font',
-                  'webpage': 'bookmark'}
+                  'webpage': 'bookmark',
+                  'thesis': 'education',
+                  'patent': 'certificate',
+                  'blogPost': 'pencil'}
     UPPER = re.compile(r'([A-Z][a-z]+)')
     CAPS_META_KEYS = set('url'.split())
 
@@ -54,6 +57,7 @@ class NavCreateVisitor(Visitor):
                 icon_name = self.ITEM_ICONS[node.type]
             else:
                 # :(
+                logger.warning(f'such icon found for {node.type}')
                 icon_name = 'unchecked'
         elif isinstance(node, Note):
             icon_name = 'text-background'
