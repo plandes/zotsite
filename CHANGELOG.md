@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Added
 - Added icons for thesis, patents and blog posts.
+- Added option to sort items in the tree navigation.
 
 
 ## [0.3.2] - 2020-01-03

@@ -153,7 +153,14 @@ home directory with name `.zotero` (this defaults to the Zotero default).
 You can indicate where the program configuration file is with the `ZOTSITERC`
 environment variable or use the `--config` command line program.
 
-See the full [configuration file] for all options and documentation.
+See the full [configuration file] for example of all options.  All options
+include:
+* *data_dir*: the directory where the Zotero DB files live
+* *match_children*: when using --collection, match on items as well
+* *file_mapping*: one of: item or long
+* *id_mapping*: one of: `none`, `betterbib`
+* *sort*: whether or not to sort items `none` or `case` (non-case might be
+  added later)
 
 
 ## Process
