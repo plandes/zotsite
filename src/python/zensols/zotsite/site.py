@@ -14,6 +14,8 @@ from zensols.zotsite import (
     Library,
     PrintVisitor,
     Walker,
+    UnsortedWalker,
+    SortedWalker,
     BetterBibtexVisitor,
 )
 
@@ -27,12 +29,18 @@ class SiteCreator(object):
     def __init__(self, config: AppConfig = None):
         cnf = config.populate()
         self.db = DatabaseReader(config.data_dir, library_id=cnf.library_id)
+        self.sort = cnf.sort
         self.out_dir = config.get_option_path('out_dir', expect=False)
         self.config = config
 
     @property
+    @persisted('_walker')
     def walker(self) -> Walker:
-        return Walker()
+        walker = {'none': 'UnsortedWalker',
+                  'case': 'SortedWalker'}.get(self.sort)
+        if walker is None:
+            raise ValueError(f'unknown sort type: "{self.sort}"')
+        return globals()[walker]()
 
     @property
     @persisted('_library')

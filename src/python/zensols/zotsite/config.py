@@ -15,7 +15,7 @@ class AppConfig(ExtendedInterpolationConfig):
     def data_dir(self):
         return self.get_option_path('data_dir').expanduser()
 
-    def set_default(self, name: str, value: str, clobber: bool = None):
+    def set_default(self, name: str, value: str, clobber: object = None):
         if clobber is not None:
             self.set_option(name, clobber, self.default_section)
         elif name not in self.options and value is not None:
@@ -37,4 +37,5 @@ class AppConfig(ExtendedInterpolationConfig):
         self.set_default('id_mapping', 'none')
         self.set_default('out_dir', None, out_dir)
         self.set_default('name_pat', None, name_pat)
+        self.set_default('sort', 'none')
         return self

@@ -262,11 +262,34 @@ class PrintVisitor(Visitor):
         self.depth -= 1
 
 
-class Walker(object):
+class Walker(ABC):
+    @abstractmethod
     def walk(self, parent, visitor: Visitor):
         """Recursively traverse the object graph."""
+        pass
+
+
+class UnsortedWalker(Walker):
+    def walk(self, parent, visitor: Visitor):
         visitor.enter_parent(parent)
         for c in parent.children:
+            visitor.visit_child(c)
+            self.walk(c, visitor)
+        visitor.leave_parent(parent)
+
+
+class SortedWalker(Walker):
+    def __init__(self, key_fn=None, reverse=False):
+        if key_fn is None:
+            self.key_fn = lambda x: str(x)
+        else:
+            self.key_fn = key_fn
+        self.reverse = reverse
+
+    def walk(self, parent, visitor: Visitor):
+        visitor.enter_parent(parent)
+        kids = sorted(parent.children, key=self.key_fn, reverse=self.reverse)
+        for c in kids:
             visitor.visit_child(c)
             self.walk(c, visitor)
         visitor.leave_parent(parent)
