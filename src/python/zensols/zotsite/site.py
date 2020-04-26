@@ -1,8 +1,9 @@
+
 import logging
 from pathlib import Path
 import json
 import shutil
-from zensols.actioncli import persisted
+from zensols.persist import persisted
 from zensols.zotsite import (
     AppConfig,
     DatabaseReader,
@@ -14,9 +15,10 @@ from zensols.zotsite import (
     Library,
     PrintVisitor,
     Walker,
+    BetterBibtexVisitor,
+    # not used as literals, but imported to bind to the module namespace
     UnsortedWalker,
     SortedWalker,
-    BetterBibtexVisitor,
 )
 
 logger = logging.getLogger(__name__)

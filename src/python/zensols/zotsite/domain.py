@@ -2,7 +2,7 @@ import logging
 from abc import ABC, abstractmethod
 import re
 from pathlib import Path
-from zensols.actioncli import persisted
+from zensols.persist import persisted
 
 logger = logging.getLogger(__name__)
 

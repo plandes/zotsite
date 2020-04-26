@@ -4,7 +4,7 @@
 __author__ = 'Paul Landes'
 
 from pathlib import Path
-from zensols.actioncli import ExtendedInterpolationConfig
+from zensols.config import ExtendedInterpolationConfig
 
 
 class AppConfig(ExtendedInterpolationConfig):

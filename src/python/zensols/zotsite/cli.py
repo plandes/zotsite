@@ -1,4 +1,4 @@
-from zensols.actioncli import OneConfPerActionOptionsCliEnv
+from zensols.cli import OneConfPerActionOptionsCliEnv
 from zensols.zotsite import (
     SiteCreator,
     AppConfig,

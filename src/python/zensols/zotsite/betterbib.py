@@ -1,8 +1,7 @@
 import logging
-from pathlib import Path
 import json
 import sqlite3
-from zensols.actioncli import persisted
+from zensols.persist import persisted
 from zensols.zotsite import (
     ZoteroObject,
     Item,
