@@ -28,6 +28,8 @@ class NavCreateVisitor(Visitor):
                   'patent': 'certificate',
                   'blogPost': 'pencil'}
     UPPER = re.compile(r'([A-Z][a-z]+)')
+    PDF_EXT_REGEXP = re.compile(r'.*\.pdf$')
+    PDF_FULL_REGEXP = re.compile(r'^.*Full\s*[tT]ext PDF')
     CAPS_META_KEYS = set('url'.split())
 
     def __init__(self, lib, itemmapper: ItemMapper):
@@ -82,12 +84,20 @@ class NavCreateVisitor(Visitor):
                 mdarr.append((k, v))
             return mdarr
 
-    def _find_child_resource(self, item: Item, ext: str):
-        res = tuple(filter(lambda p: p is not None and p.endswith(ext),
+    def _find_child_resource(self, item: Item, pat: re.Pattern):
+        res = tuple(filter(lambda p: p is not None and pat.match(p),
                            map(lambda c: self.itemmapper.get_resource_name(c),
                                item.children)))
         if len(res) == 1:
             return res[0]
+
+    def _find_child_name(self, item: Item, pat: re.Pattern):
+        res = tuple(filter(lambda p: p is not None and pat.match(p),
+                           map(lambda c: c.name, item.children)))
+        if len(res) > 0:
+            for c in item.children:
+                if c.name == res[0]:
+                    return self.itemmapper.get_resource_name(c)
 
     def create_node(self, item: Item):
         "Create a node for an item."
@@ -108,7 +118,9 @@ class NavCreateVisitor(Visitor):
                 node['metadata'] = meta
                 res = self.itemmapper.get_resource_name(item)
                 if res is None:
-                    res = self._find_child_resource(item, '.pdf')
+                    res = self._find_child_resource(item, self.PDF_EXT_REGEXP)
+                if res is None:
+                    res = self._find_child_name(item, self.PDF_FULL_REGEXP)
                 if res is not None:
                     node['resource'] = res
             if creators is not None:
