@@ -11,6 +11,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Changed
 - Upgrade to [zensols.util] 1.2.0.
 
+### Removed
+- Drop support for Python 3.6.
+
 ### Added
 - Added icons for thesis, patents and blog posts.
 - Added option to sort items in the tree navigation.
