@@ -8,6 +8,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ## [Unreleased]
 
 
+### Changed
+- Upgrade to [zensols.util] 1.2.0.
+
 ### Added
 - Added icons for thesis, patents and blog posts.
 - Added option to sort items in the tree navigation.
@@ -97,3 +100,4 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 <!-- links -->
 [BetterBibtex]: https://github.com/retorquere/zotero-better-bibtex
 [ZotFile]: http://zotfile.com
+[zensols.util]: https://github.com/plandes/util
