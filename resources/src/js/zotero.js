@@ -101,12 +101,13 @@ function ZoteroManager(levels, meta) {
 	topPanel.classList.add('justify-content-between');
 	topPanel.classList.add('content-head-pane');
 
-	// add the pdf/html attachemnt if it exists, otherwise direct the user via
-	// add tool tip if no attachement
+	// add the pdf/html attachemnt if it exists, otherwise direct the user
+	// via; add tool tip if no attachement
 	btn.action = node.resource;
-	if (node.resource) {//node.item_type == 'attachment') {
+	if (node.resource) {
 	    btn.onClick = node.resource;
-	    btn.setAttribute('onClick', "location.href='" + node.resource + "'");
+	    btn.setAttribute('onClick', "location.href='" +
+			     node.resource + "'");
 	} else {
 	    btn.classList.add('disabled');
 	    btn.setAttribute('data-toggle', 'tooltip');
@@ -124,7 +125,8 @@ function ZoteroManager(levels, meta) {
 
     // populate the link button and update main screen link
     function updateLink(node) {
-	var itemDocLinkButton = document.getElementById("item-document-link-button");
+	var itemDocLinkButton = document.getElementById(
+	    "item-document-link-button");
 	var link = null;
 	if (node) {
 	    link = createDocumentLink(node);

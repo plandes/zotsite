@@ -1,7 +1,10 @@
 from abc import ABC, abstractmethod
 import logging
 import re
-from zensols.zotsite import Item, Library
+from zensols.zotsite import (
+    Item,
+    Library,
+)
 
 logger = logging.getLogger(__name__)
 
