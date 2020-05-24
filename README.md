@@ -1,4 +1,4 @@
-# Export Zotero to a web site
+# Zotsite
 
 [![Travis CI Build Status][travis-badge]][travis-link]
 [![PyPI][pypi-badge]][pypi-link]
@@ -14,7 +14,7 @@ This generated website has the following features:
 * Search function dynamically narrows down the papers you're looking for.
 * Embed links to a specific collection, article, item, note etc.
 * Export only a portion of your collection with regular expressions using the
-  collection name.
+collection name.
 * [BetterBibtex] integration.
 * Snazzy look and feel from the latest [Bootstrap] CSS/Javascript library.
 
@@ -25,13 +25,13 @@ This generated website has the following features:
 - [Ubuntu and Linux Systems with Python 3.5 or Previous Version](#ubuntu-and-linux-systems-with-python-35-or-previous-version)
 - [Sample Site](#sample-site)
 - [Usage](#usage)
-    - [Show Structure](#show-structure)
-    - [Website Creation](#website-creation)
-    - [Subcollections](#subcollections)
-    - [Configuration File](#configuration-file)
+- [Show Structure](#show-structure)
+- [Website Creation](#website-creation)
+- [Subcollections](#subcollections)
+- [Configuration File](#configuration-file)
 - [Process](#process)
-    - [Keeping the Website In Sync With Zotero](#keeping-the-website-in-sync-with-zotero)
-    - [Platform](#platform)
+- [Keeping the Website In Sync With Zotero](#keeping-the-website-in-sync-with-zotero)
+- [Platform](#platform)
 - [Command Line Help](#command-line-help)
 - [Attribution](#attribution)
 - [Screenshot](#screenshot)
@@ -42,6 +42,11 @@ This generated website has the following features:
 
 <!-- markdown-toc end -->
 
+
+
+## Documentation
+
+See the [full documentation](https://plandes.github.io/zotsite/index.html).
 
 
 ## Obtaining
@@ -159,7 +164,7 @@ include:
 * *file_mapping*: one of: item or long
 * *id_mapping*: one of: `none`, `betterbib`
 * *sort*: whether or not to sort items `none` or `case` (non-case might be
-  added later)
+added later)
 
 
 ## Process
@@ -167,8 +172,8 @@ include:
 The tool does the following:
 
 1. Exports the meta data (directory structure, references, notes, etc) from
-   your [Zotero] library.  On MacOS, this is done by querying the file system
-   SQLite DB files.
+your [Zotero] library.  On MacOS, this is done by querying the file system
+SQLite DB files.
 2. Copies a static site that enables traversal of the exported data.
 3. Copies your [Zotero] stored papers, snapshot (sites) etc.
 4. Generates a navigation tree to easily find your papers/content.
@@ -195,19 +200,19 @@ Command line usage as provided with the `--help` option:
 Usage: zotsite <list|export|print|tmp> [options]
 
 Options:
-  --version             show program's version number and exit
-  -h, --help            show this help message and exit
-  -w NUMBER, --whine=NUMBER
-                        add verbosity to logging
-  -c FILE, --config=FILE
-                        configuration file
+--version             show program's version number and exit
+-h, --help            show this help message and exit
+-w NUMBER, --whine=NUMBER
+add verbosity to logging
+-c FILE, --config=FILE
+configuration file
 Actions:
-  export  Export
-  -o, --outputdir <string>  ./zotsite  the directory to output the website
-  --collection <string>                regular expression pattern to match collections
+export  Export
+-o, --outputdir <string>  ./zotsite  the directory to output the website
+--collection <string>                regular expression pattern to match collections
 
-  print   Print structure
-  --collection <string>                regular expression pattern to match collections
+print   Print structure
+--collection <string>                regular expression pattern to match collections
 ```
 
 
@@ -231,12 +236,12 @@ Also see the [live demo].
 ## Todo
 
 * Make the site portion a proper Javascript site.  Right now, all the `min`s
-  are added in the distribution to same directory as
-  the [main navigation/content](src/site/js/zotero.js) file.
+are added in the distribution to same directory as
+the [main navigation/content](src/site/js/zotero.js) file.
 * Add functionality to the disabled *View* button that drills down in a paper
-  and finds a PDF or site to view withouth the user having to do this.
+and finds a PDF or site to view withouth the user having to do this.
 * Use something like zotxt to make this work with a plugin rather than directly
-  against the SQLite DB.
+against the SQLite DB.
 
 
 ## Zotero Plugin Listing
@@ -251,25 +256,9 @@ An extensive changelog is available [here](CHANGELOG.md).
 
 ## License
 
-Copyright © 2018 - 2020 Paul Landes
+[MIT License](LICENSE.md)
 
-Permission is hereby granted, free of charge, to any person obtaining a copy of
-this software and associated documentation files (the "Software"), to deal in
-the Software without restriction, including without limitation the rights to
-use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies
-of the Software, and to permit persons to whom the Software is furnished to do
-so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
+Copyright (c) 2020 Paul Landes
 
 
 <!-- links -->

@@ -1,3 +1,5 @@
+# License
+
 MIT License
 
 Copyright © 2019 Paul Landes

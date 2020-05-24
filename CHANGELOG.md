@@ -6,6 +6,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 
 ## [Unreleased]
+### Added
+- Sphinx documentation, which includes API docs.
+### Changed
+- Upgrade to [zensols.util] 1.2.5.
 
 
 ## [0.3.3] - 2020-04-25
