@@ -5,6 +5,7 @@
    Overview <index.md>
    doc/*
    API Reference <api.rst>
+   Contributing <CONTRIBUTING.md>
 
 
 Indices and tables
