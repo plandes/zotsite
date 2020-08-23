@@ -20,7 +20,7 @@ include ./zenbuild/main.mk
 
 .PHONY:			cpdemo
 cpdemo:
-			@echo "COPY DEMO"
+			@echo "copy zotsite demo"
 			mkdir -p $(PY_DOC_BUILD_HTML)
 			cp -r $(SITE_DEMO) $(PY_DOC_BUILD_HTML)
 
@@ -57,3 +57,4 @@ display:		export
 demo:			clean
 			rm -fr $(SITE_DEMO)
 			make PYTHON_BIN_ARGS='export -o $(SITE_DEMO) --collection $(COLL_ARGS)' run
+			touch $(SITE_DEMO)/.nojekyll
