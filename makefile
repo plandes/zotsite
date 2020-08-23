@@ -9,7 +9,7 @@ PYTHON_BIN_ARGS ?=	export -o $(WEB_PKG_DIR)
 
 # project
 COLL_ARGS =		.*generalized\ distance\|Weighted\|.*Imperative\|Semantics
-SITE_SAMPLE =		doc/sample
+SITE_DEMO =		doc/demo
 PY_DOC_BUILD_HTML_DEPS += cpdemo
 
 
@@ -22,7 +22,7 @@ include ./zenbuild/main.mk
 cpdemo:
 			@echo "COPY DEMO"
 			mkdir -p $(PY_DOC_BUILD_HTML)
-			cp -r doc/demo $(PY_DOC_BUILD_HTML)
+			cp -r $(SITE_DEMO) $(PY_DOC_BUILD_HTML)
 
 .PHONY:			web
 web:
@@ -53,7 +53,7 @@ display:		export
 				osascript -e 'tell application "Safari" to set URL of document 1 to URL of document 1' ; \
 			fi
 
-.PHONY:			sample
-sample:			clean
-			rm -fr $(SITE_SAMPLE)
-			make PYTHON_BIN_ARGS='export -o $(SITE_SAMPLE) --collection $(COLL_ARGS)' run
+.PHONY:			demo
+demo:			clean
+			rm -fr $(SITE_DEMO)
+			make PYTHON_BIN_ARGS='export -o $(SITE_DEMO) --collection $(COLL_ARGS)' run

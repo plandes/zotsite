@@ -156,7 +156,7 @@ Copyright (c) 2020 Paul Landes
 [gitter-badge]: https://badges.gitter.im/zoterosite/gitter.png
 
 [pypi]: https://pypi.org/project/zensols.zotsite/
-[live demo]: https://plandes.github.io/zotsite/doc/sample/index.html
+[live demo]: https://plandes.github.io/zotsite/demo/index.html
 
 [Zotero]: https://www.zotero.org
 [Bootstrap]: https://getbootstrap.com
