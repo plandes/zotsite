@@ -2,7 +2,7 @@
 
 # build
 PROJ_TYPE=		python
-PROJ_MODULES=		git python-doc python-resources
+PROJ_MODULES=		git python-doc python-resources python-doc-deploy
 WEB_PKG_DIR=		$(MTARG)/site
 WEB_BROWSER=		firefox-repeat
 PYTHON_BIN_ARGS ?=	export -o $(WEB_PKG_DIR)
