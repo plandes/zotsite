@@ -1,1 +1,1 @@
-zensols.util==1.2.5
+zensols.util>=1.3.0
