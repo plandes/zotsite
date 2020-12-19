@@ -8,6 +8,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ## [Unreleased]
 
 
+### Changed
+- Switch from travis to github workflows.
+
+
 ## [0.3.4] - 2020-12-09
 ### Added
 - Sphinx documentation, which includes API docs.
