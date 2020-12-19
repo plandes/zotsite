@@ -1,8 +1,9 @@
 # Zotsite
 
-[![Travis CI Build Status][travis-badge]][travis-link]
 [![PyPI][pypi-badge]][pypi-link]
 [![Python 3.7][python37-badge]][python37-link]
+[![Python 3.8][python38-badge]][python38-link]
+[![Build Status][build-badge]][build-link]
 [![Gitter chat][gitter-badge]][gitter-link]
 
 This project exports your local [Zotero] library to a usable HTML website.
@@ -150,8 +151,8 @@ Copyright (c) 2020 Paul Landes
 
 
 <!-- links -->
-[travis-link]: https://travis-ci.org/plandes/zotsite
-[travis-badge]: https://travis-ci.org/plandes/zotsite.svg?branch=master
+[build-link]: https://github.com/plandes/zotsite/actions
+[build-badge]: https://github.com/plandes/zotsite/workflows/CI/badge.svg
 [gitter-link]: https://gitter.im/zoterosite/zotsite
 [gitter-badge]: https://badges.gitter.im/zoterosite/gitter.png
 
@@ -170,5 +171,7 @@ Copyright (c) 2020 Paul Landes
 
 [python37-link]: https://www.python.org/downloads/release/python-370
 [python37-badge]: https://img.shields.io/badge/python-3.7-blue.svg
+[python38-link]: https://www.python.org/downloads/release/python-380
+[python38-badge]: https://img.shields.io/badge/python-3.8-blue.svg
 [pypi-badge]: https://img.shields.io/pypi/v/zensols.zotsite.svg
 [pypi-link]: https://pypi.python.org/pypi/zensols.zotsite
