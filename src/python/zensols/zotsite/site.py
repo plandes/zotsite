@@ -3,6 +3,8 @@ import logging
 from pathlib import Path
 import json
 import shutil
+import sys
+from io import TextIOBase
 from zensols.persist import persisted
 from zensols.zotsite import (
     AppConfig,
@@ -32,7 +34,10 @@ class SiteCreator(object):
         cnf = config.populate()
         self.db = DatabaseReader(config.data_dir, library_id=cnf.library_id)
         self.sort = cnf.sort
-        self.out_dir = config.get_option_path('out_dir', expect=False)
+        if config.has_option('out_dir'):
+            self.out_dir = config.get_option_path('out_dir')
+        else:
+            self.out_dir = None
         self.config = config
 
     @property
@@ -48,14 +53,18 @@ class SiteCreator(object):
     @persisted('_library')
     def library(self) -> Library:
         lib = self.db.get_library()
-        name_pat = self.config.get_option('name_pat', expect=False)
-        if name_pat is not None:
+        if self.config.has_option('name_pat'):
+            name_pat = self.config.get_option('name_pat')
             logger.info(f'filtering on \'{name_pat}\'')
-            match_children = self.config.get_option_boolean(
-                'match_children', expect=False)
+            if self.config.has_option('match_children'):
+                match_children = self.config.get_option_boolean(
+                    'match_children')
+            else:
+                match_children = None
             visitor = PruneVisitor(name_pat, match_children)
             self.walker.walk(lib, visitor)
-        id_mapping = self.config.get_option('id_mapping', expect=False)
+        if self.config.has_option('id_mapping'):
+            id_mapping = self.config.get_option('id_mapping')
         if id_mapping == 'none':
             pass
         elif id_mapping == 'betterbib':
@@ -77,11 +86,11 @@ class SiteCreator(object):
             raise ValueError(f'unknown file mapping: {name}')
         return mapper
 
-    def print_structure(self):
+    def print_structure(self, writer: TextIOBase = sys.stdout):
         """Print (sub)collections and papers in those collections as a tree.
 
         """
-        self.walker.walk(self.library, PrintVisitor())
+        self.walker.walk(self.library, PrintVisitor(writer))
 
     def _write_meta(self, fname):
         """Write version and other metadata to the website, which is used during

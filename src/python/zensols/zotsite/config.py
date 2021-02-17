@@ -4,13 +4,10 @@
 __author__ = 'Paul Landes'
 
 from pathlib import Path
-from zensols.config import ExtendedInterpolationConfig
+from zensols.config import ExtendedInterpolationEnvConfig
 
 
-class AppConfig(ExtendedInterpolationConfig):
-    def __init__(self, *args, **kwargs):
-        super(AppConfig, self).__init__(*args, default_expect=True, **kwargs)
-
+class AppConfig(ExtendedInterpolationEnvConfig):
     @property
     def data_dir(self):
         return self.get_option_path('data_dir').expanduser()

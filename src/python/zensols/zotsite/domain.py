@@ -1,6 +1,7 @@
 import logging
 from abc import ABC, abstractmethod
 import re
+from io import TextIOBase
 from pathlib import Path
 from zensols.persist import persisted
 
@@ -247,12 +248,13 @@ class Visitor(ABC):
 
 
 class PrintVisitor(Visitor):
-    def __init__(self):
+    def __init__(self, writer: TextIOBase):
+        self.writer = writer
         self.depth = 0
 
     def enter_parent(self, parent: ZoteroObject):
-        print(f"{' ' * (self.depth * 4)}{str(parent)} " +
-              f'({parent.__class__.__name__})')
+        self.writer.write(f"{' ' * (self.depth * 4)}{str(parent)} " +
+                          f'({parent.__class__.__name__})\n')
         self.depth += 1
 
     def visit_child(self, child: ZoteroObject):
