@@ -8,8 +8,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ## [Unreleased]
 
 
+## [0.3.5] - 2021-03-16
 ### Changed
 - Switch from travis to github workflows.
+- Upgrade to [zensols.util] 1.4.1.
 
 
 ## [0.3.4] - 2020-12-09
@@ -103,7 +105,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Initial version
 
 
-[Unreleased]: https://github.com/plandes/zotsite/compare/v0.3.4...HEAD
+[Unreleased]: https://github.com/plandes/zotsite/compare/v0.3.5...HEAD
+[0.3.5]: https://github.com/plandes/zotsite/compare/v0.3.4...v0.3.5
 [0.3.4]: https://github.com/plandes/zotsite/compare/v0.3.3...v0.3.4
 [0.3.3]: https://github.com/plandes/zotsite/compare/v0.3.2...v0.3.3
 [0.3.2]: https://github.com/plandes/zotsite/compare/v0.3.1...v0.3.2
