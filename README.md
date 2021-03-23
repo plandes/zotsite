@@ -75,6 +75,14 @@ zotsite export -o <sitedir>
 See [usage](doc/usage.md) for more information.
 
 
+### Configuration File
+
+Either an environment variable `ZOTSITERC` must be set or a `-c` configuration
+option must be given and point to a file to customize how the program works.
+See the test [configuration file] for an example and inline comments for more
+detail on how and what can be configured.
+
+
 ## Ubuntu and Linux Systems with Python 3.5 or Previous Version
 
 Please [read this issue](https://github.com/plandes/zotsite/issues/4) if you
