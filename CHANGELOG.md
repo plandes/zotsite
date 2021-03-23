@@ -8,6 +8,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ## [Unreleased]
 
 
+## [0.3.6] - 2021-03-23
+### Changed
+- Add pattern support for attachment prefix in items.
+
+
 ## [0.3.5] - 2021-03-16
 ### Changed
 - Switch from travis to github workflows.
@@ -105,7 +110,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Initial version
 
 
-[Unreleased]: https://github.com/plandes/zotsite/compare/v0.3.5...HEAD
+[Unreleased]: https://github.com/plandes/zotsite/compare/v0.3.6...HEAD
+[0.3.6]: https://github.com/plandes/zotsite/compare/v0.3.5...v0.3.6
 [0.3.5]: https://github.com/plandes/zotsite/compare/v0.3.4...v0.3.5
 [0.3.4]: https://github.com/plandes/zotsite/compare/v0.3.3...v0.3.4
 [0.3.3]: https://github.com/plandes/zotsite/compare/v0.3.2...v0.3.3
