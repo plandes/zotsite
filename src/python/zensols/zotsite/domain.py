@@ -96,7 +96,7 @@ class Item(ZoteroObject):
     def __init__(self, sel, children):
         self.sel = sel
         super(Item, self).__init__(children)
-        self.storage_pat = re.compile('^storage:(.+)$')
+        self.storage_pat = re.compile('^(?:storage|attachments):(.+)$')
 
     def get_db_id(self):
         return self.sel['i_id']
@@ -132,7 +132,7 @@ class Item(ZoteroObject):
     def path(self):
         abs_path = None
         path = self.sel['path']
-        if path:
+        if path is not None:
             m = self.storage_pat.match(path)
             if m is None:
                 # assume ZoteroFile is used
