@@ -10,7 +10,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [0.3.6] - 2021-03-23
 ### Changed
-- Add pattern support for attachment prefix in items.
+- Add pattern support for attachment prefix in items.  It appears that it acts
+  like `storage` used to point to a file in the storage path.  See issue
+  [#18](https://github.com/plandes/zotsite/issues/18).
 
 
 ## [0.3.5] - 2021-03-16
