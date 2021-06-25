@@ -55,6 +55,10 @@ library.  *Note:* To my knowledge, all of these resources are free to
 distribute and violate no laws.  If I've missed one,
 please [create an issue](CONTRIBUTING.md).
 
+## Requirements  
+
+[BetterBibtex] plugin for Zotero.  
+
 
 ## Usage
 
@@ -69,8 +73,16 @@ zotsite print
 To create the stand-alone site, run the program (without the angle brackets):
 
 ```bash
-zotsite export -o <sitedir>
+zotsite export
 ```
+
+If your library is not in the default $HOME/zotero directory you will need to change that path by making a zotsite.conf config file:
+
+```bash
+zotsite export -c zotsite.conf
+```
+
+This will create the html files in the directory ./zotsite
 
 See [usage](doc/usage.md) for more information.
 
