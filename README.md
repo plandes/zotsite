@@ -55,9 +55,9 @@ library.  *Note:* To my knowledge, all of these resources are free to
 distribute and violate no laws.  If I've missed one,
 please [create an issue](CONTRIBUTING.md).
 
-## Requirements  
+## Requirements
 
-[BetterBibtex] plugin for Zotero.  
+[BetterBibtex] plugin for Zotero.
 
 
 ## Usage
