@@ -29,7 +29,8 @@ window.onload = function() {
     var url = new URL(window.location.href);
     var treeLevels = url.searchParams.get('levels') || 1;
     var nodeId = url.searchParams.get('id');
-    var zot = new ZoteroManager(treeLevels, zoteroMeta);
+    var isView = (url.searchParams.get('isView') != null);
+    var zot = new ZoteroManager(treeLevels, zoteroMeta, isView);
     zot.init(nodeId);
 
     $('#init-button').click(function() { zot.reset(); })

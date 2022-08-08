@@ -1,6 +1,7 @@
-function ZoteroManager(levels, meta) {
+function ZoteroManager(levels, meta, isView) {
     this.levels = levels;
     this.meta = meta;
+    this.isView = isView;
 
     // create the metadata table, which is the key/value pairs given from a zotero
     // collection (sub folder) or attachment
@@ -90,6 +91,7 @@ function ZoteroManager(levels, meta) {
 	btn.classList.add('btn-sm');
 	btn.classList.add('content-head-pane-btn');
 	btn.setAttribute('type', 'button');
+	btn.id = "view-button";
 	btn.appendChild(document.createTextNode('View'));
 	topElem = document.createElement('div');
 	topElem.appendChild(btn);
@@ -454,6 +456,11 @@ function ZoteroManager(levels, meta) {
 	console.log(itemToJs);
 	if (itemId) {
 	    showItem(itemId, itemToJs);
+	}
+
+	console.log('isView: ' + isView);
+	if (isView) {
+	    $('#view-button').click();
 	}
     }
 }

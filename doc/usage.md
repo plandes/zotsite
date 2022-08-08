@@ -102,3 +102,12 @@ site, which is [here](src/sh/zotsync.sh).
 
 This project uses the SQLite Python library and should run on other platforms
 but assumes a directory structure that's been tested on OSX.
+
+
+## URL Parameters
+
+The generated website takes the following URL encoded parameters:
+
+* **levels**: The number of levels to display in the left navigation tree.
+* **id**: The document ID used to display and navigate when the page loads.
+* **isView**: if `1`, go directly to the PDF rather than the information page.
