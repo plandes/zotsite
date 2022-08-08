@@ -24,6 +24,10 @@ cpdemo:
 			mkdir -p $(PY_DOC_BUILD_HTML)
 			cp -r $(SITE_DEMO) $(PY_DOC_BUILD_HTML)
 
+.PHONY:			zsrun
+zsrun:
+			./zotsite $(PYTHON_BIN_ARGS)
+
 .PHONY:			web
 web:
 			open $(WEB_PKG_DIR)/index.html
@@ -31,17 +35,17 @@ web:
 
 .PHONY:			print
 print:
-			make PYTHON_BIN_ARGS='print --collection $(COLL_ARGS)' run
+			make PYTHON_BIN_ARGS='print --collection $(COLL_ARGS)' zsrun
 
 .PHONY:			export
 export:
 			mkdir -p $(MTARG)
-			make PYTHON_BIN_ARGS='export -o $(WEB_PKG_DIR)' run
+			make PYTHON_BIN_ARGS='export -o $(WEB_PKG_DIR)' zsrun
 
 .PHONY:			selection
 selection:
 			mkdir -p $(MTARG)
-			make PYTHON_BIN_ARGS='export -o $(WEB_PKG_DIR) --collection $(COLL_ARGS)' run
+			make PYTHON_BIN_ARGS='export -o $(WEB_PKG_DIR) --collection $(COLL_ARGS)' zsrun
 
 .PHONY:			display
 display:		export
@@ -56,5 +60,5 @@ display:		export
 .PHONY:			demo
 demo:			clean
 			rm -fr $(SITE_DEMO)
-			make PYTHON_BIN_ARGS='export -o $(SITE_DEMO) --collection $(COLL_ARGS)' run
+			make PYTHON_BIN_ARGS='export -o $(SITE_DEMO) --collection $(COLL_ARGS)' zsrun
 			touch $(SITE_DEMO)/.nojekyll
