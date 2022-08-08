@@ -1,1 +1,1 @@
-zensols.util>=1.4.1
+zensols.util~=1.4.1
