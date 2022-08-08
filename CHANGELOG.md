@@ -8,6 +8,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ## [Unreleased]
 
 
+## [0.4.0] - 2022-08-08
+### Added
+- Add URL parameter to go directly to the PDF.
+
+
 ## [0.3.6] - 2021-03-23
 ### Changed
 - Add pattern support for attachment prefix in items.  It appears that it acts
@@ -112,7 +117,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Initial version
 
 
-[Unreleased]: https://github.com/plandes/zotsite/compare/v0.3.6...HEAD
+[Unreleased]: https://github.com/plandes/zotsite/compare/v0.4.0...HEAD
+[0.4.0]: https://github.com/plandes/zotsite/compare/v0.3.6...v0.4.0
 [0.3.6]: https://github.com/plandes/zotsite/compare/v0.3.5...v0.3.6
 [0.3.5]: https://github.com/plandes/zotsite/compare/v0.3.4...v0.3.5
 [0.3.4]: https://github.com/plandes/zotsite/compare/v0.3.3...v0.3.4
