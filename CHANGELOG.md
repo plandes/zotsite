@@ -12,6 +12,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Added
 - Add URL parameter to go directly to the PDF.
 
+### Changed
+- Fix `zensols.util` dependency for Python 3.7 and 3.8 comparability.
+
 
 ## [0.3.6] - 2021-03-23
 ### Changed
