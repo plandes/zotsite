@@ -1,3 +1,4 @@
+from typing import List, Dict
 import logging
 import re
 from zensols.zotsite import (
@@ -10,14 +11,6 @@ from zensols.zotsite import (
 
 logger = logging.getLogger(__name__)
 
-def sort_nodes(lst,by='item_title'):
-    """Sort the nodes in the root node.  The default is to sort by item title.
-    """
-    assert type(lst) == list
-    lst.sort(key=lambda n: n[by])
-    for n in lst:
-        if 'nodes' in n:
-            sort_nodes(n['nodes'], by)
 
 class NavCreateVisitor(Visitor):
     """This class creates the data structure used by the Javascript navigation
@@ -57,9 +50,19 @@ class NavCreateVisitor(Visitor):
     @property
     def primary_roots(self):
         "Return the (root level) collections."
+
+        def sort_nodes(lst: List[Dict[str, str]], by: str = 'item_title'):
+            """Sort the nodes in the root node.  The default is to sort by item
+            title.
+
+            """
+            assert type(lst) == list
+            lst.sort(key=lambda n: n[by])
+            for n in lst:
+                if 'nodes' in n:
+                    sort_nodes(n['nodes'], by)
+
         target = self.root['nodes'][0]['nodes']
-        # sort target by nodes' "text"
-        # target.sort(key=lambda n: n['text'])
         sort_nodes(target)
         return target
 
