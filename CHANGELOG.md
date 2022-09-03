@@ -8,6 +8,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ## [Unreleased]
 
 
+## Changes
+- Sort nodes by item name in the left tree navigation (thanks to
+  [Cai-98](https://github.com/Cai-98)).
+
+
 ## [0.4.0] - 2022-08-08
 ### Added
 - Add URL parameter to go directly to the PDF.
