@@ -10,14 +10,6 @@ from zensols.zotsite import (
 
 logger = logging.getLogger(__name__)
 
-def sort_nodes(lst,by='item_title'):
-    """Sort the nodes in the root node.  The default is to sort by item title.
-    """
-    assert type(lst) == list
-    lst.sort(key=lambda n: n[by])
-    for n in lst:
-        if 'nodes' in n:
-            sort_nodes(n['nodes'], by)
 
 class NavCreateVisitor(Visitor):
     """This class creates the data structure used by the Javascript navigation
@@ -25,7 +17,7 @@ class NavCreateVisitor(Visitor):
 
     """
     ITEM_ICONS = {'computerProgram': 'floppy-disk',
-                  'conferencePaper': 'file',
+                  'conferencePaper': 'pencil',
                   'journalArticle': 'file',
                   'attachment': 'paperclip',
                   'bookSection': 'book',
@@ -57,11 +49,7 @@ class NavCreateVisitor(Visitor):
     @property
     def primary_roots(self):
         "Return the (root level) collections."
-        target = self.root['nodes'][0]['nodes']
-        # sort target by nodes' "text"
-        # target.sort(key=lambda n: n['text'])
-        sort_nodes(target)
-        return target
+        return self.root['nodes'][0]['nodes']
 
     def icon_name(self, node):
         "Return the name of the icon name for ``node``."
