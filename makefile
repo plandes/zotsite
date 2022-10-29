@@ -6,12 +6,14 @@
 PROJ_TYPE =		python
 PROJ_MODULES =		git python-resources python-cli python-doc python-doc-deploy
 INFO_TARGETS +=		appinfo
+ADD_CLEAN +=		zotero-site
 
 # Project
 #
 COLL_ARGS =		.*generalized\ distance\|Weighted\|.*Imperative\|Semantics
 SITE_DEMO =		doc/demo
 WEB_PKG_DIR=		$(MTARG)/site
+ENTRY= 			./zotsite
 
 # add app configuration to command line arguments
 PY_CLI_ARGS +=		-c test-resources/zotsite.conf
@@ -26,12 +28,15 @@ appinfo:
 
 .PHONY:			export
 export:
-			$(eval PY_CLI_ARGS=export -o $(WEB_PKG_DIR) $(PY_CLI_ARGS))
-			@make PY_CLI_DEBUG=1 PY_CLI_ARGS="$(PY_CLI_ARGS)" pycli
+			$(ENTRY) $(PY_CLI_ARGS)
+
+.PHONY:			exportsubset
+exportsubset:
+			$(ENTRY) --collection $(COLL_ARGS) $(PY_CLI_ARGS)
 
 .PHONY:			print
 print:
-			./zotsite print --collection $(COLL_ARGS) $(PY_CLI_ARGS)
+			$(ENTRY) print --collection $(COLL_ARGS) $(PY_CLI_ARGS)
 
 .PHONY:			testprint
 testprint:

@@ -50,7 +50,8 @@ class FileSystemCopyVisitor(Visitor):
                         parent.mkdir(parents=True, exist_ok=True)
                     src, dst = str(src), str(dst)
                     logger.debug(f'shcopy: {src} -> {dst}')
-                    shutil.copy(src, dst)
+                    shutil.copyfile(src, dst)
+                    shutil.copystat(src, dst)
 
     def leave_parent(self, parent: ZoteroObject):
         pass

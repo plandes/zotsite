@@ -1,3 +1,4 @@
 *.pyc
 *_flymake.py
 /target
+/zotero-site

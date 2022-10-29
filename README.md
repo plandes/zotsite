@@ -133,6 +133,8 @@ print                              print (sub)collections and papers in those co
 
 This software uses:
 * Python 3
+* [jQuery] version 3
+* [DataTables] version 1.12
 * [Bootstrap] version 4
 * [Tree View] for Bootstrap
 * [Popper] for tooltips
@@ -190,6 +192,8 @@ Copyright (c) 2019 - 2022 Paul Landes
 [live demo]: https://plandes.github.io/zotsite/demo/index.html
 
 [Zotero]: https://www.zotero.org
+[jQuery]: https://jquery.com
+[DataTables]: https://datatables.net
 [Bootstrap]: https://getbootstrap.com
 [Tree View]: https://github.com/jonmiles/bootstrap-treeview
 [Popper]: https://popper.js.org

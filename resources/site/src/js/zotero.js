@@ -185,6 +185,93 @@ function ZoteroManager(levels, meta, isView) {
 	}
     }
 
+    // create the table with the collection information of children paper node
+    function createCollectionTable(node) {
+	function createTable(cols, rows) {
+	    var tab = document.createElement('table');
+	    var thead = document.createElement('thead');
+	    var tbody = document.createElement('tbody');
+	    var tr = document.createElement('tr');
+	    var tabItemToJs = mapItemToJs();
+
+	    function addHeaderCols(cols) {
+		for (var i = 0; i < cols.length; i++) {
+		    var th = document.createElement('th');
+		    th.appendChild(document.createTextNode(cols[i]));
+		    tr.appendChild(th);
+		}
+	    }
+
+	    function addRow(cells) {
+		var tr = document.createElement('tr');
+		for (var i = 0; i < cells.length; i++) {
+		    var cell = cells[i];
+		    var itemId = cell[0];
+		    var cellText = cell[1];
+		    var td = document.createElement('td');
+		    var tnode = document.createTextNode(cellText);
+		    td.classList.add(['word-wrap', 'break-word', 'meta-table-val']);
+		    tr.appendChild(td);
+		    if (i == 0) {
+			var link = document.createElement('a');
+			link.href = itemId;
+			link.onclick = function(e) {
+			    e.preventDefault();
+			    showItem(itemId, tabItemToJs);
+			}
+			link.appendChild(tnode);
+			td.appendChild(link);
+		    } else {
+			td.appendChild(tnode);
+		    }
+		}
+		tbody.appendChild(tr);
+	    }	    
+
+	    tab.id = 'summary-table';
+	    tab.cellspaceing = 0;
+	    tab.width = '100%';
+	    thead.classList.add('meta-thead');
+	    tab.appendChild(thead);
+	    tab.appendChild(tbody);
+	    thead.appendChild(tr);
+
+	    addHeaderCols(cols);
+	    for (var rix = 0; rix < rows.length; rix++) {
+		addRow(rows[rix]);
+	    }
+	    return tab;
+	}
+
+	var cols = ['Title', 'Creators', 'Date'];
+	var childs = node.nodes;
+	var rows = [];
+	var tab = null;
+
+	for (var i = 0; i < childs.length; i++) {
+	    var c = childs[i];
+	    var meta = c.metadata;
+	    if (meta != null) {
+		var metaByCol = {};
+		var row = [];
+		for (var mix = 0; mix < meta.length; mix++) {
+		    var mpair = meta[mix];
+		    metaByCol[mpair[0]] = mpair[1];
+		}
+		for (var cix = 0; cix < cols.length; cix++) {
+		    var col = cols[cix];
+		    var cval = metaByCol[col];
+		    if (cval == null) cval = '';
+		    row.push([c['item-id'], cval]);
+		}
+		rows.push(row);
+	    }
+	}
+
+	if (rows.length > 0) tab = createTable(cols, rows);
+	return tab
+    }
+
     // create the main (right) content pane in the main top level table
     // params:
     // node: the node currently selected in the left nav
@@ -202,10 +289,7 @@ function ZoteroManager(levels, meta, isView) {
 	    var nodeType;
 	    var hasContent;
 
-	    console.log('node: ' + node.text);
-
 	    // determine the type of node in the tree we're visiting
-	    //if (node.resource != null) {
 	    if (node.item_type == 'attachment') {
 		nodeType = 'attachment';
 	    } else if (node.item_type == 'note') {
@@ -228,11 +312,35 @@ function ZoteroManager(levels, meta, isView) {
 	if (hasContent) {
 	    headerPane(node, cont);
 	} else if (!hasNote) {
+	    // add collection table if we find the metadata level node;
+	    // otherwise give the "No Content" message
 	    var noc = document.createElement('div');
-
-	    cont.classList.add('center-cell');
-	    noc.classList.add('disabled-text');
-	    noc.appendChild(document.createTextNode('No Content'));
+	    var ctab = createCollectionTable(node);
+	    if (ctab != null) {
+		console.log('adding collection table');
+		var root = document.createElement('div');
+		var title = document.createElement('div');
+		var header = document.createElement('h1');
+		header.classList.add('bd-title');
+		header.appendChild(document.createTextNode(node.item_title));
+		root.classList.add('nav-item');
+		ctab.classList.add('table', 'border', 'meta-table');
+		$(document).ready(function () {
+		    $('#summary-table').DataTable({
+			// https://datatables.net/examples/basic_init/dom.html
+			dom: '<tp>',
+		    });
+		});
+		title.appendChild(header);
+		root.appendChild(title);
+		root.appendChild(ctab);
+		noc.appendChild(root);
+	    } else {
+		console.log('no data collection data found');
+		cont.classList.add('center-cell');
+		noc.classList.add('disabled-text');
+		noc.appendChild(document.createTextNode('No Content'));
+	    }
 	    cont.appendChild(noc);
 	}
 
@@ -277,8 +385,6 @@ function ZoteroManager(levels, meta, isView) {
 	    console.log('adding resource: ' + node.resource);
 	    var aelem = document.createElement('div');
 	    if (node.resource.endsWith('.html')) {
-		// var html = $('#stage').load(node.resource);
-		// console.log(html)
 		$.ajax({
 		    url: node.resource,
 		    type: 'GET',

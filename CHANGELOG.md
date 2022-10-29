@@ -8,6 +8,17 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ## [Unreleased]
 
 
+## [0.5.1] - 2022-10-29
+### Added
+- Added a collections table of all the child items/papers.  This involves
+  adding [DataTables] as a dependency.
+- Optionally view the created export in a browser using [zensols.showfile].
+
+### Changes
+- Storage (paper PDF files) keep time stamps to speed up rsync.
+- Upgraded to Bootstrap 4.6.2.
+
+
 ## [0.5.0] - 2022-10-28
 ### Changes
 - Sort nodes by item name in the left tree navigation (thanks to
@@ -135,7 +146,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Initial version
 
 
-[Unreleased]: https://github.com/plandes/zotsite/compare/v0.5.0...HEAD
+[Unreleased]: https://github.com/plandes/zotsite/compare/v0.5.1...HEAD
+[0.5.1]: https://github.com/plandes/zotsite/compare/v0.5.0...v0.5.1
 [0.5.0]: https://github.com/plandes/zotsite/compare/v0.4.0...v0.5.0
 [0.4.0]: https://github.com/plandes/zotsite/compare/v0.3.6...v0.4.0
 [0.3.6]: https://github.com/plandes/zotsite/compare/v0.3.5...v0.3.6
@@ -154,3 +166,5 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 [BetterBibtex]: https://github.com/retorquere/zotero-better-bibtex
 [ZotFile]: http://zotfile.com
 [zensols.util]: https://github.com/plandes/util
+[zensols.showfile]: https://github.com/plandes/showfile
+[DataTables]: https://datatables.net
