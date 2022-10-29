@@ -133,9 +133,11 @@ select c.firstName, c.lastName
         :param conn: the DB connection
 
         """
-        logger.debug(f'data_dir: {self.data_dir}')
+        if logger.isEnabledFor(logging.DEBUG):
+            logger.debug(f'data_dir: {self.data_dir}')
         wparams = {'library_id': self.library_id}
-        logger.debug('wparams: %s' % wparams)
+        if logger.isEnabledFor(logging.DEBUG):
+            logger.debug('wparams: %s' % wparams)
         items = {}
         for item in conn.execute(self._item_sql(wparams)):
             item['subs'] = []
