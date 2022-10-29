@@ -150,7 +150,7 @@ Also see the [live demo].
 
 * Make the site portion a proper Javascript site.  Right now, all the `min`s
   are added in the distribution to same directory as
-  the [main navigation/content](src/site/js/zotero.js) file.
+  the [main navigation/content](resources/site/src/js/zotero.js) file.
 * Add functionality to the disabled *View* button that drills down in a paper
   and finds a PDF or site to view withouth the user having to do this.
 * Use something like zotxt to make this work with a plugin rather than directly
