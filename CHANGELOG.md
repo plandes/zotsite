@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ## [Unreleased]
 
 
+## [0.5.0] - 2022-10-28
 ### Changes
 - Sort nodes by item name in the left tree navigation (thanks to
   [Cai-98](https://github.com/Cai-98)).
@@ -134,7 +135,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Initial version
 
 
-[Unreleased]: https://github.com/plandes/zotsite/compare/v0.4.0...HEAD
+[Unreleased]: https://github.com/plandes/zotsite/compare/v0.5.0...HEAD
+[0.5.0]: https://github.com/plandes/zotsite/compare/v0.4.0...v0.5.0
 [0.4.0]: https://github.com/plandes/zotsite/compare/v0.3.6...v0.4.0
 [0.3.6]: https://github.com/plandes/zotsite/compare/v0.3.5...v0.3.6
 [0.3.5]: https://github.com/plandes/zotsite/compare/v0.3.4...v0.3.5
