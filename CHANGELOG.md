@@ -12,6 +12,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Sort nodes by item name in the left tree navigation (thanks to
   [Cai-98](https://github.com/Cai-98)).
 - Upgrade to [zensols.util] 1.11.
+- Separate database filtering using `where` clauses and regular expression
+  pattern filtering. 
 
 ### Added
 - Support for Python 3.9, 3.10.

@@ -65,6 +65,13 @@ The [Python regular expression] syntax.  One gotcha is a `.*` is needed at the
 front of a string to match anything.
 
 
+## Database Filtering
+
+The [configuration file] provides a way to give a database `where like` clause
+to filter collections.  By default this is set to `%%` (a double percent is
+need as the percent sign itself is used to escape).
+
+
 ## Configuration File
 
 All command line parameters you provide can also be given in a `ini` style
@@ -81,14 +88,14 @@ home directory with name `.zotero` (this defaults to the Zotero default).
 You can indicate where the program configuration file is with the `ZOTSITERC`
 environment variable or use the `--config` command line program.
 
-See the full [configuration file] for example of all options.  All options
-include:
+See the full [configuration file] for example of all options.  A few important
+options include:
 * *data_dir*: the directory where the Zotero DB files live
 * *match_children*: when using --collection, match on items as well
 * *file_mapping*: one of: item or long
 * *id_mapping*: one of: `none`, `betterbib`
 * *sort*: whether or not to sort items `none` or `case` (non-case might be
-added later)
+  added later)
 
 
 ## Keeping the Website In Sync With Zotero
@@ -111,3 +118,7 @@ The generated website takes the following URL encoded parameters:
 * **levels**: The number of levels to display in the left navigation tree.
 * **id**: The document ID used to display and navigate when the page loads.
 * **isView**: if `1`, go directly to the PDF rather than the information page.
+
+
+<!-- links -->
+[configuration file]: #configuration-file
