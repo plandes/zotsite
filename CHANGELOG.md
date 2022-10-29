@@ -8,9 +8,16 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ## [Unreleased]
 
 
-## Changes
+### Changes
 - Sort nodes by item name in the left tree navigation (thanks to
   [Cai-98](https://github.com/Cai-98)).
+- Upgrade to [zensols.util] 1.11.
+
+### Added
+- Support for Python 3.9, 3.10.
+
+### Removed
+- Support for Python 3.7, 3.8.
 
 
 ## [0.4.0] - 2022-08-08

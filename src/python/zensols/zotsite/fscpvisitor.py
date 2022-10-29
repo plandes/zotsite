@@ -1,12 +1,13 @@
+"""Contains a class to copy files from the package resource location to the
+target website path.
+
+"""
+__author__ = 'Paul Landes'
+
 import logging
 import shutil
 from pathlib import Path
-from zensols.zotsite import (
-    Visitor,
-    ItemMapper,
-    Item,
-    ZoteroObject,
-)
+from zensols.zotsite import Visitor, ItemMapper, Item, ZoteroObject
 
 logger = logging.getLogger(__name__)
 
@@ -28,7 +29,6 @@ class FileSystemCopyVisitor(Visitor):
 
         """
         self.lib = lib
-        #self.data_path = Path(lib.get_storage_path())
         self.out_path = Path(out_dir)
         self.itemmapper = itemmapper
         logger.debug(f'out_path: {self.out_path}')
@@ -40,7 +40,6 @@ class FileSystemCopyVisitor(Visitor):
         if isinstance(child, Item):
             logger.debug(f'child: {child.path}')
             if child.path is not None:
-                #src = Path(self.data_path, child.file_name)
                 src = child.path
                 dst = Path(self.out_path, self.itemmapper.get_file_name(child))
                 logger.debug(f'copy: {src} -> {dst}')

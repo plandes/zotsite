@@ -1,15 +1,19 @@
+"""Contains classes that map :class:`.Item` unique identifiers.
+
+"""
+__author__ = 'Paul Landes'
+
 from abc import ABC, abstractmethod
 import logging
 import re
-from zensols.zotsite import (
-    Item,
-    Library,
-)
+from zensols.zotsite import Item, Library
 
 logger = logging.getLogger(__name__)
 
 
 class ItemMapper(ABC):
+    """Maps :class:`.Item` unique identifiers.
+    """
     EXT_RE = re.compile(r'.+\.(.+)?$')
 
     def _item_to_ext(self, item: Item):
@@ -18,10 +22,12 @@ class ItemMapper(ABC):
 
     @abstractmethod
     def get_resource_name(self, item: Item) -> str:
+        """Return a resource used on the browser side for ``item``."""
         pass
 
     @abstractmethod
     def get_file_name(self, item: Item) -> str:
+        """Return a file path used on the browser side for ``item``."""
         pass
 
 
@@ -58,7 +64,7 @@ class RegexItemMapper(ItemMapper):
 
 
 class IdItemMapper(ItemMapper):
-    """Map by using ids.
+    """Map by using item IDs.
 
     """
     def __init__(self, lib: Library, fmatch_re=None, repl_re=None):

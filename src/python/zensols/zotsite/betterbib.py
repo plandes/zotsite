@@ -1,13 +1,14 @@
+"""A class that replaces item IDs with BetterBibtex IDs
+
+"""
+__author__ = 'Paul Landes'
+
+from typing import Dict, Any
 import logging
 import json
 import sqlite3
 from zensols.persist import persisted
-from zensols.zotsite import (
-    ZoteroObject,
-    Item,
-    Visitor,
-    Library,
-)
+from zensols.zotsite import ZoteroObject, Item, Visitor, Library
 
 logger = logging.getLogger(__name__)
 
@@ -21,7 +22,7 @@ class BetterBibtexMapper(object):
         self.lib = lib
 
     @property
-    def data(self):
+    def data(self) -> Dict[str, Any]:
         path = self.lib.data_dir / 'better-bibtex.sqlite'
         logger.info(f'reading bibtex DB at {path}')
         conn = sqlite3.connect(path)
@@ -37,15 +38,11 @@ class BetterBibtexMapper(object):
 
     @property
     @persisted('_mapping')
-    def mapping(self):
+    def mapping(self) -> Dict[str, Any]:
         lib_id = self.lib.library_id
         data = self.data['data']
         data = filter(lambda x: x['libraryID'] == lib_id, data)
         return {x['itemID']: x['citekey'] for x in data}
-
-    def tmp(self):
-        from pprint import pprint
-        pprint(self.mapping)
 
 
 class BetterBibtexVisitor(Visitor):

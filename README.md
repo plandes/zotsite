@@ -1,11 +1,9 @@
-# Zotsite
+# Zotsite: A Zotero Export Utility
 
 [![PyPI][pypi-badge]][pypi-link]
-[![Python 3.7][python37-badge]][python37-link]
-[![Python 3.8][python38-badge]][python38-link]
 [![Python 3.9][python39-badge]][python39-link]
+[![Python 3.10][python310-badge]][python310-link]
 [![Build Status][build-badge]][build-link]
-[![Gitter chat][gitter-badge]][gitter-link]
 
 This project exports your local [Zotero] library to a usable HTML website.
 This generated website has the following features:
@@ -106,23 +104,28 @@ version.
 
 Command line usage as provided with the `--help` option:
 
-```sql
-Usage: zotsite <list|export|print|tmp> [options]
+```bash
+Usage: zotsite [list|export|print] [options]:
+
+This project exports your local Zotero library to a usable HTML website.
 
 Options:
---version             show program's version number and exit
--h, --help            show this help message and exit
--w NUMBER, --whine=NUMBER
-add verbosity to logging
--c FILE, --config=FILE
-configuration file
-Actions:
-export  Export
--o, --outputdir <string>  ./zotsite  the directory to output the website
---collection <string>                regular expression pattern to match collections
+  -h, --help                       show this help message and exit
+  --version                        show the program version and exit
+  --level X                        the level to set the application logger,
+                                   X is one of: debug, err, info, warn
+  -c, --config FILE                the path to the configuration file
 
-print   Print structure
---collection <string>                regular expression pattern to match collections
+Actions:
+list                               list all actions and help
+  --lstfmt <json|name|text>  text  the output format for the action listing
+
+export (default)                   generate and export the zotero website
+  --collection REGEX               a regular expression used to filter "collection" nodes
+  -o, --outputdir DIR              the directory to dump the site; default to configuration file
+
+print                              print (sub)collections and papers in those collections as a tree
+  --collection REGEX               a regular expression used to filter "collection" nodes
 ```
 
 
@@ -172,12 +175,18 @@ Copyright (c) 2020 - 2022 Paul Landes
 
 
 <!-- links -->
-[build-link]: https://github.com/plandes/zotsite/actions
+[pypi]: https://pypi.org/project/zensols.zotsite/
+[pypi-link]: https://pypi.python.org/pypi/zensols.zotsite
+[pypi-badge]: https://img.shields.io/pypi/v/zensols.zotsite.svg
+[python39-badge]: https://img.shields.io/badge/python-3.9-blue.svg
+[python39-link]: https://www.python.org/downloads/release/python-390
+[python310-badge]: https://img.shields.io/badge/python-3.10-blue.svg
+[python310-link]: https://www.python.org/downloads/release/python-310
 [build-badge]: https://github.com/plandes/zotsite/workflows/CI/badge.svg
+[build-link]: https://github.com/plandes/zotsite/actions
 [gitter-link]: https://gitter.im/zoterosite/zotsite
 [gitter-badge]: https://badges.gitter.im/zoterosite/gitter.png
 
-[pypi]: https://pypi.org/project/zensols.zotsite/
 [live demo]: https://plandes.github.io/zotsite/demo/index.html
 
 [Zotero]: https://www.zotero.org
@@ -189,12 +198,3 @@ Copyright (c) 2020 - 2022 Paul Landes
 [BetterBibtex]: https://github.com/retorquere/zotero-better-bibtex
 [configuration file]: test-resources/zotsite.conf
 [Python regular expression]: https://docs.python.org/3/library/re.html
-
-[pypi-badge]: https://img.shields.io/pypi/v/zensols.zotsite.svg
-[pypi-link]: https://pypi.python.org/pypi/zensols.zotsite
-[python37-badge]: https://img.shields.io/badge/python-3.7-blue.svg
-[python37-link]: https://www.python.org/downloads/release/python-370
-[python38-badge]: https://img.shields.io/badge/python-3.8-blue.svg
-[python38-link]: https://www.python.org/downloads/release/python-380
-[python39-badge]: https://img.shields.io/badge/python-3.9-blue.svg
-[python39-link]: https://www.python.org/downloads/release/python-390

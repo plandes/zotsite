@@ -1,64 +1,46 @@
-## makefile automates the build and deployment for python projects
+## (@)Id: makefile automates the build and deployment for python projects
 
-# build
-PROJ_TYPE=		python
-PROJ_MODULES=		git python-doc python-resources python-doc-deploy
-WEB_PKG_DIR=		$(MTARG)/site
-WEB_BROWSER=		firefox-repeat
-PYTHON_BIN_ARGS ?=	export -o $(WEB_PKG_DIR)
+## Build config
+#
+# type of project
+PROJ_TYPE =		python
+PROJ_MODULES =		git python-resources python-cli python-doc python-doc-deploy
+INFO_TARGETS +=		appinfo
 
-# project
+# Project
+#
 COLL_ARGS =		.*generalized\ distance\|Weighted\|.*Imperative\|Semantics
 SITE_DEMO =		doc/demo
-PY_DOC_BUILD_HTML_DEPS += cpdemo
+WEB_PKG_DIR=		$(MTARG)/site
+
+# add app configuration to command line arguments
+PY_CLI_ARGS +=		-c test-resources/zotsite.conf
 
 
 include ./zenbuild/main.mk
 
 
-## targets
-
-.PHONY:			cpdemo
-cpdemo:
-			@echo "copy zotsite demo"
-			mkdir -p $(PY_DOC_BUILD_HTML)
-			cp -r $(SITE_DEMO) $(PY_DOC_BUILD_HTML)
-
-.PHONY:			zsrun
-zsrun:
-			./zotsite $(PYTHON_BIN_ARGS)
-
-.PHONY:			web
-web:
-			open $(WEB_PKG_DIR)/index.html
-			osascript -e 'tell application "Emacs" to activate'
-
-.PHONY:			print
-print:
-			make PYTHON_BIN_ARGS='print --collection $(COLL_ARGS)' zsrun
+.PHONY:			appinfo
+appinfo:
+			@echo "app-resources-dir: $(RESOURCES_DIR)"
 
 .PHONY:			export
 export:
-			mkdir -p $(MTARG)
-			make PYTHON_BIN_ARGS='export -o $(WEB_PKG_DIR)' zsrun
+			$(eval PY_CLI_ARGS=export -o $(WEB_PKG_DIR) $(PY_CLI_ARGS))
+			@make PY_CLI_DEBUG=1 PY_CLI_ARGS="$(PY_CLI_ARGS)" pycli
 
-.PHONY:			selection
-selection:
-			mkdir -p $(MTARG)
-			make PYTHON_BIN_ARGS='export -o $(WEB_PKG_DIR) --collection $(COLL_ARGS)' zsrun
+.PHONY:			print
+print:
+			./zotsite print --collection $(COLL_ARGS) $(PY_CLI_ARGS)
 
-.PHONY:			display
-display:		export
-			if [ $(WEB_BROWSER) == 'firefox' ] ; then \
-				open -a Firefox $(WEB_PKG_DIR)/index.html ; \
-			elif [ '$(WEB_BROWSER)' == 'firefox-repeat' ] ; then \
-				osascript src/as/refresh.scpt \
-			else \
-				osascript -e 'tell application "Safari" to set URL of document 1 to URL of document 1' ; \
+.PHONY:			testprint
+testprint:
+			$(eval EXPECTED=10)
+			$(eval LINES=$(shell make print | wc -l))
+			@if [ $(LINES) -lt $(EXPECTED) ] ; then \
+				echo "expecting at least $(EXPECTED) lines but got $(LINES)" ; \
+				exit 1 ; \
 			fi
 
-.PHONY:			demo
-demo:			clean
-			rm -fr $(SITE_DEMO)
-			make PYTHON_BIN_ARGS='export -o $(SITE_DEMO) --collection $(COLL_ARGS)' zsrun
-			touch $(SITE_DEMO)/.nojekyll
+.PHONY:			testall
+testall:		test testprint

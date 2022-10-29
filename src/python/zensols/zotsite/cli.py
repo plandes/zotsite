@@ -1,53 +1,20 @@
-from zensols.cli import OneConfPerActionOptionsCliEnv
-from zensols.zotsite import (
-    SiteCreator,
-    AppConfig,
-)
+"""Command line entry point to the application.
+
+"""
+__author__ = 'Paul Landes'
+
+from typing import List, Any, Dict
+import sys
+from zensols.cli import ActionResult, CliHarness
+from zensols.cli import ApplicationFactory as CliApplicationFactory
 
 
-class SiteCli(object):
+class ApplicationFactory(CliApplicationFactory):
     def __init__(self, *args, **kwargs):
-        config = AppConfig.from_args(*args, **kwargs)
-        self.site = SiteCreator(config)
-
-    def print_structure(self):
-        self.site.print_structure()
-
-    def export(self):
-        self.site.export()
+        kwargs['package_resource'] = 'zensols.zotsite'
+        super().__init__(*args, **kwargs)
 
 
-class ConfAppCommandLine(OneConfPerActionOptionsCliEnv):
-    def __init__(self):
-        coll_op = [None, '--collection', False,
-                   {'dest': 'name_pat',
-                    'metavar': 'DB PATTERN',
-                    'help': 'regular expression pattern to match collections'}]
-        outdir_op = ['-o', '--outputdir', True,
-                     {'dest': 'out_dir',
-                      'default': './zotsite',
-                      'metavar': 'DIRECTORY',
-                      'help': 'the directory to output the website'}]
-        cnf = {'executors':
-               [{'name': 'exporter',
-                 'executor': lambda params: SiteCli(**params),
-                 'actions': [{'name': 'print',
-                              'meth': 'print_structure',
-                              'opts': [coll_op]},
-                             {'name': 'export',
-                              'opts': [outdir_op, coll_op]}]}],
-               'config_option': {'name': 'config',
-                                 'expect': False,
-                                 'opt': ['-c', '--config', False,
-                                         {'dest': 'config',
-                                          'metavar': 'FILE',
-                                          'help': 'configuration file'}]},
-               'whine': 1}
-        super(ConfAppCommandLine, self).__init__(
-            cnf, config_env_name='zotsiterc', pkg_dist='zensols.zotsite',
-            config_type=AppConfig)
-
-
-def main():
-    cl = ConfAppCommandLine()
-    cl.invoke()
+def main(args: List[str] = sys.argv, **kwargs: Dict[str, Any]) -> ActionResult:
+    harness: CliHarness = ApplicationFactory.create_harness(relocate=False)
+    harness.invoke(args, **kwargs)

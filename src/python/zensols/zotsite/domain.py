@@ -1,11 +1,31 @@
+"""Contains domain and visitor (GoF pattern) classes.
+
+"""
+__author__ = 'Paul Landes'
+
+from typing import Callable
 import logging
 from abc import ABC, abstractmethod
 import re
 from io import TextIOBase
 from pathlib import Path
+from zensols.util import APIError
+from zensols.cli import ApplicationError
 from zensols.persist import persisted
 
 logger = logging.getLogger(__name__)
+
+
+class ZoteroError(APIError):
+    """Thrown for control flow errors."""
+    pass
+
+
+class ZoteroApplicationError(ApplicationError):
+    """Thrown for application errors meant to be reported by the command line.
+
+    """
+    pass
 
 
 class ZoteroObject(ABC):
@@ -63,7 +83,7 @@ class Note(ZoteroObject):
     """
     def __init__(self, sel):
         self.sel = sel
-        super(Note, self).__init__([])
+        super().__init__([])
 
     def get_id(self):
         return 'n' + str(self.sel['i_id'])
@@ -95,7 +115,7 @@ class Item(ZoteroObject):
     """
     def __init__(self, sel, children):
         self.sel = sel
-        super(Item, self).__init__(children)
+        super().__init__(children)
         self.storage_pat = re.compile('^(?:storage|attachments):(.+)$')
 
     def get_db_id(self):
@@ -143,7 +163,8 @@ class Item(ZoteroObject):
                 pdir = self.sel['key']
                 fpart = m.group(1)
                 abs_path = self.lib.get_storage_path() / f'{pdir}/{fpart}'
-                logger.debug(f'pdir={pdir}, fpart={fpart}, abs={abs_path}')
+                if logger.isEnabledFor(logging.DEBUG):
+                    logger.debug(f'pdir={pdir}, fpart={fpart}, abs={abs_path}')
         return abs_path
 
     def __format_zobj__(self):
@@ -160,7 +181,7 @@ class Container(ZoteroObject):
     def __init__(self, items, collections):
         self.items = items
         self.collections = collections
-        super(Container, self).__init__(None)
+        super().__init__(None)
 
     @property
     def children(self):
@@ -177,7 +198,7 @@ class Collection(Container):
     """
     def __init__(self, sel, items, collections):
         self.sel = sel
-        super(Collection, self).__init__(items, collections)
+        super().__init__(items, collections)
 
     def get_id(self):
         return 'c{},i{}'.format(self.sel['c_id'], self.sel['c_iid'])
@@ -195,7 +216,7 @@ class Library(Container):
         self.data_dir = data_dir
         self.library_id = library_id
         self.storage_dirname = 'storage'
-        super(Library, self).__init__([], collections)
+        super().__init__([], collections)
         for c in collections:
             self._init_child(c)
 
@@ -220,7 +241,7 @@ class Library(Container):
 
     @property
     def name(self):
-        return 'lib'.format(self.library_id)
+        return 'lib'
 
     @property
     def title(self):
@@ -231,6 +252,8 @@ class Library(Container):
 
 
 class Visitor(ABC):
+    """The visitor in the GoF *visitor pattern*.
+    """
     @abstractmethod
     def enter_parent(self, parent: ZoteroObject):
         """Template method for traversing down/into a node."""
@@ -248,6 +271,9 @@ class Visitor(ABC):
 
 
 class PrintVisitor(Visitor):
+    """A visitor that prints items for debugging.
+
+    """
     def __init__(self, writer: TextIOBase):
         self.writer = writer
         self.depth = 0
@@ -265,14 +291,21 @@ class PrintVisitor(Visitor):
 
 
 class Walker(ABC):
+    """Iterates the Zotero data and calls the visitor for each node.
+
+    """
     @abstractmethod
-    def walk(self, parent, visitor: Visitor):
+    def walk(self, parent: ZoteroObject, visitor: Visitor):
         """Recursively traverse the object graph."""
         pass
 
 
 class UnsortedWalker(Walker):
-    def walk(self, parent, visitor: Visitor):
+    """Iterates through the Zotero visiting children in whatever order is
+    provided by the database.
+
+    """
+    def walk(self, parent: ZoteroObject, visitor: Visitor):
         visitor.enter_parent(parent)
         for c in parent.children:
             visitor.visit_child(c)
@@ -281,14 +314,26 @@ class UnsortedWalker(Walker):
 
 
 class SortedWalker(Walker):
-    def __init__(self, key_fn=None, reverse=False):
+    """Iterates through the Zotero visiting children in sorted order.
+
+    """
+    def __init__(self, key_fn: Callable = None, reverse: bool = False):
+        """Initialize.
+
+        :param key_fn: a function/callable used to sort the data that takes a
+                       single argument to access compared data, which defaults
+                       to :function:`str`
+
+        :param reverse: whether or not to reverse the visited results
+
+        """
         if key_fn is None:
-            self.key_fn = lambda x: str(x)
+            self.key_fn = str
         else:
             self.key_fn = key_fn
         self.reverse = reverse
 
-    def walk(self, parent, visitor: Visitor):
+    def walk(self, parent: ZoteroObject, visitor: Visitor):
         visitor.enter_parent(parent)
         kids = sorted(parent.children, key=self.key_fn, reverse=self.reverse)
         for c in kids:

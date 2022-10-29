@@ -1,12 +1,14 @@
-from typing import List, Dict
+"""Contains the class that generates the website navigation data structure.
+
+"""
+__author__ = 'Paul Landes'
+
+from typing import List, Dict, Union, Any, Type, Optional
 import logging
 import re
 from zensols.zotsite import (
-    Visitor,
-    ItemMapper,
-    Item,
-    Note,
-    ZoteroObject,
+    ZoteroError, Library, Visitor,
+    ZoteroObject, ItemMapper, Item, Note,
 )
 
 logger = logging.getLogger(__name__)
@@ -33,54 +35,58 @@ class NavCreateVisitor(Visitor):
     PDF_FULL_REGEXP = re.compile(r'^.*Full\s*[tT]ext PDF')
     CAPS_META_KEYS = set('url'.split())
 
-    def __init__(self, lib, itemmapper: ItemMapper):
+    def __init__(self, lib: Library, item_mapper: ItemMapper):
         """Initialize the visitor object.
 
         :param lib: the object graph returned from
-        ``DatabaseReader.get_library``.
-        :param itemmapper: used for file name substitution so the widget uses the
-        correct names (i.e. underscore substitution)
+                    ``DatabaseReader.get_library``.
+
+        :param item_mapper: used for file name substitution so the widget uses
+                            the correct names (i.e. underscore substitution)
 
         """
-        self.lib = lib
-        self.itemmapper = itemmapper
-        self.root = {'nodes': []}
-        self.parents = [self.root]
+        self._item_mapper = item_mapper
+        self._root = {'nodes': []}
+        self._parents = [self._root]
+
+    @classmethod
+    def _sort_nodes(cls: Type, lst: List[Dict[str, Any]],
+                    by: str = 'item_title'):
+        """Sort the nodes in the root node.  The default is to sort by item
+        title.
+
+        """
+        assert type(lst) == list
+        lst.sort(key=lambda n: n[by])
+        for n in lst:
+            if 'nodes' in n:
+                cls._sort_nodes(n['nodes'], by)
 
     @property
-    def primary_roots(self):
-        "Return the (root level) collections."
-
-        def sort_nodes(lst: List[Dict[str, str]], by: str = 'item_title'):
-            """Sort the nodes in the root node.  The default is to sort by item
-            title.
-
-            """
-            assert type(lst) == list
-            lst.sort(key=lambda n: n[by])
-            for n in lst:
-                if 'nodes' in n:
-                    sort_nodes(n['nodes'], by)
-
-        target = self.root['nodes'][0]['nodes']
-        sort_nodes(target)
+    def primary_roots(self) -> List[Dict[str, Any]]:
+        """The (root level) collections."""
+        node: Dict[str, Union[str, List]] = self._root['nodes'][0]
+        if 'nodes' not in node:
+            raise ZoteroError(f"Missing 'nodes' in: <{node}>")
+        target: List[Dict[str, Any]] = node['nodes']
+        self._sort_nodes(target)
         return target
 
-    def icon_name(self, node):
-        "Return the name of the icon name for ``node``."
+    def icon_name(self, node) -> str:
+        """Return the name of the icon name for ``node``."""
         icon_name = None
         if isinstance(node, Item):
             if node.type in self.ITEM_ICONS:
                 icon_name = self.ITEM_ICONS[node.type]
             else:
                 # :(
-                logger.warning(f'such icon found for {node.type}')
+                logger.warning(f'no such icon found for {node.type}')
                 icon_name = 'unchecked'
         elif isinstance(node, Note):
             icon_name = 'text-background'
         return icon_name
 
-    def _munge_meta_key(self, name: str):
+    def _munge_meta_key(self, name: str) -> str:
         if name in self.CAPS_META_KEYS:
             name = name.upper()
         elif not name.isupper():
@@ -90,7 +96,7 @@ class NavCreateVisitor(Visitor):
             name = ' '.join(parts)
         return name
 
-    def _node_metadata(self, item: Item):
+    def _node_metadata(self, item: Item) -> Optional[Dict[str, Any]]:
         meta = item.metadata
         if meta is not None:
             mdarr = []
@@ -101,7 +107,7 @@ class NavCreateVisitor(Visitor):
 
     def _find_child_resource(self, item: Item, pat: re.Pattern):
         res = tuple(filter(lambda p: p is not None and pat.match(p),
-                           map(lambda c: self.itemmapper.get_resource_name(c),
+                           map(lambda c: self._item_mapper.get_resource_name(c),
                                item.children)))
         if len(res) == 1:
             return res[0]
@@ -112,10 +118,10 @@ class NavCreateVisitor(Visitor):
         if len(res) > 0:
             for c in item.children:
                 if c.name == res[0]:
-                    return self.itemmapper.get_resource_name(c)
+                    return self._item_mapper.get_resource_name(c)
 
-    def create_node(self, item: Item):
-        "Create a node for an item."
+    def _create_node(self, item: Item) -> Dict[str, Any]:
+        """Create a node for an item."""
         node = {'text': item.title,
                 'item-id': item.id,
                 'nodes': []}
@@ -131,7 +137,7 @@ class NavCreateVisitor(Visitor):
             creators = item.creators
             if meta is not None:
                 node['metadata'] = meta
-                res = self.itemmapper.get_resource_name(item)
+                res = self._item_mapper.get_resource_name(item)
                 if res is None:
                     res = self._find_child_resource(item, self.PDF_EXT_REGEXP)
                 if res is None:
@@ -148,16 +154,16 @@ class NavCreateVisitor(Visitor):
         return node
 
     def enter_parent(self, parent: ZoteroObject):
-        new_par = self.create_node(parent)
-        cur_par = self.parents[-1]
+        new_par: Dict[str, Any] = self._create_node(parent)
+        cur_par: Dict[str, List[Dict]] = self._parents[-1]
         cur_par['nodes'].append(new_par)
-        self.parents.append(new_par)
+        self._parents.append(new_par)
 
     def visit_child(self, child: ZoteroObject):
         pass
 
     def leave_parent(self, parent: ZoteroObject):
-        node = self.parents.pop()
+        node = self._parents.pop()
         if len(node['nodes']) == 0:
             del node['nodes']
         else:

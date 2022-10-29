@@ -1,35 +1,30 @@
+"""Contains access to the Zotero SQLite database.
+
+"""
+__author__ = 'Paul Landes'
+
+from dataclasses import dataclass, field
 import logging
 from pathlib import Path
 import sqlite3
-from zensols.zotsite.domain import (
-    Collection,
-    Library,
-    Item,
-    Note,
-    Name,
-)
+from zensols.zotsite.domain import Collection, Library, Item, Note, Name
 
 logger = logging.getLogger(__name__)
 
 
+@dataclass
 class DatabaseReader(object):
     """Database access to Zotero store.
 
     """
-    def __init__(self, data_dir: Path, name_pat: str = '%',
-                 library_id: int = 1):
-        """Initialize
+    data_dir: Path = field()
+    """Directory containing the Zotero DB files (sqlite and collections)."""
 
-        :param data_dir: directory containing the Zotero DB files (sqlite and
-        collections)
-        :param name_pat: the SQL pattern to match against subcollection names
-        :param library_id: the DB ide of the library to export
+    collection_like: str = field(default='%')
+    """The SQL pattern to match against subcollection names."""
 
-        """
-        logger.debug(f'data {format(data_dir)}')
-        self.data_dir = data_dir
-        self.name_pat = name_pat
-        self.library_id = library_id
+    library_id: int = field(default=1)
+    """The DB ide of the library to export."""
 
     def _collection_sql(self, whparams):
         """Create an SQL string to get collections rows."""
@@ -102,8 +97,11 @@ select c.firstName, c.lastName
         """Return the item metadata from the database.
 
         :param item: the item to fetch data for
+
         :param conn: the DB connection
+
         :param whparams: dict of parameters used for the metadata SQL query
+
         """
         whparams['item_id'] = item['i_id']
         meta = {}
@@ -115,8 +113,11 @@ select c.firstName, c.lastName
         """Return the item metadata from the database.
 
         :param item: the item to fetch data for
+
         :param conn: the DB connection
+
         :param whparams: dict of parameters used for the metadata SQL query
+
         """
         whparams['item_id'] = item['i_id']
         creators = []
@@ -130,6 +131,7 @@ select c.firstName, c.lastName
         """Return items from the database.
 
         :param conn: the DB connection
+
         """
         logger.debug(f'data_dir: {self.data_dir}')
         wparams = {'library_id': self.library_id}
@@ -167,9 +169,13 @@ select c.firstName, c.lastName
         :param conn: the DB connection
 
         """
-        logger.debug(f'data_dir: {self.data_dir}')
-        wparams = {'library_id': self.library_id, 'coll_name': self.name_pat}
-        logger.debug('wparams: %s' % wparams)
+        if logger.isEnabledFor(logging.DEBUG):
+            logger.debug(f'data_dir: {self.data_dir} ' +
+                         f'pattern: {self.collection_like}')
+        wparams = {'library_id': self.library_id,
+                   'coll_name': self.collection_like}
+        if logger.isEnabledFor(logging.DEBUG):
+            logger.debug(f'wparams: {wparams}')
         colls = {}
         for row in conn.execute(self._collection_sql(wparams)):
             row['subs'] = []
@@ -186,12 +192,11 @@ select c.firstName, c.lastName
                            colls.values()))
 
     def _create_item(self, item):
-        """Return a domain object that represents an item (i.e. PDF attachement, link,
-        note etc).
+        """Return a domain object that represents an item (i.e. PDF attachement,
+        link, note etc).
 
         """
         children = list(map(lambda x: self._create_item(x), item['subs']))
-        #if item['n_title']:
         if item['type'] == 'note':
             item = Note(item)
         else:
@@ -202,11 +207,13 @@ select c.firstName, c.lastName
         """Return a domain object that represents a Zotero DB (sub)collection.
 
         :param conn: the DB connection
+
         :param by_cid: parent to child collection IDs
 
         """
-        logger.debug('processing: {} ({}, {})'.
-                     format(coll['c_name'], coll['c_id'], coll['c_iid']))
+        if logger.isEnabledFor(logging.DEBUG):
+            logger.debug('processing: {} ({}, {})'.
+                         format(coll['c_name'], coll['c_id'], coll['c_iid']))
         cid = coll['c_id']
         items = []
         if cid in by_cid:
@@ -218,10 +225,11 @@ select c.firstName, c.lastName
         items = list(map(lambda x: self._create_item(x), items))
         return Collection(coll, items, children)
 
-    def _create_library(self, colls, items):
+    def _create_library(self, colls, items) -> Library:
         """Return a domain object that represents a Zotero DB (sub)collection.
 
         :param conn: the DB connection
+
         :param by_cid: parent to child collection IDs
 
         """
@@ -239,10 +247,9 @@ select c.firstName, c.lastName
         for coll in colls:
             fcoll = self._create_collection(coll, by_cid)
             fcolls.append(fcoll)
-        lib = Library(self.data_dir, self.library_id, fcolls)
-        return lib
+        return Library(self.data_dir, self.library_id, fcolls)
 
-    def get_library(self):
+    def get_library(self) -> Library:
         """Get an object graph representing the data in the Zotero database.
 
         """
