@@ -9,16 +9,10 @@ from abc import ABC, abstractmethod
 import re
 from io import TextIOBase
 from pathlib import Path
-from zensols.util import APIError
 from zensols.cli import ApplicationError
 from zensols.persist import persisted
 
 logger = logging.getLogger(__name__)
-
-
-class ZoteroError(APIError):
-    """Thrown for control flow errors."""
-    pass
 
 
 class ZoteroApplicationError(ApplicationError):

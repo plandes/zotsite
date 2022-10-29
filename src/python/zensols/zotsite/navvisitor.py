@@ -7,7 +7,7 @@ from typing import List, Dict, Union, Any, Type, Optional
 import logging
 import re
 from zensols.zotsite import (
-    ZoteroError, Library, Visitor,
+    ZoteroApplicationError, Library, Visitor,
     ZoteroObject, ItemMapper, Item, Note,
 )
 
@@ -67,7 +67,9 @@ class NavCreateVisitor(Visitor):
         """The (root level) collections."""
         node: Dict[str, Union[str, List]] = self._root['nodes'][0]
         if 'nodes' not in node:
-            raise ZoteroError(f"Missing 'nodes' in: <{node}>")
+            raise ZoteroApplicationError(
+                'No collections found; maybe too restrictive collections ' +
+                'regular expression?')
         target: List[Dict[str, Any]] = node['nodes']
         self._sort_nodes(target)
         return target
