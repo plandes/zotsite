@@ -12,6 +12,7 @@
     <link href="css/bootstrap-3-retro.css" rel="stylesheet">
     <link href="css/bootstrap-treeview.min.css" rel="stylesheet">
     <link href="css/datatables.css" rel="stylesheet">
+    <link href="css/dark-mode.css" rel="stylesheet">
     <link href="css/zotsite.css" rel="stylesheet">
     <link href="css/zotero.css" rel="stylesheet">
 
@@ -36,6 +37,16 @@ window.onload = function() {
     zot.init(nodeId);
 
     $('#init-button').click(function() { zot.reset(); })
+
+    $('.switch').click(()=>{
+	$([".light [class*='-light']", ".dark [class*='-dark']"]).each((i,ele)=>{
+            $(ele).toggleClass('bg-light bg-dark')
+            $(ele).toggleClass('text-light text-dark')
+            $(ele).toggleClass('navbar-light navbar-dark')
+	})
+	// toggle body class selector
+	$('body').toggleClass('light dark')
+    });
 }
     </script>
 
@@ -58,6 +69,14 @@ window.onload = function() {
 	       href="https://github.com/plandes/zotsite/releases/tag/"
 	       id="bd-versions">Javascript Error</a>
 	  </li>
+
+	  <li class="nav-item">
+            <div class="custom-control custom-switch">
+              <input type="checkbox" class="custom-control-input" id="darkSwitch">
+              <label class="custom-control-label" for="darkSwitch">Dark Mode</label>
+            </div>
+	  </li>
+
 	  <li class="nav-item">
 	    <a class="nav-link" href="https://github.com/plandes/zotsite">
 	      <img src="img/github-logo.svg" class="d-block" height="26"
@@ -116,5 +135,7 @@ window.onload = function() {
 	</td>
       </tr>
     </table>
+    <!-- You must load 'dark-mode-switch.js' at the foot of the page -->
+    <script src="js/dark-mode-switch.min.js"></script>
   </body>
 </html>
