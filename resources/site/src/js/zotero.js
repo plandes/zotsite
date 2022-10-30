@@ -325,19 +325,17 @@ function ZoteroManager(levels, meta, isView) {
 		header.appendChild(document.createTextNode(node.item_title));
 		root.classList.add('nav-item');
 		ctab.classList.add('table', 'border', 'meta-table');
-		if (!$.fn.DataTable.isDataTable('#summary-table')) {
-		    $(document).ready(function () {
-			$('#summary-table').DataTable({
-			    // https://datatables.net/examples/basic_init/dom.html
-			    dom: '<tp>',
-			    'pageLength': 50,
-			});
-		    });
-		}
 		title.appendChild(header);
 		root.appendChild(title);
 		root.appendChild(ctab);
 		noc.appendChild(root);
+		if (!$.fn.DataTable.isDataTable('#summary-table')) {
+		    $('#summary-table').DataTable({
+			// https://datatables.net/examples/basic_init/dom.html
+			dom: '<tp>',
+			'pageLength': 50,
+		    });
+		}
 	    } else {
 		console.log('no data collection data found');
 		cont.classList.add('center-cell');
