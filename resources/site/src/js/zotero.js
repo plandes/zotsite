@@ -228,7 +228,7 @@ function ZoteroManager(levels, meta, isView) {
 		tbody.appendChild(tr);
 	    }	    
 
-	    tab.id = 'summary-table';
+	    tab.id = 'collections-table';
 	    tab.cellspaceing = 0;
 	    tab.width = '100%';
 	    thead.classList.add('meta-thead');
@@ -308,6 +308,7 @@ function ZoteroManager(levels, meta, isView) {
 	    nodeType = null;
 	}
 
+	var initCollectionsTable = false;
 	// add the header pane
 	if (hasContent) {
 	    headerPane(node, cont);
@@ -329,13 +330,7 @@ function ZoteroManager(levels, meta, isView) {
 		root.appendChild(title);
 		root.appendChild(ctab);
 		noc.appendChild(root);
-		if (!$.fn.DataTable.isDataTable('#summary-table')) {
-		    $('#summary-table').DataTable({
-			// https://datatables.net/examples/basic_init/dom.html
-			dom: '<tp>',
-			'pageLength': 50,
-		    });
-		}
+		initCollectionsTable = true;
 	    } else {
 		console.log('no data collection data found');
 		cont.classList.add('center-cell');
@@ -343,6 +338,16 @@ function ZoteroManager(levels, meta, isView) {
 		noc.appendChild(document.createTextNode('No Content'));
 	    }
 	    cont.appendChild(noc);
+	}
+
+	if (initCollectionsTable) {
+	    if (!$.fn.DataTable.isDataTable('#collections-table')) {
+		$('#collections-table').DataTable({
+		    // https://datatables.net/examples/basic_init/dom.html
+		    dom: '<tp>',
+		    'pageLength': 50,
+		});
+	    }
 	}
 
 	// add metadata if there is any
