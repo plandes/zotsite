@@ -8,6 +8,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ## [Unreleased]
 
 
+## [0.6.1] - 2022-10-29
+### Changed
+- Bug fix to [DataTables] initialization.
+
+
 ## [0.6.0] - 2022-10-29
 ### Added
 - Added a collections table of all the child items/papers.  This involves
@@ -146,7 +151,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Initial version
 
 
-[Unreleased]: https://github.com/plandes/zotsite/compare/v0.6.0...HEAD
+[Unreleased]: https://github.com/plandes/zotsite/compare/v0.6.1...HEAD
+[0.6.1]: https://github.com/plandes/zotsite/compare/v0.6.0...v0.6.1
 [0.6.0]: https://github.com/plandes/zotsite/compare/v0.5.0...v0.6.0
 [0.5.0]: https://github.com/plandes/zotsite/compare/v0.4.0...v0.5.0
 [0.4.0]: https://github.com/plandes/zotsite/compare/v0.3.6...v0.4.0
