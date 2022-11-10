@@ -11,6 +11,7 @@
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <link href="css/bootstrap-3-retro.css" rel="stylesheet">
     <link href="css/bootstrap-treeview.min.css" rel="stylesheet">
+    <link href="css/datatables.css" rel="stylesheet">
     <link href="css/zotsite.css" rel="stylesheet">
     <link href="css/zotero.css" rel="stylesheet">
 
@@ -20,6 +21,7 @@
     <script src="js/bootstrap.min.js"></script>
     <script src="js/bootstrap-treeview.min.js"></script>
     <script src="js/clipboard.js"></script>
+    <script src="js/datatables.js"></script>
     <script src="js/zotero-tree-data.js"></script>
     <script src="js/zotero-meta.js"></script>
     <script src="js/zotero.js"></script>
@@ -29,7 +31,8 @@ window.onload = function() {
     var url = new URL(window.location.href);
     var treeLevels = url.searchParams.get('levels') || 1;
     var nodeId = url.searchParams.get('id');
-    var zot = new ZoteroManager(treeLevels, zoteroMeta);
+    var isView = (url.searchParams.get('isView') != null);
+    var zot = new ZoteroManager(treeLevels, zoteroMeta, isView);
     zot.init(nodeId);
 
     $('#init-button').click(function() { zot.reset(); })

@@ -192,7 +192,7 @@ var tree =
         "resource": "storage/i59.pdf"
       }
     ],
-    "icon": "glyphicon glyphicon-pencil",
+    "icon": "glyphicon glyphicon-file",
     "item_title": "On the generalized distance in statistics",
     "item_type": "conferencePaper",
     "item_note": null,
@@ -255,7 +255,7 @@ var tree =
             "resource": "storage/i1298.pdf"
           }
         ],
-        "icon": "glyphicon glyphicon-pencil",
+        "icon": "glyphicon glyphicon-file",
         "item_title": "Deep Semantic Role Labeling",
         "item_type": "conferencePaper",
         "item_note": null,
@@ -354,7 +354,7 @@ var tree =
             "resource": "storage/i760.pdf"
           }
         ],
-        "icon": "glyphicon glyphicon-pencil",
+        "icon": "glyphicon glyphicon-file",
         "item_title": "USFD at SemEval-2016 Task 6",
         "item_type": "conferencePaper",
         "item_note": null,
