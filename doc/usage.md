@@ -28,7 +28,7 @@ zotsite export -o <sitedir>
 After the program runs, `sitedir` will be where the tool creates/generates the
 the new site.  Note you can also give a `--datadir` to tell the program where
 your [Zotero] library is.  This can also be configured in
-your [configuration](#configuration-file).
+your [configuration file](#configuration-file).
 
 The website will work as served from either a website or from the local file
 system.  You can pass `levels` as a URL encoded parameter to produce the number
@@ -79,7 +79,7 @@ configuration file, for example:
 
 ```ini
 [default]
-data_dir={HOME}/.zotero
+data_dir = ${env:home}/Zotero
 ```
 
 tells the program where the [Zotero] data directory is located in the user's
@@ -88,8 +88,9 @@ home directory with name `.zotero` (this defaults to the Zotero default).
 You can indicate where the program configuration file is with the `ZOTSITERC`
 environment variable or use the `--config` command line program.
 
-See the full [configuration file] for example of all options.  A few important
-options include:
+See the [test case configuration file] for example of all options.  A few
+important options include:
+
 * *data_dir*: the directory where the Zotero DB files live
 * *match_children*: when using --collection, match on items as well
 * *file_mapping*: one of: item or long
@@ -122,3 +123,6 @@ The generated website takes the following URL encoded parameters:
 
 <!-- links -->
 [configuration file]: #configuration-file
+[Zotero]: https://www.zotero.org
+[configuration file]: #configuration-file
+[test case configuration file]: ../test-resources/zotsite.conf
