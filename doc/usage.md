@@ -91,12 +91,14 @@ environment variable or use the `--config` command line program.
 See the [test case configuration file] for example of all options.  A few
 important options include:
 
-* *data_dir*: the directory where the Zotero DB files live
-* *match_children*: when using --collection, match on items as well
-* *file_mapping*: one of: item or long
-* *id_mapping*: one of: `none`, `betterbib`
-* *sort*: whether or not to sort items `none` or `case` (non-case might be
+* **data_dir**: the directory where the Zotero DB files live
+* **match_children**: when using --collection, match on items as well
+* **file_mapping**: one of: item or long
+* **id_mapping**: one of: `none`, `betterbib`
+* **sort**: whether or not to sort items `none` or `case` (non-case might be
   added later)
+* **library_id**: the library used to generate the site, which defaults to the
+  Personal
 
 
 ## Keeping the Website In Sync With Zotero

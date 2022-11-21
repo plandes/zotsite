@@ -8,6 +8,14 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ## [Unreleased]
 
 
+## [0.6.3] - 2022-11-21
+### Changed
+- Default tilde home directory as Windows uses other environment variables.
+  Python's `pathlib` appears to be able to find them per [issue 20].
+
+- Updated documentation.
+
+
 ## [0.6.2] - 2022-10-30
 ### Changed
 - Another bug fix to [DataTables] initialization.
@@ -156,7 +164,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Initial version
 
 
-[Unreleased]: https://github.com/plandes/zotsite/compare/v0.6.2...HEAD
+[Unreleased]: https://github.com/plandes/zotsite/compare/v0.6.3...HEAD
+[0.6.3]: https://github.com/plandes/zotsite/compare/v0.6.2...v0.6.3
 [0.6.2]: https://github.com/plandes/zotsite/compare/v0.6.1...v0.6.2
 [0.6.1]: https://github.com/plandes/zotsite/compare/v0.6.0...v0.6.1
 [0.6.0]: https://github.com/plandes/zotsite/compare/v0.5.0...v0.6.0
@@ -180,3 +189,4 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 [zensols.util]: https://github.com/plandes/util
 [zensols.showfile]: https://github.com/plandes/showfile
 [DataTables]: https://datatables.net
+[issue 20]: https://github.com/plandes/zotsite/issues/20#issuecomment-1321320667
