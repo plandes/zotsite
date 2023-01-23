@@ -1,1 +1,1 @@
-zensols.util~=1.11.1
+zensols.util~=1.12.0

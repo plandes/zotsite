@@ -8,6 +8,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ## [Unreleased]
 
 
+## [0.6.4] - 2023-01-22
+### Changed
+- Upgrade to [zensols.util] v1.12.0.
+
+
 ## [0.6.3] - 2022-11-21
 ### Changed
 - Default tilde home directory as Windows uses other environment variables.
@@ -164,7 +169,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Initial version
 
 
-[Unreleased]: https://github.com/plandes/zotsite/compare/v0.6.3...HEAD
+[Unreleased]: https://github.com/plandes/zotsite/compare/v0.6.4...HEAD
+[0.6.4]: https://github.com/plandes/zotsite/compare/v0.6.3...v0.6.4
 [0.6.3]: https://github.com/plandes/zotsite/compare/v0.6.2...v0.6.3
 [0.6.2]: https://github.com/plandes/zotsite/compare/v0.6.1...v0.6.2
 [0.6.1]: https://github.com/plandes/zotsite/compare/v0.6.0...v0.6.1
