@@ -104,8 +104,8 @@ important options include:
 ## Keeping the Website In Sync With Zotero
 
 Currently there is no way to do this (contributions are welcome).  However
-there is a script I use to do this when I know I'm going to need to use the
-site, which is [here](../src/sh/zotsync.sh).
+there is a [synchronization script] I use to synchronize the output of the
+website with a remote host.
 
 
 ## Platform
@@ -147,3 +147,4 @@ is some larger issue.
 [configuration file]: #configuration-file
 [Zotero]: https://www.zotero.org
 [test case configuration file]: https://github.com/plandes/zotsite/blob/master/test-resources/zotsite.conf
+[synchronization script]: https://github.com/plandes/zotsite/blob/master/src/sh/zotsync.sh
