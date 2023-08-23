@@ -69,6 +69,9 @@ class SiteCreator(object):
     out_dir: Path = field(default=None)
     """The default output directory to store the collection."""
 
+    robust_fs: bool = field(default=False)
+    """Whether to raise an exception on file system errors."""
+
     @property
     @persisted('_walker')
     def walker(self) -> Walker:
@@ -146,8 +149,9 @@ class SiteCreator(object):
         documents that will be rendered in the site GUI.
 
         """
-        dst = self.out_dir
-        fsvisitor = FileSystemCopyVisitor(self.library, dst, self.item_mapper)
+        dst: Path = self.out_dir
+        fsvisitor = FileSystemCopyVisitor(
+            self.library, dst, self.robust_fs, self.item_mapper)
         if logger.isEnabledFor(logging.INFO):
             logger.info(f'copying storage to {dst}')
         self.walker.walk(self.library, fsvisitor)
