@@ -145,7 +145,7 @@ This software uses:
 
 Also see the [live demo].
 
-![Screenshot](doc/snapshot.png?raw=true "Zotero Screenshot")
+![Screenshot][screenshot]
 
 
 ## Todo
@@ -190,6 +190,7 @@ Copyright (c) 2019 - 2023 Paul Landes
 [gitter-badge]: https://badges.gitter.im/zoterosite/gitter.png
 
 [live demo]: https://plandes.github.io/zotsite/demo/index.html
+[screenshot]: https://raw.githubusercontent.com/plandes/zotsite/master/doc/snapshot.png
 
 [Zotero]: https://www.zotero.org
 [jQuery]: https://jquery.com

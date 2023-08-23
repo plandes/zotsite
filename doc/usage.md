@@ -146,5 +146,4 @@ is some larger issue.
 <!-- links -->
 [configuration file]: #configuration-file
 [Zotero]: https://www.zotero.org
-[configuration file]: #configuration-file
-[test case configuration file]: ../test-resources/zotsite.conf
+[test case configuration file]: https://github.com/plandes/zotsite/blob/master/test-resources/zotsite.conf
