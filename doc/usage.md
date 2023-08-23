@@ -125,10 +125,10 @@ The generated website takes the following URL encoded parameters:
 
 ## Robust File System Access
 
-If one file copy from the Zotero storage fails, the program dump a stack trace
-and terminate.  However, there might be cases where the database might have
-out-of-sync entries from what is on the file system but you still want to
-export those entries that are available.
+If one file copy from the Zotero storage fails, the program will dump a stack
+trace and terminate.  However, there might be cases where the database might
+have out-of-sync entries from the storage files, but you still want to export
+those entries that are available.
 
 To change this behavior and robustly deal with missing entries, add the
 following to the [configuration file]:
