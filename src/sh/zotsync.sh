@@ -1,8 +1,8 @@
 #!/bin/sh
 
-DOCROOT_URL=smb://SERVER/PATH
+DOCROOT_URL=smb://YOUR/SERVER/PATH
 ZOT_DIR=$(mktemp -d)
-TARG=/v/docedit/zotero
+TARG=/Volumes/YOUR/LOCAL/MOUNT/POINT
 
 if [ ! -d "${TARG}" ] ; then
     echo "mount ${TARG} not found--mounting ${DOCROOT_URL}..."
