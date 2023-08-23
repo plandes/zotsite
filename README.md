@@ -110,22 +110,22 @@ Usage: zotsite [list|export|print] [options]:
 This project exports your local Zotero library to a usable HTML website.
 
 Options:
-  -h, --help                       show this help message and exit
-  --version                        show the program version and exit
-  --level X                        the level to set the application logger,
-                                   X is one of: debug, err, info, warn
-  -c, --config FILE                the path to the configuration file
+  -h, --help [actions]                         show this help message and exit
+  --version                                    show the program version and exit
+  --level X                                    the application logger level, X is one of: debug, err, info, warn
+  -c, --config FILE                            the configuration file
 
 Actions:
-list                               list all actions and help
-  --lstfmt <json|name|text>  text  the output format for the action listing
+list                                           list all actions and help
+  --lstfmt <json|name|text>              text  the output format for the action listing
 
-export (default)                   generate and export the zotero website
-  --collection REGEX               a regular expression used to filter "collection" nodes
-  -o, --outputdir DIR              the directory to dump the site; default to configuration file
+export (default)                               generate and export the zotero website
+  --collection REGEX                           a regular expression used to filter "collection" nodes
+  -o, --outputdir DIR                          the directory to dump the site; default to configuration file
+  -s, --show                                   whether to browse to the created site (needs "pip install zensols.showfile")
 
-print                              print (sub)collections and papers in those collections as a tree
-  --collection REGEX               a regular expression used to filter "collection" nodes
+print                                          print (sub)collections and papers in those collections as a tree
+  --collection REGEX                           a regular expression used to filter "collection" nodes
 ```
 
 
@@ -173,7 +173,7 @@ An extensive changelog is available [here](CHANGELOG.md).
 
 [MIT License](LICENSE.md)
 
-Copyright (c) 2019 - 2022 Paul Landes
+Copyright (c) 2019 - 2023 Paul Landes
 
 
 <!-- links -->
