@@ -123,6 +123,26 @@ The generated website takes the following URL encoded parameters:
 * **isView**: if `1`, go directly to the PDF rather than the information page.
 
 
+## Robust File System Access
+
+If one file copy from the Zotero storage fails, the program dump a stack trace
+and terminate.  However, there might be cases where the database might have
+out-of-sync entries from what is on the file system but you still want to
+export those entries that are available.
+
+To change this behavior and robustly deal with missing entries, add the
+following to the [configuration file]:
+
+```ini
+[site_creator]
+robust_fs = True
+```
+
+This tells the program to continue to try to export even when encountering file
+system copy issues.  However, you'll get a lot of verbose error output if there
+is some larger issue.
+
+
 <!-- links -->
 [configuration file]: #configuration-file
 [Zotero]: https://www.zotero.org
