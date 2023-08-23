@@ -39,7 +39,7 @@ class Application(object):
         harness: CliHarness = ApplicationFactory.create_harness()
         app: Application = harness.get_instance('config')
         logger.info(f'showing {index_file}')
-        app.show(index_file)
+        app.show(str(index_file))
 
     def export(self, output_dir: Path = None, show: bool = False):
         """Generate and export the Zotero website.
