@@ -77,7 +77,7 @@ zotsite export
 If your library is not in the default $HOME/zotero directory you will need to change that path by making a zotsite.conf config file:
 
 ```bash
-zotsite export -c zotsite.conf
+zotsite export --collection zotsite.conf
 ```
 
 This will create the html files in the directory ./zotsite
