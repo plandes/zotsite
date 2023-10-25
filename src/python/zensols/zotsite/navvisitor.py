@@ -18,6 +18,8 @@ class NavCreateVisitor(Visitor):
     """This class creates the data structure used by the Javascript navigation
     widget in the created website.
 
+    :see: `Bootstrap Glyphicons <https://getbootstrap.com/docs/3.3/components>`_
+
     """
     ITEM_ICONS = {'computerProgram': 'floppy-disk',
                   'conferencePaper': 'file',
@@ -29,7 +31,9 @@ class NavCreateVisitor(Visitor):
                   'webpage': 'bookmark',
                   'thesis': 'education',
                   'patent': 'certificate',
-                  'blogPost': 'pencil'}
+                  'blogPost': 'pencil',
+                  'preprint': 'log-in',
+                  'dataset': 'oil'}
     UPPER = re.compile(r'([A-Z][a-z]+)')
     PDF_EXT_REGEXP = re.compile(r'.*\.pdf$')
     PDF_FULL_REGEXP = re.compile(r'^.*Full\s*[tT]ext PDF')
@@ -56,7 +60,7 @@ class NavCreateVisitor(Visitor):
         title.
 
         """
-        assert type(lst) == list
+        assert isinstance(lst, list)
         lst.sort(key=lambda n: n[by])
         for n in lst:
             if 'nodes' in n:
