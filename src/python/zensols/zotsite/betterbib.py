@@ -25,14 +25,10 @@ class BetterBibtexMapper(object):
     def data(self) -> Dict[str, Any]:
         path = self.lib.data_dir / 'better-bibtex.sqlite'
         logger.info(f'reading bibtex DB at {path}')
-        conn = sqlite3.connect(path)
+        conn = sqlite3.connect(':memory:')
+        conn.execute('ATTACH DATABASE ? AS betterbibtex', (path,))
         try:
-            rows = tuple(conn.execute("""select * from `better-bibtex`"""))
-            assert len(rows) == 3
-            rows = tuple(filter(lambda r: r[0] == 'better-bibtex.citekey', rows))
-            assert len(rows) == 1
-            jstr = rows[0][1]
-            return json.loads(jstr)
+            return [ tuple(k) for k in conn.execute("""select * from betterbibtex.citationkey""") ]
         finally:
             conn.close()
 
