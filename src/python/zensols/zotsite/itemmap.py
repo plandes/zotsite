@@ -13,6 +13,7 @@ logger = logging.getLogger(__name__)
 
 class ItemMapper(ABC):
     """Maps :class:`.Item` unique identifiers.
+
     """
     EXT_RE = re.compile(r'.+\.(.+)?$')
 
