@@ -11,7 +11,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ## [0.8.2] - 2023-10-25
 ### Changed
 - [Fixed SQLite access](https://github.com/plandes/zotsite/pull/29) to cite
-  keys after better-bibtex upgrade
+  keys, by [Emiliano Heyns](https://github.com/retorquere), after better-bibtex
+  upgrade.
 - Added icon mapping for `preprint` and `dataset`.
 
 
