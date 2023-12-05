@@ -1,0 +1,456 @@
+<!doctype html>
+<html class="no-js" lang="en" data-content_root="./">
+  <head><meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width,initial-scale=1"/>
+    <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="index" title="Index" href="genindex.html" /><link rel="search" title="Search" href="search.html" /><link rel="next" title="Usage" href="doc/usage.html" /><link rel="prev" title="Zotsite: A Zotero Export Utility" href="top.html" />
+
+    <!-- Generated with Sphinx 7.2.6 and Furo 2023.09.10 -->
+        <title>Zotsite: A Zotero Export Utility - Zotsite: A Zotero Export Utility 0.9.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/furo.css?v=135e06be" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="_static/graphviz.css" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/furo-extensions.css?v=36a5483c" />
+    
+    
+
+
+<style>
+  body {
+    --color-code-background: #eeffcc;
+  --color-code-foreground: black;
+  
+  }
+  @media not print {
+    body[data-theme="dark"] {
+      --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  
+    }
+    @media (prefers-color-scheme: dark) {
+      body:not([data-theme="light"]) {
+        --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  
+      }
+    }
+  }
+</style></head>
+  <body>
+    
+    <script>
+      document.body.dataset.theme = localStorage.getItem("theme") || "auto";
+    </script>
+    
+
+<svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+  <symbol id="svg-toc" viewBox="0 0 24 24">
+    <title>Contents</title>
+    <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 1024 1024">
+      <path d="M408 442h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8zm-8 204c0 4.4 3.6 8 8 8h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56zm504-486H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zm0 632H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zM115.4 518.9L271.7 642c5.8 4.6 14.4.5 14.4-6.9V388.9c0-7.4-8.5-11.5-14.4-6.9L115.4 505.1a8.74 8.74 0 0 0 0 13.8z"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-menu" viewBox="0 0 24 24">
+    <title>Menu</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-menu">
+      <line x1="3" y1="12" x2="21" y2="12"></line>
+      <line x1="3" y1="6" x2="21" y2="6"></line>
+      <line x1="3" y1="18" x2="21" y2="18"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-arrow-right" viewBox="0 0 24 24">
+    <title>Expand</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-chevron-right">
+      <polyline points="9 18 15 12 9 6"></polyline>
+    </svg>
+  </symbol>
+  <symbol id="svg-sun" viewBox="0 0 24 24">
+    <title>Light mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="feather-sun">
+      <circle cx="12" cy="12" r="5"></circle>
+      <line x1="12" y1="1" x2="12" y2="3"></line>
+      <line x1="12" y1="21" x2="12" y2="23"></line>
+      <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+      <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+      <line x1="1" y1="12" x2="3" y2="12"></line>
+      <line x1="21" y1="12" x2="23" y2="12"></line>
+      <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+      <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-moon" viewBox="0 0 24 24">
+    <title>Dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-moon">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z" />
+    </svg>
+  </symbol>
+  <symbol id="svg-sun-half" viewBox="0 0 24 24">
+    <title>Auto light/dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-shadow">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+      <circle cx="12" cy="12" r="9" />
+      <path d="M13 12h5" />
+      <path d="M13 15h4" />
+      <path d="M13 18h1" />
+      <path d="M13 9h4" />
+      <path d="M13 6h1" />
+    </svg>
+  </symbol>
+</svg>
+
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation">
+<input type="checkbox" class="sidebar-toggle" name="__toc" id="__toc">
+<label class="overlay sidebar-overlay" for="__navigation">
+  <div class="visually-hidden">Hide navigation sidebar</div>
+</label>
+<label class="overlay toc-overlay" for="__toc">
+  <div class="visually-hidden">Hide table of contents sidebar</div>
+</label>
+
+
+
+<div class="page">
+  <header class="mobile-header">
+    <div class="header-left">
+      <label class="nav-overlay-icon" for="__navigation">
+        <div class="visually-hidden">Toggle site navigation sidebar</div>
+        <i class="icon"><svg><use href="#svg-menu"></use></svg></i>
+      </label>
+    </div>
+    <div class="header-center">
+      <a href="top.html"><div class="brand">Zotsite: A Zotero Export Utility 0.9.0 documentation</div></a>
+    </div>
+    <div class="header-right">
+      <div class="theme-toggle-container theme-toggle-header">
+        <button class="theme-toggle">
+          <div class="visually-hidden">Toggle Light / Dark / Auto color theme</div>
+          <svg class="theme-icon-when-auto"><use href="#svg-sun-half"></use></svg>
+          <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+          <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+        </button>
+      </div>
+      <label class="toc-overlay-icon toc-header-icon" for="__toc">
+        <div class="visually-hidden">Toggle table of contents sidebar</div>
+        <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
+      </label>
+    </div>
+  </header>
+  <aside class="sidebar-drawer">
+    <div class="sidebar-container">
+      
+      <div class="sidebar-sticky"><a class="sidebar-brand" href="top.html">
+  
+  
+  <span class="sidebar-brand-text">Zotsite: A Zotero Export Utility 0.9.0 documentation</span>
+  
+</a><form class="sidebar-search-container" method="get" action="search.html" role="search">
+  <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
+  <input type="hidden" name="check_keywords" value="yes">
+  <input type="hidden" name="area" value="default">
+</form>
+<div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
+  <ul class="current">
+<li class="toctree-l1 current current-page"><a class="current reference internal" href="#">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="doc/usage.html">Usage</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="api.html">API Reference</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><div class="visually-hidden">Toggle navigation of API Reference</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="api/zensols.zotsite.html">zensols.zotsite package</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="CONTRIBUTING.html">Contributing</a></li>
+</ul>
+
+</div>
+</div>
+
+      </div>
+      
+    </div>
+  </aside>
+  <div class="main">
+    <div class="content">
+      <div class="article-container">
+        <a href="#" class="back-to-top muted-link">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12z"></path>
+          </svg>
+          <span>Back to top</span>
+        </a>
+        <div class="content-icon-container">
+          
+<div class="theme-toggle-container theme-toggle-content">
+            <button class="theme-toggle">
+              <div class="visually-hidden">Toggle Light / Dark / Auto color theme</div>
+              <svg class="theme-icon-when-auto"><use href="#svg-sun-half"></use></svg>
+              <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+              <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+            </button>
+          </div>
+          <label class="toc-overlay-icon toc-content-icon" for="__toc">
+            <div class="visually-hidden">Toggle table of contents sidebar</div>
+            <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
+          </label>
+        </div>
+        <article role="main">
+          <section id="zotsite-a-zotero-export-utility">
+<h1>Zotsite: A Zotero Export Utility<a class="headerlink" href="#zotsite-a-zotero-export-utility" title="Link to this heading">#</a></h1>
+<p><a class="reference external" href="https://pypi.python.org/pypi/zensols.zotsite"><img alt="PyPI" src="https://img.shields.io/pypi/v/zensols.zotsite.svg" /></a>
+<a class="reference external" href="https://www.python.org/downloads/release/python-3100"><img alt="Python 3.10" src="https://img.shields.io/badge/python-3.10-blue.svg" /></a>
+<a class="reference external" href="https://www.python.org/downloads/release/python-3110"><img alt="Python 3.11" src="https://img.shields.io/badge/python-3.11-blue.svg" /></a>
+<a class="reference external" href="https://github.com/plandes/zotsite/actions"><img alt="Build Status" src="https://github.com/plandes/zotsite/workflows/CI/badge.svg" /></a></p>
+<p>This project exports your local <a class="reference external" href="https://www.zotero.org">Zotero</a> library to a usable HTML website.
+This generated website has the following features:</p>
+<ul class="simple">
+<li><p>Easily access your papers, site snapshots, notes from a navigation tree.</p></li>
+<li><p>Provides metadata from collections and attachments (i.e. referenes etc).</p></li>
+<li><p>Display PDF papers and website snapshot (the latter as framed).</p></li>
+<li><p>Search function dynamically narrows down the papers you’re looking for.</p></li>
+<li><p>Embed links to a specific collection, article, item, note etc.</p></li>
+<li><p>Export only a portion of your collection with regular expressions using the
+collection name.</p></li>
+<li><p><a class="reference external" href="https://github.com/retorquere/zotero-better-bibtex">BetterBibtex</a> integration.</p></li>
+<li><p>Snazzy look and feel from the latest <a class="reference external" href="https://getbootstrap.com">Bootstrap</a> CSS/Javascript library.</p></li>
+</ul>
+<section id="documentation">
+<h2>Documentation<a class="headerlink" href="#documentation" title="Link to this heading">#</a></h2>
+<p>See the <a class="reference external" href="https://plandes.github.io/zotsite/index.html">full documentation</a>.</p>
+</section>
+<section id="obtaining">
+<h2>Obtaining<a class="headerlink" href="#obtaining" title="Link to this heading">#</a></h2>
+<p>The easist way to install the command line program is via the <code class="docutils literal notranslate"><span class="pre">pip</span></code> installer:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pip3<span class="w"> </span>install<span class="w"> </span>zensols.zotsite
+</pre></div>
+</div>
+<p>Binaries are also available on <a class="reference external" href="https://pypi.org/project/zensols.zotsite/">pypi</a>.</p>
+</section>
+<section id="process">
+<h2>Process<a class="headerlink" href="#process" title="Link to this heading">#</a></h2>
+<p>The tool does the following:</p>
+<ol class="simple">
+<li><p>Exports the meta data (directory structure, references, notes, etc) from
+your <a class="reference external" href="https://www.zotero.org">Zotero</a> library.  On MacOS, this is done by querying the file system
+SQLite DB files.</p></li>
+<li><p>Copies a static site that enables traversal of the exported data.</p></li>
+<li><p>Copies your <a class="reference external" href="https://www.zotero.org">Zotero</a> stored papers, snapshot (sites) etc.</p></li>
+<li><p>Generates a navigation tree to easily find your papers/content.</p></li>
+</ol>
+</section>
+<section id="sample-site-demonstration">
+<h2>Sample Site Demonstration<a class="headerlink" href="#sample-site-demonstration" title="Link to this heading">#</a></h2>
+<p>See the <a class="reference external" href="https://plandes.github.io/zotsite/demo/index.html">live demo</a>, which provides a variety of resources found in my own
+library.  <em>Note:</em> To my knowledge, all of these resources are free to
+distribute and violate no laws.  If I’ve missed one,
+please <a class="reference internal" href="CONTRIBUTING.html"><span class="doc">create an issue</span></a>.</p>
+</section>
+<section id="requirements">
+<h2>Requirements<a class="headerlink" href="#requirements" title="Link to this heading">#</a></h2>
+<p><a class="reference external" href="https://github.com/retorquere/zotero-better-bibtex">BetterBibtex</a> plugin for Zotero.</p>
+</section>
+<section id="usage">
+<h2>Usage<a class="headerlink" href="#usage" title="Link to this heading">#</a></h2>
+<p>The command line program has two modes: show configuration (a good first step)
+and to create the web site.  You can see what the program is parsing from your
+<a class="reference external" href="https://www.zotero.org">Zotero</a> library:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>zotsite<span class="w"> </span>print
+</pre></div>
+</div>
+<p>To create the stand-alone site, run the program (without the angle brackets):</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>zotsite<span class="w"> </span><span class="nb">export</span>
+</pre></div>
+</div>
+<p>If your library is not in the default $HOME/zotero directory you will need to change that path by making a zotsite.conf config file:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>zotsite<span class="w"> </span><span class="nb">export</span><span class="w"> </span>--collection<span class="w"> </span>zotsite.conf
+</pre></div>
+</div>
+<p>This will create the html files in the directory ./zotsite</p>
+<p>See <a class="reference internal" href="doc/usage.html"><span class="doc">usage</span></a> for more information.</p>
+<section id="configuration-file">
+<h3>Configuration File<a class="headerlink" href="#configuration-file" title="Link to this heading">#</a></h3>
+<p>Either an environment variable <code class="docutils literal notranslate"><span class="pre">ZOTSITERC</span></code> must be set or a <code class="docutils literal notranslate"><span class="pre">-c</span></code> configuration
+option must be given and point to a file to customize how the program works.
+See the test <a class="reference external" href="test-resources/zotsite.conf">configuration file</a> for an example and inline comments for more
+detail on how and what can be configured.</p>
+</section>
+</section>
+<section id="ubuntu-and-linux-systems-with-python-3-5-or-previous-version">
+<h2>Ubuntu and Linux Systems with Python 3.5 or Previous Version<a class="headerlink" href="#ubuntu-and-linux-systems-with-python-3-5-or-previous-version" title="Link to this heading">#</a></h2>
+<p>Please <a class="reference external" href="https://github.com/plandes/zotsite/issues/4">read this issue</a> if you
+are installing a Ubuntu or any Linux system with Python 3.5 or previous
+version.</p>
+</section>
+<section id="command-line-help">
+<h2>Command Line Help<a class="headerlink" href="#command-line-help" title="Link to this heading">#</a></h2>
+<p>Command line usage as provided with the <code class="docutils literal notranslate"><span class="pre">--help</span></code> option:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>Usage:<span class="w"> </span>zotsite<span class="w"> </span><span class="o">[</span>list<span class="p">|</span>export<span class="p">|</span>print<span class="o">]</span><span class="w"> </span><span class="o">[</span>options<span class="o">]</span>:
+
+This<span class="w"> </span>project<span class="w"> </span>exports<span class="w"> </span>your<span class="w"> </span><span class="nb">local</span><span class="w"> </span>Zotero<span class="w"> </span>library<span class="w"> </span>to<span class="w"> </span>a<span class="w"> </span>usable<span class="w"> </span>HTML<span class="w"> </span>website.
+
+Options:
+<span class="w">  </span>-h,<span class="w"> </span>--help<span class="w"> </span><span class="o">[</span>actions<span class="o">]</span><span class="w">                         </span>show<span class="w"> </span>this<span class="w"> </span><span class="nb">help</span><span class="w"> </span>message<span class="w"> </span>and<span class="w"> </span><span class="nb">exit</span>
+<span class="w">  </span>--version<span class="w">                                    </span>show<span class="w"> </span>the<span class="w"> </span>program<span class="w"> </span>version<span class="w"> </span>and<span class="w"> </span><span class="nb">exit</span>
+<span class="w">  </span>--level<span class="w"> </span>X<span class="w">                                    </span>the<span class="w"> </span>application<span class="w"> </span>logger<span class="w"> </span>level,<span class="w"> </span>X<span class="w"> </span>is<span class="w"> </span>one<span class="w"> </span>of:<span class="w"> </span>debug,<span class="w"> </span>err,<span class="w"> </span>info,<span class="w"> </span>warn
+<span class="w">  </span>-c,<span class="w"> </span>--config<span class="w"> </span>FILE<span class="w">                            </span>the<span class="w"> </span>configuration<span class="w"> </span>file
+
+Actions:
+list<span class="w">                                           </span>list<span class="w"> </span>all<span class="w"> </span>actions<span class="w"> </span>and<span class="w"> </span><span class="nb">help</span>
+<span class="w">  </span>--lstfmt<span class="w"> </span>&lt;json<span class="p">|</span>name<span class="p">|</span>text&gt;<span class="w">              </span>text<span class="w">  </span>the<span class="w"> </span>output<span class="w"> </span>format<span class="w"> </span><span class="k">for</span><span class="w"> </span>the<span class="w"> </span>action<span class="w"> </span>listing
+
+<span class="nb">export</span><span class="w"> </span><span class="o">(</span>default<span class="o">)</span><span class="w">                               </span>generate<span class="w"> </span>and<span class="w"> </span><span class="nb">export</span><span class="w"> </span>the<span class="w"> </span>zotero<span class="w"> </span>website
+<span class="w">  </span>--collection<span class="w"> </span>REGEX<span class="w">                           </span>a<span class="w"> </span>regular<span class="w"> </span>expression<span class="w"> </span>used<span class="w"> </span>to<span class="w"> </span>filter<span class="w"> </span><span class="s2">&quot;collection&quot;</span><span class="w"> </span>nodes
+<span class="w">  </span>-o,<span class="w"> </span>--outputdir<span class="w"> </span>DIR<span class="w">                          </span>the<span class="w"> </span>directory<span class="w"> </span>to<span class="w"> </span>dump<span class="w"> </span>the<span class="w"> </span>site<span class="p">;</span><span class="w"> </span>default<span class="w"> </span>to<span class="w"> </span>configuration<span class="w"> </span>file
+<span class="w">  </span>-s,<span class="w"> </span>--show<span class="w">                                   </span>whether<span class="w"> </span>to<span class="w"> </span>browse<span class="w"> </span>to<span class="w"> </span>the<span class="w"> </span>created<span class="w"> </span>site<span class="w"> </span><span class="o">(</span>needs<span class="w"> </span><span class="s2">&quot;pip install zensols.showfile&quot;</span><span class="o">)</span>
+
+print<span class="w">                                          </span>print<span class="w"> </span><span class="o">(</span>sub<span class="o">)</span>collections<span class="w"> </span>and<span class="w"> </span>papers<span class="w"> </span><span class="k">in</span><span class="w"> </span>those<span class="w"> </span>collections<span class="w"> </span>as<span class="w"> </span>a<span class="w"> </span>tree
+<span class="w">  </span>--collection<span class="w"> </span>REGEX<span class="w">                           </span>a<span class="w"> </span>regular<span class="w"> </span>expression<span class="w"> </span>used<span class="w"> </span>to<span class="w"> </span>filter<span class="w"> </span><span class="s2">&quot;collection&quot;</span><span class="w"> </span>nodes
+</pre></div>
+</div>
+</section>
+<section id="attribution">
+<h2>Attribution<a class="headerlink" href="#attribution" title="Link to this heading">#</a></h2>
+<p>This software uses:</p>
+<ul class="simple">
+<li><p>Python 3</p></li>
+<li><p><a class="reference external" href="https://jquery.com">jQuery</a> version 3</p></li>
+<li><p><a class="reference external" href="https://datatables.net">DataTables</a> version 1.12</p></li>
+<li><p><a class="reference external" href="https://getbootstrap.com">Bootstrap</a> version 4</p></li>
+<li><p><a class="reference external" href="https://github.com/jonmiles/bootstrap-treeview">Tree View</a> for Bootstrap</p></li>
+<li><p><a class="reference external" href="https://popper.js.org">Popper</a> for tooltips</p></li>
+<li><p><a class="reference external" href="https://ourcodeworld.com/articles/read/143/how-to-copy-text-to-clipboard-with-javascript-easily">Copy to Clipboard</a> function</p></li>
+</ul>
+</section>
+<section id="screenshot">
+<h2>Screenshot<a class="headerlink" href="#screenshot" title="Link to this heading">#</a></h2>
+<p>Also see the <a class="reference external" href="https://plandes.github.io/zotsite/demo/index.html">live demo</a>.</p>
+<p><img alt="Screenshot" src="https://raw.githubusercontent.com/plandes/zotsite/master/doc/snapshot.png" /></p>
+</section>
+<section id="todo">
+<h2>Todo<a class="headerlink" href="#todo" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Make the site portion a proper Javascript site.  Right now, all the <code class="docutils literal notranslate"><span class="pre">min</span></code>s
+are added in the distribution to same directory as
+the <a class="reference external" href="resources/site/src/js/zotero.js">main navigation/content</a> file.</p></li>
+<li><p>Add functionality to the disabled <em>View</em> button that drills down in a paper
+and finds a PDF or site to view withouth the user having to do this.</p></li>
+<li><p>Use something like zotxt to make this work with a plugin rather than directly
+against the SQLite DB.</p></li>
+</ul>
+</section>
+<section id="zotero-plugin-listing">
+<h2>Zotero Plugin Listing<a class="headerlink" href="#zotero-plugin-listing" title="Link to this heading">#</a></h2>
+<p>This is listed as a <a class="reference external" href="https://www.zotero.org/support/plugins#website_integration">plugin</a> on the Zotero site.</p>
+</section>
+<section id="changelog">
+<h2>Changelog<a class="headerlink" href="#changelog" title="Link to this heading">#</a></h2>
+<p>An extensive changelog is available <a class="reference internal" href="CHANGELOG.html"><span class="doc">here</span></a>.</p>
+</section>
+<section id="community">
+<h2>Community<a class="headerlink" href="#community" title="Link to this heading">#</a></h2>
+<p>Please star this repository and let me know how and where you use this API.
+Contributions as pull requests, feedback and any input is welcome.</p>
+</section>
+<section id="license">
+<h2>License<a class="headerlink" href="#license" title="Link to this heading">#</a></h2>
+<p><a class="reference internal" href="LICENSE.html"><span class="doc">MIT License</span></a></p>
+<p>Copyright (c) 2019 - 2023 Paul Landes</p>
+<!-- links --></section>
+</section>
+
+        </article>
+      </div>
+      <footer>
+        
+        <div class="related-pages">
+          <a class="next-page" href="doc/usage.html">
+              <div class="page-info">
+                <div class="context">
+                  <span>Next</span>
+                </div>
+                <div class="title">Usage</div>
+              </div>
+              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
+            </a>
+          <a class="prev-page" href="top.html">
+              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
+              <div class="page-info">
+                <div class="context">
+                  <span>Previous</span>
+                </div>
+                
+                <div class="title">Home</div>
+                
+              </div>
+            </a>
+        </div>
+        <div class="bottom-of-page">
+          <div class="left-details">
+            <div class="copyright">
+                Copyright &#169; 2023, Paul Landes
+            </div>
+            Made with <a href="https://www.sphinx-doc.org/">Sphinx</a> and <a class="muted-link" href="https://pradyunsg.me">@pradyunsg</a>'s
+            
+            <a href="https://github.com/pradyunsg/furo">Furo</a>
+            
+          </div>
+          <div class="right-details">
+            
+          </div>
+        </div>
+        
+      </footer>
+    </div>
+    <aside class="toc-drawer">
+      
+      
+      <div class="toc-sticky toc-scroll">
+        <div class="toc-title-container">
+          <span class="toc-title">
+            On this page
+          </span>
+        </div>
+        <div class="toc-tree-container">
+          <div class="toc-tree">
+            <ul>
+<li><a class="reference internal" href="#">Zotsite: A Zotero Export Utility</a><ul>
+<li><a class="reference internal" href="#documentation">Documentation</a></li>
+<li><a class="reference internal" href="#obtaining">Obtaining</a></li>
+<li><a class="reference internal" href="#process">Process</a></li>
+<li><a class="reference internal" href="#sample-site-demonstration">Sample Site Demonstration</a></li>
+<li><a class="reference internal" href="#requirements">Requirements</a></li>
+<li><a class="reference internal" href="#usage">Usage</a><ul>
+<li><a class="reference internal" href="#configuration-file">Configuration File</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#ubuntu-and-linux-systems-with-python-3-5-or-previous-version">Ubuntu and Linux Systems with Python 3.5 or Previous Version</a></li>
+<li><a class="reference internal" href="#command-line-help">Command Line Help</a></li>
+<li><a class="reference internal" href="#attribution">Attribution</a></li>
+<li><a class="reference internal" href="#screenshot">Screenshot</a></li>
+<li><a class="reference internal" href="#todo">Todo</a></li>
+<li><a class="reference internal" href="#zotero-plugin-listing">Zotero Plugin Listing</a></li>
+<li><a class="reference internal" href="#changelog">Changelog</a></li>
+<li><a class="reference internal" href="#community">Community</a></li>
+<li><a class="reference internal" href="#license">License</a></li>
+</ul>
+</li>
+</ul>
+
+          </div>
+        </div>
+      </div>
+      
+      
+    </aside>
+  </div>
+</div><script src="_static/documentation_options.js?v=39bb1c6d"></script>
+    <script src="_static/doctools.js?v=888ff710"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/scripts/furo.js?v=32e29ea5"></script>
+    <script src="_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="_static/copybutton.js?v=f281be69"></script>
+    </body>
+</html>

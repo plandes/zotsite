@@ -1,0 +1,6 @@
+<map id="inheritance4bd244d0cb" name="inheritance4bd244d0cb">
+<area shape="rect" id="node1" title="Helper class that provides a standard way to create an ABC using" alt="" coords="64,5,136,36"/>
+<area shape="rect" id="node4" title="All subclasses have the ability to deallocate any resources. &#160;This is" alt="" coords="35,84,165,115"/>
+<area shape="rect" id="node2" href="#zensols.zotsite.cli.ApplicationFactory" target="_top" title="Boots the application context from the command line. &#160;This first loads" alt="" coords="15,241,185,272"/>
+<area shape="rect" id="node3" title="Classes can extend this that want to persist :class:`.PersistedWork`" alt="" coords="5,163,195,193"/>
+</map>

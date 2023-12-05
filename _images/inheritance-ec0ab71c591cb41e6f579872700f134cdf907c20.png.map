@@ -1,0 +1,5 @@
+<map id="inheritancee065519097" name="inheritancee065519097">
+<area shape="rect" id="node1" title="Helper class that provides a standard way to create an ABC using" alt="" coords="29,5,101,36"/>
+<area shape="rect" id="node3" href="#zensols.zotsite.domain.Visitor" target="_top" title="The visitor in the GoF *visitor pattern*." alt="" coords="29,84,101,115"/>
+<area shape="rect" id="node2" href="#zensols.zotsite.prunevisitor.PruneVisitor" target="_top" title="This that filters out ``Collection`` instances based on a regular" alt="" coords="5,163,125,193"/>
+</map>

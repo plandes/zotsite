@@ -1,0 +1,113 @@
+zensols.zotsite package
+=======================
+
+Submodules
+----------
+
+zensols.zotsite.app
+-------------------
+.. inheritance-diagram:: zensols.zotsite.app
+   :parts: 1
+
+.. automodule:: zensols.zotsite.app
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+zensols.zotsite.betterbib
+-------------------------
+.. inheritance-diagram:: zensols.zotsite.betterbib
+   :parts: 1
+
+.. automodule:: zensols.zotsite.betterbib
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+zensols.zotsite.cli
+-------------------
+.. inheritance-diagram:: zensols.zotsite.cli
+   :parts: 1
+
+.. automodule:: zensols.zotsite.cli
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+zensols.zotsite.db
+------------------
+.. inheritance-diagram:: zensols.zotsite.db
+   :parts: 1
+
+.. automodule:: zensols.zotsite.db
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+zensols.zotsite.domain
+----------------------
+.. inheritance-diagram:: zensols.zotsite.domain
+   :parts: 1
+
+.. automodule:: zensols.zotsite.domain
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+zensols.zotsite.fscpvisitor
+---------------------------
+.. inheritance-diagram:: zensols.zotsite.fscpvisitor
+   :parts: 1
+
+.. automodule:: zensols.zotsite.fscpvisitor
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+zensols.zotsite.itemmap
+-----------------------
+.. inheritance-diagram:: zensols.zotsite.itemmap
+   :parts: 1
+
+.. automodule:: zensols.zotsite.itemmap
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+zensols.zotsite.navvisitor
+--------------------------
+.. inheritance-diagram:: zensols.zotsite.navvisitor
+   :parts: 1
+
+.. automodule:: zensols.zotsite.navvisitor
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+zensols.zotsite.prunevisitor
+----------------------------
+.. inheritance-diagram:: zensols.zotsite.prunevisitor
+   :parts: 1
+
+.. automodule:: zensols.zotsite.prunevisitor
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+zensols.zotsite.screate
+-----------------------
+.. inheritance-diagram:: zensols.zotsite.screate
+   :parts: 1
+
+.. automodule:: zensols.zotsite.screate
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+Module contents
+---------------
+
+.. automodule:: zensols.zotsite
+   :members:
+   :undoc-members:
+   :show-inheritance:
