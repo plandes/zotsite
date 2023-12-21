@@ -3,6 +3,10 @@ function ZoteroManager(levels, meta, isView) {
     this.meta = meta;
     this.isView = isView;
 
+    this.currentSearchItem = -1;
+    this.currentSearchCount = -1;
+    this.currentSearchNodes = null;
+
     // create the metadata table, which is the key/value pairs given from a zotero
     // collection (sub folder) or attachment
     function createMetaTable(meta) {
@@ -108,8 +112,7 @@ function ZoteroManager(levels, meta, isView) {
 	btn.action = node.resource;
 	if (node.resource) {
 	    btn.onClick = node.resource;
-	    btn.setAttribute('onClick', "location.href='" +
-			     node.resource + "'");
+	    btn.setAttribute('onClick', "window.open('/"+node.resource+"','_blank')");
 	} else {
 	    btn.classList.add('disabled');
 	    btn.setAttribute('data-toggle', 'tooltip');
@@ -310,9 +313,9 @@ function ZoteroManager(levels, meta, isView) {
 
 	var initCollectionsTable = false;
 	// add the header pane
-	if (hasContent) {
+	if (nodeType == 'attachment') {
 	    headerPane(node, cont);
-	} else if (!hasNote) {
+	} else if (nodeType == 'meta' && !hasNote) {
 	    // add collection table if we find the metadata level node;
 	    // otherwise give the "No Content" message
 	    var noc = document.createElement('div');
@@ -466,7 +469,7 @@ function ZoteroManager(levels, meta, isView) {
 	}
     }
 
-    // show the nodes given by the search and hidw all others
+    // show the nodes given by the search and hide all others
     // used when the user uses the search button or presses enter
     function searchNarrow() {
 	var tree = $('#tree').treeview(true);
@@ -494,9 +497,36 @@ function ZoteroManager(levels, meta, isView) {
 		tree.revealNode(node.nodeId, {levels: 1});
 	    }
 
-	    if (nlen == 1) {
-		tree.selectNode(node.nodeId);
+	    if (nlen >= 1) {
+		tree.selectNode(nodes[0].nodeId);
+		var node = tree.getNode(nodes[0].nodeId);
+		//node.scrollIntoView();
+		
+		currentSearchNodes = nodes;
+		currentSearchCount = nlen;
+		currentSearchItem = 0;
 	    }
+	}
+    }
+
+    function mod(n, m) {
+	var remain = n % m;
+	return Math.floor(remain >= 0 ? remain : remain + m);
+    }
+
+    function searchReverse() {
+	if (currentSearchItem != -1) {
+	    currentSearchItem = mod(currentSearchItem - 1, currentSearchCount);
+	    var tree = $('#tree').treeview(true);
+	    tree.selectNode(currentSearchNodes[currentSearchItem].nodeId);
+	}
+    }
+
+    function searchForward() {
+	if (currentSearchItem != -1) {
+	    currentSearchItem = mod(currentSearchItem + 1, currentSearchCount);
+	    var tree = $('#tree').treeview(true);
+	    tree.selectNode(currentSearchNodes[currentSearchItem].nodeId);
 	}
     }
 
@@ -517,8 +547,13 @@ function ZoteroManager(levels, meta, isView) {
 
     this.reset = function() {
 	console.log('resetting');
+	currentSearchItem = -1;
+	currentSearchCount = -1;
+	currentSearchNodes = null;
 	var tree = $('#tree').treeview(true);
 	tree.collapseAll();
+	var searchBox = document.getElementById("termSearch");
+	searchBox.value = '';
 	createMain(null);
 	updateLink(null);
 	lastNode = null;
@@ -543,8 +578,20 @@ function ZoteroManager(levels, meta, isView) {
 	    if (e.keyCode == 13) {
 		searchNarrow();
 	    } else {
-		onSearchChange(this.value);
+		//onSearchChange(this.value);
 	    }
+	});
+
+	$('#searchEnter').on('click', function(e) {
+	    searchNarrow();
+	});
+
+	$('#searchRev').on('mousedown', function(e) {
+	    searchReverse();
+	});
+
+	$('#searchFwd').on('mousedown', function(e) {
+	    searchForward();
 	});
 
 	$('#item-document-link-button').click(function() {
