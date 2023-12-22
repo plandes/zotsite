@@ -251,23 +251,25 @@ function ZoteroManager(levels, meta, isView) {
 	var rows = [];
 	var tab = null;
 
-	for (var i = 0; i < childs.length; i++) {
-	    var c = childs[i];
-	    var meta = c.metadata;
-	    if (meta != null) {
-		var metaByCol = {};
-		var row = [];
-		for (var mix = 0; mix < meta.length; mix++) {
-		    var mpair = meta[mix];
-		    metaByCol[mpair[0]] = mpair[1];
-		}
-		for (var cix = 0; cix < cols.length; cix++) {
-		    var col = cols[cix];
-		    var cval = metaByCol[col];
-		    if (cval == null) cval = '';
-		    row.push([c['item-id'], cval]);
-		}
-		rows.push(row);
+	if (childs) {
+	    for (var i = 0; i < childs.length; i++) {
+	        var c = childs[i];
+	        var meta = c.metadata;
+	        if (meta != null) {
+	    	    var metaByCol = {};
+	    	    var row = [];
+	    	    for (var mix = 0; mix < meta.length; mix++) {
+	    	        var mpair = meta[mix];
+	    	        metaByCol[mpair[0]] = mpair[1];
+	    	    }
+	    	    for (var cix = 0; cix < cols.length; cix++) {
+	    	        var col = cols[cix];
+	    	        var cval = metaByCol[col];
+	    	        if (cval == null) cval = '';
+	    	        row.push([c['item-id'], cval]);
+	    	    }
+	    	    rows.push(row);
+	        }
 	    }
 	}
 
@@ -480,7 +482,7 @@ function ZoteroManager(levels, meta, isView) {
 	    console.log('searching on text: ' + text);
 	    var options = {ignoreCase: true,
 			   exactMatch: false,
-			   revealResults: false}
+			   revealResults: true}
 	    var nodes = tree.getExpanded();
 	    var nlen = nodes.length;
 	    for (var i = 0; i < nlen; i++) {
