@@ -8,6 +8,7 @@ import logging
 from pathlib import Path
 import sqlite3
 from zensols.zotsite.domain import Collection, Library, Item, Note, Name
+import pprint
 
 logger = logging.getLogger(__name__)
 
@@ -76,6 +77,18 @@ select c.firstName, c.lastName
     ic.itemID = %(item_id)s
     order by ic.orderIndex""" % whparams
 
+    def _item_keywords_sql(self, whparams):
+        """Create an SQL string to get items keywords."""
+        return """
+select w.word keyword 
+    from items i, itemTypes it, itemData id, fulltextItemWords iw, fulltextWords w 
+    where i.itemTypeId = it.itemTypeId and 
+    i.itemId = id.itemId and 
+    iw.itemID = id.itemId and 
+    iw.wordID = w.wordID and 
+    i.itemId = %(item_id)s and 
+    i.itemId not in (select itemId from deletedItems)""" % whparams
+
     def get_connection(self):
         """Return a database connection the SQLite database.
 
@@ -127,6 +140,23 @@ select c.firstName, c.lastName
         if len(creators) > 0:
             return creators
 
+    def _get_item_keywords(self, item, conn, whparams):
+        """Return the item keywords from the database.
+
+        :param item: the item to fetch data for
+
+        :param conn: the DB connection
+
+        :param whparams: dict of parameters used for the metadata SQL query
+
+        """
+        whparams['item_id'] = item['i_id']
+        keywords = []
+        for row in conn.execute(self._item_keywords_sql(whparams)):
+            keywords.append(row['keyword'])
+        if len(keywords) > 0:
+            return keywords
+
     def _select_items(self, conn):
         """Return items from the database.
 
@@ -151,6 +181,9 @@ select c.firstName, c.lastName
         for itemlst in items.values():
             for item in itemlst:
                 meta = self._get_item_meta(item, conn, wparams)
+                keywords = self._get_item_keywords(item, conn, wparams)
+                if keywords != None:
+                    meta['keywords'] = ','.join(keywords)
                 item['meta'] = meta
                 creators = self._get_item_creators(item, conn, wparams)
                 item['creators'] = creators
@@ -198,6 +231,7 @@ select c.firstName, c.lastName
         link, note etc).
 
         """
+        #pprint.pprint(item)
         children = list(map(lambda x: self._create_item(x), item['subs']))
         if item['type'] == 'note':
             item = Note(item)
