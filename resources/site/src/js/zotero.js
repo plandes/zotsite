@@ -36,28 +36,29 @@ function ZoteroManager(levels, meta, isView) {
 	    var tval = document.createElement('div');
 	    var key = meta[i][0];
 	    var val = meta[i][1];
+	    if (key != 'Keywords') {
+		tr = document.createElement('tr');
 
-            tr = document.createElement('tr');
+		td.appendChild(document.createTextNode(key));
+		td.classList.add('meta-table-key');
+		tr.appendChild(td)
 
-            td.appendChild(document.createTextNode(key));
-	    td.classList.add('meta-table-key');
-            tr.appendChild(td)
+		td = document.createElement('td');
+		td.appendChild(tval);
+		if (key == 'URL') {
+			var anch = document.createElement('a');
+			anch.setAttribute('href', val);
+			anch.appendChild(document.createTextNode(anch));
+			tval.appendChild(anch);
+		} else {
+			tval.appendChild(document.createTextNode(val));
+		}
+		tval.classList.add('meta-table-val');
+		td.appendChild(tval);
 
-            td = document.createElement('td');
-	    td.appendChild(tval);
-	    if (key == 'URL') {
-		var anch = document.createElement('a');
-		anch.setAttribute('href', val);
-		anch.appendChild(document.createTextNode(anch));
-		tval.appendChild(anch);
-	    } else {
-		tval.appendChild(document.createTextNode(val));
+		tr.appendChild(td)
+		tbdy.appendChild(tr);
 	    }
-	    tval.classList.add('meta-table-val');
-	    td.appendChild(tval);
-
-            tr.appendChild(td)
-            tbdy.appendChild(tr);
 	}
 
 	tbl.appendChild(thead);
@@ -266,6 +267,7 @@ function ZoteroManager(levels, meta, isView) {
 	    	        var col = cols[cix];
 	    	        var cval = metaByCol[col];
 	    	        if (cval == null) cval = '';
+			console.log(c['item-id']);
 	    	        row.push([c['item-id'], cval]);
 	    	    }
 	    	    rows.push(row);
