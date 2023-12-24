@@ -155,7 +155,7 @@ select w.word keyword
         for row in conn.execute(self._item_keywords_sql(whparams)):
             keywords.append(row['keyword'])
         if len(keywords) > 0:
-            return keywords
+            return list(set(keywords))
 
     def _select_items(self, conn):
         """Return items from the database.
