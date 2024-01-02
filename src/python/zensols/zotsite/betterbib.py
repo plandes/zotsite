@@ -19,32 +19,20 @@ class BetterBibtexMapper(object):
 
     """
     def __init__(self, lib: Library):
-        self.lib = lib
-
-    @property
-    def data(self) -> Dict[str, Any]:
-        path = self.lib.data_dir / 'better-bibtex.sqlite'
+        lib_id = lib.library_id
+        path = lib.data_dir / 'better-bibtex.sqlite'
         logger.info(f'reading bibtex DB at {path}')
         conn = sqlite3.connect(':memory:')
         conn.execute('ATTACH DATABASE ? AS betterbibtex', (str(path),))
         try:
-            rows = tuple(conn.execute("""select * from betterbibtex.`better-bibtex`"""))
-            assert len(rows) == 3
-            rows = tuple(filter(lambda r: r[0] == 'better-bibtex.citekey', rows))
-            assert len(rows) == 1
-            jstr = rows[0][1]
-            return json.loads(jstr)
+            rows = tuple(conn.execute("""select itemID, citationKey from betterbibtex.`citationkey` where libraryID = ?""", (int(lib_id),)))
+            self.data = rows
         finally:
             conn.close()
-
     @property
     @persisted('_mapping')
     def mapping(self) -> Dict[str, Any]:
-        lib_id = self.lib.library_id
-        data = self.data['data']
-        data = filter(lambda x: x['libraryID'] == lib_id, data)
-        return {x['itemID']: x['citekey'] for x in data}
-
+        return {x[0]: x[1] for x in self.data}
 
 class BetterBibtexVisitor(Visitor):
     """Use the ``BetterBibtexMapper`` to change the keys in mapped items to the
