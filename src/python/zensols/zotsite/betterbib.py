@@ -32,7 +32,8 @@ class BetterBibtexMapper(object):
         try:
             return dict(conn.execute(
                 """\
-select itemID, citationKey from betterbibtex.`citationkey`
+select itemID, citationKey
+        from betterbibtex.`citationkey`
         where libraryID = ?""",
                 [self.lib.library_id]))
         finally:
