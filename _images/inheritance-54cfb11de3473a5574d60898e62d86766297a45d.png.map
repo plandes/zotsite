@@ -1,0 +1,19 @@
+<map id="inheritancefd4cc1da5c" name="inheritancefd4cc1da5c">
+<area shape="rect" id="node1" title="Helper class that provides a standard way to create an ABC using" alt="" coords="313,5,379,33"/>
+<area shape="rect" id="node7" href="#zensols.zotsite.domain.ZoteroObject" target="_top" title="Represents any collection, item etc. Zotero data object." alt="" coords="135,77,251,105"/>
+<area shape="rect" id="node13" href="#zensols.zotsite.domain.Visitor" target="_top" title="The visitor in the GoF *visitor pattern*." alt="" coords="313,77,379,105"/>
+<area shape="rect" id="node15" href="#zensols.zotsite.domain.Walker" target="_top" title="Iterates the Zotero data and calls the visitor for each node." alt="" coords="442,77,514,105"/>
+<area shape="rect" id="node2" title="Base exception from which almost all library raised errors extend." alt="" coords="688,5,771,33"/>
+<area shape="rect" id="node3" title="Thrown for all command line interface errors." alt="" coords="698,77,820,105"/>
+<area shape="rect" id="node4" title="Thrown for any application error that should result in a user error" alt="" coords="720,149,859,177"/>
+<area shape="rect" id="node17" href="#zensols.zotsite.domain.ZoteroApplicationError" target="_top" title="Thrown for application errors meant to be reported by the command line." alt="" coords="673,221,859,249"/>
+<area shape="rect" id="node5" href="#zensols.zotsite.domain.Collection" target="_top" title="Represents a (sub)collection, which is a container for other collections and" alt="" coords="5,221,98,249"/>
+<area shape="rect" id="node6" href="#zensols.zotsite.domain.Container" target="_top" title="Container class holds items and sub&#45;collections." alt="" coords="5,149,97,177"/>
+<area shape="rect" id="node9" href="#zensols.zotsite.domain.Library" target="_top" title="Represents the top level object that contains the root level collections." alt="" coords="120,221,191,249"/>
+<area shape="rect" id="node8" href="#zensols.zotsite.domain.Item" target="_top" title="Represents an attachement object, like PDFs, site links etc." alt="" coords="120,149,186,177"/>
+<area shape="rect" id="node11" href="#zensols.zotsite.domain.Note" target="_top" title="Represents a note Zotero data object." alt="" coords="208,149,274,177"/>
+<area shape="rect" id="node10" href="#zensols.zotsite.domain.Name" target="_top" title="Name" alt="" coords="793,5,859,33"/>
+<area shape="rect" id="node12" href="#zensols.zotsite.domain.PrintVisitor" target="_top" title="A visitor that prints items for debugging." alt="" coords="296,149,396,177"/>
+<area shape="rect" id="node14" href="#zensols.zotsite.domain.SortedWalker" target="_top" title="Iterates through the Zotero visiting children in sorted order." alt="" coords="418,149,538,177"/>
+<area shape="rect" id="node16" href="#zensols.zotsite.domain.UnsortedWalker" target="_top" title="Iterates through the Zotero visiting children in whatever order is" alt="" coords="560,149,698,177"/>
+</map>

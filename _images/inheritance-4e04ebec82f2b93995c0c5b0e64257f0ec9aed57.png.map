@@ -1,0 +1,6 @@
+<map id="inheritance4b9b9b2915" name="inheritance4b9b9b2915">
+<area shape="rect" id="node1" title="Helper class that provides a standard way to create an ABC using" alt="" coords="125,5,197,36"/>
+<area shape="rect" id="node3" href="#zensols.zotsite.itemmap.ItemMapper" target="_top" title="Maps :class:`.Item` unique identifiers." alt="" coords="101,84,221,115"/>
+<area shape="rect" id="node2" href="#zensols.zotsite.itemmap.IdItemMapper" target="_top" title="Map by using item IDs." alt="" coords="5,163,140,193"/>
+<area shape="rect" id="node4" href="#zensols.zotsite.itemmap.RegexItemMapper" target="_top" title="Map by using regular expression replacements." alt="" coords="164,163,336,193"/>
+</map>

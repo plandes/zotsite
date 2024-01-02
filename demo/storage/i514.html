@@ -1,0 +1,224 @@
+<!--?xml version="1.0" encoding="UTF-8"?-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<title>[1806.07999] A Supervised Approach To The Interpretation Of Imperative To-Do Lists</title>
+<link rel="shortcut icon" href="https://arxiv.org/favicon.ico" type="image/x-icon">
+<link rel="stylesheet" type="text/css" media="screen" href="arXiv.css">
+<meta name="citation_title" content="A Supervised Approach To The Interpretation Of Imperative To-Do Lists">
+<meta name="citation_author" content="Landes, Paul">
+<meta name="citation_author" content="Di Eugenio, Barbara">
+<meta name="citation_date" content="2018/06/20">
+<meta name="citation_online_date" content="2018/06/20">
+<meta name="citation_pdf_url" content="http://arxiv.org/pdf/1806.07999">
+<meta name="citation_arxiv_id" content="1806.07999">
+<script type="text/javascript" async="" defer="defer" src="piwik.js"></script><script src="mathjaxToggle.js" type="text/javascript"></script>
+
+<!-- Piwik -->
+<script type="text/javascript">
+var _paq = _paq || [];
+_paq.push(["setDomains", ["*.arxiv.org"]]);
+_paq.push(['trackPageView']);
+_paq.push(['enableLinkTracking']);
+(function()
+{ var u="//webanalytics.library.cornell.edu/"; _paq.push(['setTrackerUrl', u+'piwik.php']); _paq.push(['setSiteId', 538]); var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0]; g.type='text/javascript'; g.async=true; g.defer=true; g.src=u+'piwik.js'; s.parentNode.insertBefore(g,s); }
+)();
+</script>
+<!-- End Piwik Code -->
+
+
+<script type="text/x-mathjax-config;executed=true">MathJax.Hub.Config({
+  messageStyle: 'none',
+  extensions: ['tex2jax.js'],
+  jax: ['input/TeX','output/HTML-CSS'],
+  tex2jax: {
+    inlineMath: [['$','$']],
+    processEscapes: true,
+    ignoreClass: '.*',
+    processClass: 'mathjax.*',
+  },
+  TeX: {
+    extensions: ['AMSmath.js', 'AMSsymbols.js', 'noErrors.js'],
+    noErrors: {
+      inlineDelimiters: ['$','$'],
+      multiLine: false,
+      style: {
+        'font-size': 'normal',
+        'border': ''
+      }
+    }
+  }
+});</script><script type="text/javascript" src="MathJax.js"></script><style type="text/css">.MathJax_Preview {color: #888}
+#MathJax_Message {position: fixed; left: 1px; bottom: 2px; background-color: #E6E6E6; border: 1px solid #959595; margin: 0px; padding: 2px 8px; z-index: 102; color: black; font-size: 80%; width: auto; white-space: nowrap}
+#MathJax_MSIE_Frame {position: absolute; top: 0; left: 0; width: 0px; z-index: 101; border: 0px; margin: 0px; padding: 0px}
+.MathJax_Error {color: #CC0000; font-style: italic}
+</style></head>
+<body class="with-cu-identity"><div id="MathJax_Message" style="display: none;"></div>
+
+<noscript><img src="//webanalytics.library.cornell.edu/piwik.php?idsite=538&rec=1" style="border:0;" alt="" /></noscript>
+
+<div id="cu-identity">
+<div id="cu-logo">
+<a id="insignia-link" href="http://www.cornell.edu/"><img src="cul_signature_unstyled.gif" alt="Cornell University" width="283" height="76" border="0"></a>
+<div id="unit-signature-links">
+<a id="cornell-link" href="http://www.cornell.edu/">Cornell University</a>
+<a id="unit-link" href="http://www.library.cornell.edu/">Library</a>
+</div>
+</div>
+<div id="support-ack">
+<a href="https://confluence.cornell.edu/x/ALlRF">We gratefully acknowledge support from<br>the Simons Foundation<br> and member institutions</a>
+</div>
+</div>
+<div id="header">
+<h1><a href="https://arxiv.org/">arXiv.org</a> &gt; <a href="https://arxiv.org/list/cs/recent">cs</a> &gt; arXiv:1806.07999</h1>
+<div id="search">
+<form id="search-arxiv" method="GET" action="/search">
+                
+<div class="wrapper-search-arxiv">
+<input class="keyword-field" name="query" placeholder="Search or Article ID" type="text">
+
+<div class="filter-field">
+<select name="searchtype">
+<option value="all" selected="selected">All fields</option>
+<option value="title">Title</option>
+<option value="author">Author(s)</option>
+<option value="abstract">Abstract</option>
+<option value="comments">Comments</option>
+<option value="journal_ref">Journal reference</option>
+<option value="acm_class">ACM classification</option>
+<option value="msc_class">MSC classification</option>
+<option value="report_num">Report number</option>
+<option value="paper_id">arXiv identifier</option>
+<option value="doi">DOI</option>
+<option value="orcid">ORCID</option>
+<option value="author_id">arXiv author ID</option>
+<option value="help">Help pages</option>
+<option value="full_text">Full text</option></select>
+</div>
+<input class="btn-search-arxiv" value="" type="submit">
+<div class="links">(<a href="https://arxiv.org/help">Help</a> | <a href="https://arxiv.org/search/advanced">Advanced search</a>)</div>
+</div>
+<input name="source" value="header" type="hidden">
+</form>
+</div>
+</div>
+<div id="content">
+
+<!--
+<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+         xmlns:dc="http://purl.org/dc/elements/1.1/"
+         xmlns:trackback="http://madskills.com/public/xml/rss/module/trackback/">
+    <rdf:Description
+        rdf:about="http://arxiv.org/abs/1806.07999"
+        dc:identifier="http://arxiv.org/abs/1806.07999"
+        dc:title="A Supervised Approach To The Interpretation Of Imperative To-Do Lists"
+        trackback:ping="http://arxiv.org/trackback/1806.07999" />
+    </rdf:RDF>
+-->
+
+<div id="abs">
+<div class="extra-services">
+
+<div class="full-text">
+<span class="descriptor">Full-text links:</span>
+<h2>Download:</h2>
+<ul>
+<li><a href="https://arxiv.org/pdf/1806.07999" accesskey="f">PDF</a></li>
+<li><a href="https://arxiv.org/format/1806.07999">Other formats</a></li>
+</ul>
+<div class="abs-license">(<a href="http://arxiv.org/licenses/nonexclusive-distrib/1.0/" title="Rights to this article">license</a>)</div>
+</div><!--end full-text-->
+
+<div class="browse">
+<h3>Current browse context:</h3>
+<div class="current">cs.CL</div>
+<div class="prevnext"><span class="arrow"><a href="http://arxiv.org/prevnext?site=arxiv.org&amp;id=1806.07999&amp;context=cs.CL&amp;function=prev" accesskey="p" title="previous in cs.CL (accesskey p)">&lt;&nbsp;prev</a></span>&nbsp;|&nbsp;<span class="arrow"><a href="http://arxiv.org/prevnext?site=arxiv.org&amp;id=1806.07999&amp;context=cs.CL&amp;function=next" accesskey="n" title="next in cs.CL (accesskey n)">next&nbsp;&gt;</a></span>
+<br></div>
+<div class="list"><a href="https://arxiv.org/list/cs.CL/new">new</a>&nbsp;| <a href="https://arxiv.org/list/cs.CL/recent">recent</a>&nbsp;| <a href="https://arxiv.org/list/cs.CL/1806">1806</a></div><h3>Change to browse by:</h3><div class="switch">
+<a href="https://arxiv.org/abs/1806.07999?context=cs">cs</a>
+</div>
+
+</div>
+<div class="extra-ref-cite">
+<h3>References &amp; Citations</h3><ul><li><a href="http://adsabs.harvard.edu/cgi-bin/bib_query?arXiv:1806.07999">NASA ADS</a></li>
+</ul>
+
+</div>
+<div class="bookmarks">
+<div class="what-is-this">
+<h3>Bookmark</h3> (<a href="https://arxiv.org/help/social_bookmarking">what is this?</a>)
+</div>
+<a href="https://arxiv.org/ct?url=http%3A%2F%2Fwww.citeulike.org%2Fposturl%3Furl%3Dhttp%3A%2F%2Farxiv.org%2Fabs%2F1806.07999%26title%3DA%2520Supervised%2520Approach%2520To%2520The%2520Interpretation%2520Of%2520Imperative%2520To-Do%2520Lists%26authors%3D&amp;v=b65ddbb4" title="Bookmark on CiteULike"><img src="citeulike.png" alt="CiteULike logo"></a>
+<a href="https://arxiv.org/ct?url=http%3A%2F%2Fwww.bibsonomy.org%2FBibtexHandler%3FrequTask%3Dupload%26url%3Dhttp%3A%2F%2Farxiv.org%2Fabs%2F1806.07999%26description%3DA%2520Supervised%2520Approach%2520To%2520The%2520Interpretation%2520Of%2520Imperative%2520To-Do%2520Lists&amp;v=f4b4e781" title="Bookmark on BibSonomy"><img src="bibsonomy.png" alt="BibSonomy logo"></a>
+<a href="https://arxiv.org/ct?url=https%3A%2F%2Fwww.mendeley.com%2Fimport%2F%3Furl%3Dhttp%3A%2F%2Farxiv.org%2Fabs%2F1806.07999&amp;v=40f2290f" title="Bookmark on Mendeley"><img src="mendeley.png" alt="Mendeley logo"></a>
+<a href="https://arxiv.org/ct?url=https%3A%2F%2Fdel.icio.us%2Fpost%3Furl%3Dhttp%3A%2F%2Farxiv.org%2Fabs%2F1806.07999%26description%3DA%2520Supervised%2520Approach%2520To%2520The%2520Interpretation%2520Of%2520Imperative%2520To-Do%2520Lists&amp;v=0622fc62" title="Bookmark on del.icio.us"><img src="delicious.png" alt="del.icio.us logo"></a>
+<a href="https://arxiv.org/ct?url=https%3A%2F%2Fdigg.com%2Fsubmit%3Furl%3Dhttp%3A%2F%2Farxiv.org%2Fabs%2F1806.07999%26title%3DA%2520Supervised%2520Approach%2520To%2520The%2520Interpretation%2520Of%2520Imperative%2520To-Do%2520Lists&amp;v=3280644f" title="Bookmark on Digg"><img src="digg.png" alt="Digg logo"></a>
+<a href="https://arxiv.org/ct?url=https%3A%2F%2Freddit.com%2Fsubmit%3Furl%3Dhttp%3A%2F%2Farxiv.org%2Fabs%2F1806.07999%26title%3DA%2520Supervised%2520Approach%2520To%2520The%2520Interpretation%2520Of%2520Imperative%2520To-Do%2520Lists&amp;v=14e9d7ad" title="Bookmark on Reddit"><img src="reddit.png" alt="Reddit logo"></a>
+<a href="https://arxiv.org/ct?url=http%3A%2F%2Fsciencewise.info%2Fbookmarks%2Fadd%3Furl%3Dhttp%3A%2F%2Farxiv.org%2Fabs%2F1806.07999&amp;v=0beeef58" title="Bookmark on ScienceWISE"><img src="sciencewise.png" alt="ScienceWISE logo"></a>
+
+</div>
+</div><!--end extra-services-->
+
+<div class="leftcolumn">
+<div class="subheader">
+<h1>Computer Science &gt; Computation and Language</h1>
+</div>
+<h1 class="title mathjax"><span class="descriptor">Title:</span>
+A Supervised Approach To The Interpretation Of Imperative To-Do Lists</h1>
+<div class="authors"><span class="descriptor">Authors:</span>
+<a href="https://arxiv.org/search?searchtype=author&amp;query=Landes%2C+P">Paul Landes</a>, 
+<a href="https://arxiv.org/search?searchtype=author&amp;query=Di+Eugenio%2C+B">Barbara Di Eugenio</a></div>
+<div class="dateline">(Submitted on 20 Jun 2018)</div>
+<blockquote class="abstract mathjax">
+<span class="descriptor">Abstract:</span> To-do lists are a popular medium for personal information management. As
+to-do tasks are increasingly tracked in electronic form with mobile and desktop
+organizers, so does the potential for software support for the corresponding
+tasks by means of intelligent agents. While there has been work in the area of
+personal assistants for to-do tasks, no work has focused on classifying user
+intention and information extraction as we do. We show that our methods perform
+well across two corpora that span sub-domains, one of which we released.
+</blockquote>
+<!--CONTEXT-->
+<div class="metatable">
+<table summary="Additional metadata">
+<tbody><tr>
+<td class="tablecell label">Comments:
+</td>
+<td class="tablecell comments mathjax">9 pages; <a href="https://github.com/plandes/todo-task/">this https URL</a></td>
+</tr>
+<tr>
+<td class="tablecell label">Subjects:
+</td>
+<td class="tablecell subjects"><span class="primary-subject">Computation and Language (cs.CL)</span></td>
+</tr>
+<tr>
+<td class="tablecell label">
+Cite&nbsp;as:
+</td>
+<td class="tablecell arxivid"><a href="https://arxiv.org/abs/1806.07999">arXiv:1806.07999</a> [cs.CL]</td>
+</tr>
+<tr>
+<td class="tablecell label">&nbsp;</td>
+<td class="tablecell arxividv">(or <span class="arxivid"><a href="https://arxiv.org/abs/1806.07999v1">arXiv:1806.07999v1</a> [cs.CL]</span> for this version)</td>
+</tr>
+</tbody></table>
+</div>
+<div class="submission-history">
+<h2>Submission history</h2>
+From: Paul Landes [<a href="https://arxiv.org/show-email/441aa304/1806.07999">view email</a>]
+<br>
+<b>[v1]</b> Wed, 20 Jun 2018 21:46:49 GMT  (352kb,D)<br>
+</div>
+<div class="endorsers"><a href="http://arxiv.org/auth/show-endorsers/1806.07999">Which authors of this paper are endorsers?</a> | <a id="mathjax_toggle" href="javascript:setMathjaxCookie()">Disable MathJax</a> (<a href="https://arxiv.org/help/mathjax/">What is MathJax?</a>)</div><script type="text/javascript" language="javascript">mathjaxToggle();</script>
+</div><!--end leftcolumn-->
+</div><!--end abs-->
+</div>
+<div id="footer">
+<div class="footer-text">
+<p>Link back to: <a href="http://arxiv.org/">arXiv</a>, <a href="https://arxiv.org/form">form interface</a>, <a href="https://arxiv.org/help/contact">contact</a>.</p>
+</div>
+<div class="social"><a href="https://twitter.com/arxiv"><img src="twitter_logo_blue.png" alt="Twitter" title="Follow arXiv on Twitter"></a></div>
+</div>
+
+
+</body></html>

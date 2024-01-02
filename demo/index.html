@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Zotero</title>
+
+    <!-- Required Stylesheets -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/bootstrap-3-retro.css" rel="stylesheet">
+    <link href="css/bootstrap-treeview.min.css" rel="stylesheet">
+    <link href="css/datatables.css" rel="stylesheet">
+    <link href="css/zotsite.css" rel="stylesheet">
+    <link href="css/zotero.css" rel="stylesheet">
+
+    <!-- Required Javascript -->
+    <script src="js/jquery.min.js"></script>
+    <script src="js/popper.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/bootstrap-treeview.min.js"></script>
+    <script src="js/clipboard.js"></script>
+    <script src="js/datatables.js"></script>
+    <script src="js/zotero-tree-data.js"></script>
+    <script src="js/zotero-meta.js"></script>
+    <script src="js/zotero.js"></script>
+
+    <script>
+window.onload = function() {
+    var url = new URL(window.location.href);
+    var treeLevels = url.searchParams.get('levels') || 1;
+    var nodeId = url.searchParams.get('id');
+    var isView = (url.searchParams.get('isView') != null);
+    var zot = new ZoteroManager(treeLevels, zoteroMeta, isView);
+    zot.init(nodeId);
+
+    $('#init-button').click(function() { zot.reset(); })
+}
+    </script>
+
+  </head>
+  <body>
+
+    <!-- navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-z navbar-toggleable-md"
+	 style="height: 50px;">
+      <!-- brand -->
+      <a class="navbar-brand" href="https://www.zotero.org">
+	<img src="img/zotero-logo.svg" class="d-block" width="120" height="34"
+	     xmlns="http://www.w3.org/2000/svg" focusable="false"></img>
+      </a>
+      <!-- right side nav -->
+      <div class="collapse navbar-collapse" id="navbarResponsive">
+	<ul class="navbar-nav ml-auto">
+	  <li class="nav-item" id="project-link-version">
+	    <a class="nav-item nav-link mr-md-2"
+	       href="https://github.com/plandes/zotsite/releases/tag/"
+	       id="bd-versions">Javascript Error</a>
+	  </li>
+	  <li class="nav-item">
+	    <a class="nav-link" href="https://github.com/plandes/zotsite">
+	      <img src="img/github-logo.svg" class="d-block" height="26"
+		   xmlns="http://www.w3.org/2000/svg" focusable="false"></img>
+	    </a>
+	  </li>
+	  <li class="nav-item">
+	    <div class="nav-item btn btn-bd-download btn-download-z btn-outline-primary mr-md-2 disabled"
+		 id="item-document-link-button">
+	      <div class="glyphicon glyphicon-link" href="#" id="item-document-link"></div>
+	    </div>
+	  </li>
+	  <li class="nav-item">
+	    <a class="nav-item btn btn-bd-download btn-download-z btn-outline-primary mr-md-2"
+	       href="https://github.com/plandes/zotsite/releases//">Download</a>
+	  </li>
+	  <li class="nav-item" id="init-button">
+	    <a class="nav-item btn btn-bd-download btn-download-z btn-outline-primary mr-md-2" href="#">Clear</a>
+	  </li>
+	</ul>
+      </div>
+    </nav>
+
+    <div class="alert alert-dismissible fade show" role="alert"
+	 id="alert-box"
+	 style="display: none;">
+    </div>
+
+    <!-- main pane -->
+    <table class="max-table">
+      <tr valign="top">
+	<!-- left tree nav -->
+	<td class="left-nav-col border">
+	    <div class="input-group container left-nav-comp">
+	      <input type="hidden" name="search_param" value="all" id="search_param">
+	      <input type="text" class="form-control" id="termSearch" autofocus
+		     placeholder="Search term...">
+	      <span class="input-group-btn">
+		<button class="btn btn-default" type="button" onClick="zoteroSearchMin();">
+		  <span class="glyphicon glyphicon-search"></span>
+		</button>
+	      </span>
+	    </div>
+	    <div class="scrollbar scrollbar-primary treelist">
+	      <div class="force-overflow">
+		<div class="container left-nav-comp treelist" id="tree"></div>
+	      </div>
+	    </div>
+	</td>
+
+	<!-- content right pane -->
+	<td id="zotero-main-content" class="center-cell">
+	  <div class="disabled-text" id="content">
+	    No Content
+	  </div>
+	</td>
+      </tr>
+    </table>
+  </body>
+</html>
