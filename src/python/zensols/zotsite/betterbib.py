@@ -5,7 +5,7 @@ __author__ = 'Paul Landes'
 
 from typing import Dict, Any
 import logging
-import json
+from pathlib import Path
 import sqlite3
 from zensols.persist import persisted
 from zensols.zotsite import ZoteroObject, Item, Visitor, Library
@@ -19,20 +19,25 @@ class BetterBibtexMapper(object):
 
     """
     def __init__(self, lib: Library):
-        lib_id = lib.library_id
-        path = lib.data_dir / 'better-bibtex.sqlite'
-        logger.info(f'reading bibtex DB at {path}')
-        conn = sqlite3.connect(':memory:')
-        conn.execute('ATTACH DATABASE ? AS betterbibtex', (str(path),))
-        try:
-            rows = tuple(conn.execute("""select itemID, citationKey from betterbibtex.`citationkey` where libraryID = ?""", (int(lib_id),)))
-            self.data = rows
-        finally:
-            conn.close()
+        self.lib = lib
+
     @property
     @persisted('_mapping')
     def mapping(self) -> Dict[str, Any]:
-        return {x[0]: x[1] for x in self.data}
+        path: Path = self.lib.data_dir / 'better-bibtex.sqlite'
+        if logger.isEnabledFor(logging.INFO):
+            logger.info(f'reading bibtex DB at {path}')
+        conn = sqlite3.connect(':memory:')
+        conn.execute('ATTACH DATABASE ? AS betterbibtex', (str(path),))
+        try:
+            return dict(conn.execute(
+                """\
+select itemID, citationKey from betterbibtex.`citationkey`
+        where libraryID = ?""",
+                [self.lib.library_id]))
+        finally:
+            conn.close()
+
 
 class BetterBibtexVisitor(Visitor):
     """Use the ``BetterBibtexMapper`` to change the keys in mapped items to the
