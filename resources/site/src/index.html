@@ -95,8 +95,18 @@ window.onload = function() {
 	      <input type="hidden" name="search_param" value="all" id="search_param">
 	      <input type="text" class="form-control" id="termSearch" autofocus
 		     placeholder="Search term...">
+	      <span class="input-group-rev-btn">
+		<button class="btn btn-default" type="button" id="searchRev">
+		  <span class="glyphicon glyphicon-step-backward"></span>
+		</button>
+	      </span>
+	      <span class="input-group-fwd-btn">
+		<button class="btn btn-default" type="button" id="searchFwd">
+		  <span class="glyphicon glyphicon-step-forward"></span>
+		</button>
+	      </span>
 	      <span class="input-group-btn">
-		<button class="btn btn-default" type="button" onClick="zoteroSearchMin();">
+		<button class="btn btn-default" type="button" id="searchEnter">
 		  <span class="glyphicon glyphicon-search"></span>
 		</button>
 	      </span>
