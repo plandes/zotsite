@@ -504,7 +504,6 @@ function ZoteroManager(levels, meta, isView) {
 	    if (nlen >= 1) {
 		tree.selectNode(nodes[0].nodeId);
 		var node = tree.getNode(nodes[0].nodeId);
-		//node.scrollIntoView();
 		
 		currentSearchNodes = nodes;
 		currentSearchCount = nlen;
@@ -581,8 +580,6 @@ function ZoteroManager(levels, meta, isView) {
 	$('#termSearch').on('keyup', function(e) {
 	    if (e.keyCode == 13) {
 		searchNarrow();
-	    } else {
-		//onSearchChange(this.value);
 	    }
 	});
 

@@ -8,7 +8,6 @@ import logging
 from pathlib import Path
 import sqlite3
 from zensols.zotsite.domain import Collection, Library, Item, Note, Name
-import pprint
 
 logger = logging.getLogger(__name__)
 
@@ -155,7 +154,7 @@ select w.word keyword
         for row in conn.execute(self._item_keywords_sql(whparams)):
             keywords.append(row['keyword'])
         if len(keywords) > 0:
-            return keywords
+            return list(set(keywords))
 
     def _select_items(self, conn):
         """Return items from the database.
@@ -231,7 +230,6 @@ select w.word keyword
         link, note etc).
 
         """
-        #pprint.pprint(item)
         children = list(map(lambda x: self._create_item(x), item['subs']))
         if item['type'] == 'note':
             item = Note(item)
