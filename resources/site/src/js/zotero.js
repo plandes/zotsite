@@ -3,6 +3,10 @@ function ZoteroManager(levels, meta, isView) {
     this.meta = meta;
     this.isView = isView;
 
+    this.currentSearchItem = -1;
+    this.currentSearchCount = -1;
+    this.currentSearchNodes = null;
+
     // create the metadata table, which is the key/value pairs given from a zotero
     // collection (sub folder) or attachment
     function createMetaTable(meta) {
@@ -32,28 +36,29 @@ function ZoteroManager(levels, meta, isView) {
 	    var tval = document.createElement('div');
 	    var key = meta[i][0];
 	    var val = meta[i][1];
+	    if (key != 'Keywords') {
+		tr = document.createElement('tr');
 
-            tr = document.createElement('tr');
+		td.appendChild(document.createTextNode(key));
+		td.classList.add('meta-table-key');
+		tr.appendChild(td)
 
-            td.appendChild(document.createTextNode(key));
-	    td.classList.add('meta-table-key');
-            tr.appendChild(td)
+		td = document.createElement('td');
+		td.appendChild(tval);
+		if (key == 'URL') {
+			var anch = document.createElement('a');
+			anch.setAttribute('href', val);
+			anch.appendChild(document.createTextNode(anch));
+			tval.appendChild(anch);
+		} else {
+			tval.appendChild(document.createTextNode(val));
+		}
+		tval.classList.add('meta-table-val');
+		td.appendChild(tval);
 
-            td = document.createElement('td');
-	    td.appendChild(tval);
-	    if (key == 'URL') {
-		var anch = document.createElement('a');
-		anch.setAttribute('href', val);
-		anch.appendChild(document.createTextNode(anch));
-		tval.appendChild(anch);
-	    } else {
-		tval.appendChild(document.createTextNode(val));
+		tr.appendChild(td)
+		tbdy.appendChild(tr);
 	    }
-	    tval.classList.add('meta-table-val');
-	    td.appendChild(tval);
-
-            tr.appendChild(td)
-            tbdy.appendChild(tr);
 	}
 
 	tbl.appendChild(thead);
@@ -108,8 +113,7 @@ function ZoteroManager(levels, meta, isView) {
 	btn.action = node.resource;
 	if (node.resource) {
 	    btn.onClick = node.resource;
-	    btn.setAttribute('onClick', "location.href='" +
-			     node.resource + "'");
+	    btn.setAttribute('onClick', "window.open('/"+node.resource+"','_blank')");
 	} else {
 	    btn.classList.add('disabled');
 	    btn.setAttribute('data-toggle', 'tooltip');
@@ -248,23 +252,26 @@ function ZoteroManager(levels, meta, isView) {
 	var rows = [];
 	var tab = null;
 
-	for (var i = 0; i < childs.length; i++) {
-	    var c = childs[i];
-	    var meta = c.metadata;
-	    if (meta != null) {
-		var metaByCol = {};
-		var row = [];
-		for (var mix = 0; mix < meta.length; mix++) {
-		    var mpair = meta[mix];
-		    metaByCol[mpair[0]] = mpair[1];
-		}
-		for (var cix = 0; cix < cols.length; cix++) {
-		    var col = cols[cix];
-		    var cval = metaByCol[col];
-		    if (cval == null) cval = '';
-		    row.push([c['item-id'], cval]);
-		}
-		rows.push(row);
+	if (childs) {
+	    for (var i = 0; i < childs.length; i++) {
+	        var c = childs[i];
+	        var meta = c.metadata;
+	        if (meta != null) {
+	    	    var metaByCol = {};
+	    	    var row = [];
+	    	    for (var mix = 0; mix < meta.length; mix++) {
+	    	        var mpair = meta[mix];
+	    	        metaByCol[mpair[0]] = mpair[1];
+	    	    }
+	    	    for (var cix = 0; cix < cols.length; cix++) {
+	    	        var col = cols[cix];
+	    	        var cval = metaByCol[col];
+	    	        if (cval == null) cval = '';
+			console.log(c['item-id']);
+	    	        row.push([c['item-id'], cval]);
+	    	    }
+	    	    rows.push(row);
+	        }
 	    }
 	}
 
@@ -310,9 +317,9 @@ function ZoteroManager(levels, meta, isView) {
 
 	var initCollectionsTable = false;
 	// add the header pane
-	if (hasContent) {
+	if (nodeType == 'attachment') {
 	    headerPane(node, cont);
-	} else if (!hasNote) {
+	} else if (nodeType == 'meta' && !hasNote) {
 	    // add collection table if we find the metadata level node;
 	    // otherwise give the "No Content" message
 	    var noc = document.createElement('div');
@@ -466,7 +473,7 @@ function ZoteroManager(levels, meta, isView) {
 	}
     }
 
-    // show the nodes given by the search and hidw all others
+    // show the nodes given by the search and hide all others
     // used when the user uses the search button or presses enter
     function searchNarrow() {
 	var tree = $('#tree').treeview(true);
@@ -477,7 +484,7 @@ function ZoteroManager(levels, meta, isView) {
 	    console.log('searching on text: ' + text);
 	    var options = {ignoreCase: true,
 			   exactMatch: false,
-			   revealResults: false}
+			   revealResults: true}
 	    var nodes = tree.getExpanded();
 	    var nlen = nodes.length;
 	    for (var i = 0; i < nlen; i++) {
@@ -494,9 +501,35 @@ function ZoteroManager(levels, meta, isView) {
 		tree.revealNode(node.nodeId, {levels: 1});
 	    }
 
-	    if (nlen == 1) {
-		tree.selectNode(node.nodeId);
+	    if (nlen >= 1) {
+		tree.selectNode(nodes[0].nodeId);
+		var node = tree.getNode(nodes[0].nodeId);
+		
+		currentSearchNodes = nodes;
+		currentSearchCount = nlen;
+		currentSearchItem = 0;
 	    }
+	}
+    }
+
+    function mod(n, m) {
+	var remain = n % m;
+	return Math.floor(remain >= 0 ? remain : remain + m);
+    }
+
+    function searchReverse() {
+	if (currentSearchItem != -1) {
+	    currentSearchItem = mod(currentSearchItem - 1, currentSearchCount);
+	    var tree = $('#tree').treeview(true);
+	    tree.selectNode(currentSearchNodes[currentSearchItem].nodeId);
+	}
+    }
+
+    function searchForward() {
+	if (currentSearchItem != -1) {
+	    currentSearchItem = mod(currentSearchItem + 1, currentSearchCount);
+	    var tree = $('#tree').treeview(true);
+	    tree.selectNode(currentSearchNodes[currentSearchItem].nodeId);
 	}
     }
 
@@ -517,8 +550,13 @@ function ZoteroManager(levels, meta, isView) {
 
     this.reset = function() {
 	console.log('resetting');
+	currentSearchItem = -1;
+	currentSearchCount = -1;
+	currentSearchNodes = null;
 	var tree = $('#tree').treeview(true);
 	tree.collapseAll();
+	var searchBox = document.getElementById("termSearch");
+	searchBox.value = '';
 	createMain(null);
 	updateLink(null);
 	lastNode = null;
@@ -542,9 +580,19 @@ function ZoteroManager(levels, meta, isView) {
 	$('#termSearch').on('keyup', function(e) {
 	    if (e.keyCode == 13) {
 		searchNarrow();
-	    } else {
-		onSearchChange(this.value);
 	    }
+	});
+
+	$('#searchEnter').on('click', function(e) {
+	    searchNarrow();
+	});
+
+	$('#searchRev').on('mousedown', function(e) {
+	    searchReverse();
+	});
+
+	$('#searchFwd').on('mousedown', function(e) {
+	    searchForward();
 	});
 
 	$('#item-document-link-button').click(function() {
