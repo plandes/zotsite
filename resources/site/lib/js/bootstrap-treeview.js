@@ -1172,7 +1172,7 @@
 	Tree.prototype.findNodes = function (pattern, modifier, attribute) {
 
 		modifier = modifier || 'g';
-		attribute = attribute || 'text';
+		attribute = attribute || 'metadata';
 
 		var _this = this;
 		return $.grep(this.nodes, function (node) {
