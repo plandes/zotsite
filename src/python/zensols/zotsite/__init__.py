@@ -6,5 +6,6 @@ from .fscpvisitor import *
 from .prunevisitor import *
 from .betterbib import *
 from .screate import *
+from .cite import *
 from .app import *
 from .cli import *

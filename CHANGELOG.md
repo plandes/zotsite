@@ -8,6 +8,15 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ## [Unreleased]
 
 
+### Removed
+- The command line render (`show` option) to render the website after export.
+
+### Added
+- BetterBibtex citation key output with the `lookup` command line action.
+- Integration tests with mock Zotero database. Now all tests are self
+  contained.
+
+
 ## [0.9.1] - 2024-01-02
 ### Changed
 - BetterBibtex version 6.7.140: retrieve citations keys from the `citationkey`

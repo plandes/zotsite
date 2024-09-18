@@ -6,8 +6,8 @@ if (__name__ == '__main__'):
     harness = ConfigurationImporterCliHarness(
         src_dir_name='src/python',
         app_factory_class='zensols.zotsite.ApplicationFactory',
-        #config_path='test-resources/zotsite.conf',
-        proto_args='export -o target/site',
+        config_path='test-resources/zotsite.conf',
+        proto_args='proto',
         proto_factory_kwargs={'reload_pattern': r'^zensols.zotsite'},
     )
     harness.run()

@@ -3,17 +3,21 @@
 """
 __author__ = 'Paul Landes'
 
+from typing import Dict, Any
 from dataclasses import dataclass, field
 import re
 import logging
+import sys
+import json
 from pathlib import Path
-from . import SiteCreator
+from zensols.cli import ApplicationError
+from . import SiteCreator, CiteDatabase
 
 logger = logging.getLogger(__name__)
 
 
 @dataclass
-class Application(object):
+class ExportApplication(object):
     """This project exports your local Zotero library to a usable HTML website.
 
     """
@@ -33,32 +37,65 @@ class Application(object):
             self.site_creator.prune_visitor.prune_pattern = pat
         return output_dir
 
-    def _show(self, index_file: Path):
-        from zensols.cli import CliHarness
-        from zensols.showfile import ApplicationFactory, Application
-        harness: CliHarness = ApplicationFactory.create_harness()
-        app: Application = harness.get_instance('config')
-        logger.info(f'showing {index_file}')
-        app.show(str(index_file))
-
-    def export(self, output_dir: Path = None, show: bool = False):
+    def export(self, output_dir: Path = None):
         """Generate and export the Zotero website.
 
         :param output_dir: the directory to dump the site; default to
                            configuration file
-
-        :param show: whether to browse to the created site (needs ``pip install
-                     zensols.showfile``)
 
         """
         if logger.isEnabledFor(logging.INFO):
             logger.info(f'exporting site: {output_dir}')
         output_dir = self._prepare_creator(output_dir)
         self.site_creator.export()
-        if show:
-            self._show(output_dir / 'index.html')
 
     def print_structure(self):
         """Print (sub)collections and papers in those collections as a tree."""
         self._prepare_creator(None)
         self.site_creator.print_structure()
+
+
+@dataclass
+class CiteApplication(object):
+    """Map Zotero keys to BetterBibtex citekeys.
+
+    """
+    db: CiteDatabase = field()
+    """Maps Zotero keys to BetterBibtex citekeys."""
+
+    def lookup(self, format: str = '{itemKey}={citationKey}', key: str = None):
+        """Look up a citation key and print out BetterBibtex field(s).
+
+        :param key: key in format ``<libraryID>_<citationKey>``, standard input
+                    if not given, or ``all`` for every entry
+
+        :param format: the format of the output or ``json`` for all fields
+
+        """
+        entries: Dict[str, Dict[str, Any]] = self.db.entries
+        if key is None:
+            keys = map(lambda s: s.strip(), sys.stdin.readlines())
+        elif key == 'all':
+            keys = entries.keys()
+        else:
+            keys = [key]
+        for key in keys:
+            if key not in entries:
+                raise ApplicationError(
+                    f"No such entry: '{key}' in BetterBibtex database")
+            entry: Dict[str, Any] = entries[key]
+            if format == 'json':
+                print(json.dumps(entry))
+            else:
+                print(format.format(**entry))
+
+
+@dataclass
+class PrototypeApplication(object):
+    CLI_META = {'is_usage_visible': False}
+
+    export_app: ExportApplication = field()
+    cite_app: CiteApplication = field()
+
+    def proto(self):
+        self.cite_app.lookup(key='all')

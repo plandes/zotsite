@@ -2,7 +2,7 @@ import logging
 import unittest
 from io import StringIO
 from zensols.cli import CliHarness
-from zensols.zotsite import Application, ApplicationFactory
+from zensols.zotsite import ExportApplication, ApplicationFactory
 
 
 if 0:
@@ -13,7 +13,7 @@ if 0:
 class TestSiteExporter(unittest.TestCase):
     def setUp(self):
         harn: CliHarness = ApplicationFactory.create_harness()
-        self.app: Application = harn.get_instance(
+        self.app: ExportApplication = harn.get_instance(
             '-c test-resources/zotsite.conf --level=err')
         if self.app is None:
             raise ValueError('Could not create application')
