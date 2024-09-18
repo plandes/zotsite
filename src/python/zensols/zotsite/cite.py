@@ -15,11 +15,11 @@ class CiteDatabase(object):
     """Map Zotero keys to BetterBibtex citekeys.
 
     """
-    _sql: str = field()
-    """The SQL used to query the BetterBibtex database."""
-
     _persister: DbPersister = field()
     """The persister used to get the data."""
+
+    _sql: str = field()
+    """The SQL used to query the BetterBibtex database."""
 
     @property
     def entries(self) -> Dict[str, Dict[str, Any]]:
