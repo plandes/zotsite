@@ -97,4 +97,4 @@ class PrototypeApplication(object):
     cite_app: CiteApplication = field()
 
     def proto(self):
-        self.cite_app.lookup(key='all')
+        self.cite_app.db.tmp()
