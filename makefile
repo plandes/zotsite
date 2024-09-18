@@ -1,5 +1,6 @@
 ## (@)Id: makefile automates the build and deployment for python projects
 
+
 ## Build config
 #
 # type of project
@@ -7,62 +8,81 @@ PROJ_TYPE =		python
 PROJ_MODULES =		git python-resources python-cli python-doc python-doc-deploy
 INFO_TARGETS +=		appinfo
 ADD_CLEAN +=		zotero-site
+# add app configuration to command line arguments
+PY_CLI_ARGS +=		-c test-resources/zotsite.conf
+# add integration tests to test run
+PY_TEST_DEPS +=		testintegration
+
 
 # Project
 #
-COLL_ARGS =		.*generalized\ distance\|Weighted\|.*Imperative\|Semantics
+COLL_ARGS =		"^(?:NLP|Earth).*"
 ENTRY= 			./zotsite
 WEB_PKG_DIR=		$(MTARG)/site
 SITE_DEMO =		doc/demo
 PY_DOC_BUILD_HTML_DEPS += cpdemo
 
-# add app configuration to command line arguments
-PY_CLI_ARGS +=		-c test-resources/zotsite.conf
 
 
+## Includes
+#
 include ./zenbuild/main.mk
 
 
+## Targets
+#
 .PHONY:			appinfo
 appinfo:
 			@echo "app-resources-dir: $(RESOURCES_DIR)"
 
-.PHONY:			zsrun
-zsrun:
-			$(ENTRY) $(PYTHON_BIN_ARGS)
-
+# export all
 .PHONY:			export
 export:
 			$(ENTRY) $(PY_CLI_ARGS)
 
+# export a subset of the collection
 .PHONY:			exportsubset
 exportsubset:
 			$(ENTRY) --collection $(COLL_ARGS) $(PY_CLI_ARGS)
 
+# print a collections metadata
 .PHONY:			print
 print:
 			$(ENTRY) print --collection $(COLL_ARGS) $(PY_CLI_ARGS)
 
-.PHONY:			testprint
-testprint:
-			$(eval EXPECTED=10)
-			$(eval LINES=$(shell make print | wc -l))
-			@if [ $(LINES) -lt $(EXPECTED) ] ; then \
-				echo "expecting at least $(EXPECTED) lines but got $(LINES)" ; \
-				exit 1 ; \
-			fi
+# test metadata output for entire library
+.PHONY:			testprintall
+testprintall:
+			@$(ENTRY) print --level warn $(PY_CLI_ARGS) | \
+				diff - test-resources/integration/export-all.txt || \
+				exit 1
+			@echo "print all integration test ... ok"
 
-.PHONY:			testall
-testall:		test testprint
+# test metadata output for a collection
+.PHONY:			testprintcol
+testprintcol:
+			@$(ENTRY) print --level warn \
+				--collection $(COLL_ARGS) $(PY_CLI_ARGS) | \
+				diff - test-resources/integration/export-coll.txt || \
+				exit 1
+			@echo "Print collection integration test ... ok"
 
+# all integration tests
+.PHONY:			testintegration
+testintegration:	testprintall testprintcol
+
+# create the demo site
+.PHONY:			demo
+demo:			clean
+			rm -fr $(SITE_DEMO)
+			$(ENTRY) $(PY_CLI_ARGS) \
+				export -o $(SITE_DEMO) \
+				--collection $(COLL_ARGS)
+			touch $(SITE_DEMO)/.nojekyll
+
+# copy the demo site to the GitHub pages install location
 .PHONY:			cpdemo
 cpdemo:
 			@echo "copy zotsite demo"
 			mkdir -p $(PY_DOC_BUILD_HTML)
 			cp -r $(SITE_DEMO) $(PY_DOC_BUILD_HTML)
-
-.PHONY:			demo
-demo:			clean
-			rm -fr $(SITE_DEMO)
-			make PYTHON_BIN_ARGS='export -o $(SITE_DEMO) --collection $(COLL_ARGS)' zsrun
-			touch $(SITE_DEMO)/.nojekyll
