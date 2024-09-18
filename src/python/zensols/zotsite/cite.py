@@ -5,7 +5,9 @@ __author__ = 'Paul Landes'
 
 from typing import Tuple, Dict, Any
 from dataclasses import dataclass, field
+from sqlite3 import OperationalError
 from zensols.db import DbPersister
+from . import ZoteroApplicationError
 
 
 @dataclass
@@ -30,5 +32,9 @@ class CiteDatabase(object):
             data = {'libraryID': r[0], 'itemKey': r[1], 'citationKey': r[2]}
             return key, data
 
-        rows: Tuple[Tuple[str]] = self._persister.execute(self._sql)
+        try:
+            rows: Tuple[Tuple[str]] = self._persister.execute(self._sql)
+        except OperationalError as e:
+            raise ZoteroApplicationError(
+                f'Could not access BetterBibtex database: {e}') from e
         return dict(map(map_row, rows))

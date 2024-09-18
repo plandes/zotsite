@@ -10,8 +10,7 @@ import logging
 import sys
 import json
 from pathlib import Path
-from zensols.cli import ApplicationError
-from . import SiteCreator, CiteDatabase
+from . import ZoteroApplicationError, SiteCreator, CiteDatabase
 
 logger = logging.getLogger(__name__)
 
@@ -81,7 +80,7 @@ class CiteApplication(object):
             keys = [key]
         for key in keys:
             if key not in entries:
-                raise ApplicationError(
+                raise ZoteroApplicationError(
                     f"No such entry: '{key}' in BetterBibtex database")
             entry: Dict[str, Any] = entries[key]
             if format == 'json':
