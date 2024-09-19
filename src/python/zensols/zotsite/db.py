@@ -6,9 +6,11 @@ __author__ = 'Paul Landes'
 from typing import Tuple, List, Dict, Any, Union, Optional
 from dataclasses import dataclass, field
 import logging
+import re
 from pathlib import Path
 from zensols.db import DbPersister
-from . import Collection, Library, Item, Note, Name
+from . import Collection, Library, Item, Note, Name, ZoteroApplicationError
+
 
 logger = logging.getLogger(__name__)
 
@@ -188,3 +190,23 @@ class ZoteroDatabase(object):
         finally:
             # deallocate pooled connection (configured in ``obj.conf``)
             self._persister.conn_manager.dispose_all()
+
+    @property
+    def paths(self) -> Dict[str, Path]:
+        """The paths of items by key.
+
+        """
+        def map_row(r: Tuple[Any, ...]) -> Tuple[str, Path]:
+            key: str = r['key']
+            path: Path = storage_dir / key / re.sub(pat, '', r['path'])
+            return key, path
+
+        pat: re.Pattern = re.compile(r'^storage:')
+        storage_dir: Path = self._data_dir / 'storage'
+        try:
+            # TODO: add library and collection_like to params and SQL
+            rows: Tuple[Dict[str, Any], ...] = self._select('item_paths')
+            return dict(map(map_row, rows))
+        except Exception as e:
+            raise ZoteroApplicationError(
+                f'Could not access Zotero database: {e}') from e

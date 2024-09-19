@@ -3,7 +3,7 @@
 """
 __author__ = 'Paul Landes'
 
-from typing import Dict, Any
+from typing import Iterable, Dict, Any
 from dataclasses import dataclass, field
 import re
 import logging
@@ -75,6 +75,43 @@ class ExportApplication(object):
 
 
 @dataclass
+class QueryApplication(object):
+    """Query the Zotero database.
+
+    """
+    resource: Resource = field()
+    """Zotsite first class objects."""
+
+    def find_path(self, key: str = None):
+        """Output paths in the form ``<item key>=<path>``.
+
+        :param key: key in format ``<library ID>_<item key>``, standard input
+                    if not given, or ``all`` for every entry
+
+        """
+        def strip_lib_id(s: str) -> str:
+            """See TODO in :obj:`.ZoteroDatabase.paths`."""
+            return re.sub(r'^1_', '', s)
+
+        paths: Dict[str, str] = self.resource.zotero_db.paths
+        keys: Iterable[str]
+        if key is None:
+            keys = map(lambda s: s.strip(), sys.stdin.readlines())
+            keys = map(strip_lib_id)
+        elif key == 'all':
+            keys = paths.keys()
+        else:
+            keys = [strip_lib_id(key)]
+        if len(keys) == 1:
+            print(paths[keys[0]])
+        else:
+            key: str
+            for key in keys:
+                path: Path = paths[key]
+                print(f'{key}={path}')
+
+
+@dataclass
 class CiteApplication(object):
     """Map Zotero keys to BetterBibtex citekeys.
 
@@ -85,7 +122,7 @@ class CiteApplication(object):
     def lookup(self, format: str = '{itemKey}={citationKey}', key: str = None):
         """Look up a citation key and print out BetterBibtex field(s).
 
-        :param key: key in format ``<libraryID>_<citationKey>``, standard input
+        :param key: key in format ``<library ID>_<item key>``, standard input
                     if not given, or ``all`` for every entry
 
         :param format: the format of the output or ``json`` for all fields
@@ -114,9 +151,6 @@ class PrototypeApplication(object):
     CLI_META = {'is_usage_visible': False}
 
     config_factory: ConfigFactory = field()
-    export_app: ExportApplication = field()
-    cite_app: CiteApplication = field()
 
     def proto(self):
-        lib = self.export_app.resource.zotero_db.get_library()
-        print(lib)
+        self.config_factory('qapp').find_path(item_key='1_VBAMCMJX')

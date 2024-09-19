@@ -19,6 +19,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - BetterBibtex citation key output with the `lookup` command line action.
 - Integration tests with mock Zotero database. Now all tests are self
   contained.
+- An API and command line to give attachment (paper document) paths based on an
+  item key.  This can be combined with the item ID to citation ID mapping if
+  starting with a BetterBibtex citation ID.
 
 
 ## [0.9.1] - 2024-01-02
