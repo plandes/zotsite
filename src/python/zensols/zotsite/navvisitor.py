@@ -43,7 +43,7 @@ class NavCreateVisitor(Visitor):
         """Initialize the visitor object.
 
         :param lib: the object graph returned from
-                    ``DatabaseReader.get_library``.
+                    :meth:`.ZoteroDatabase.get_library`
 
         :param item_mapper: used for file name substitution so the widget uses
                             the correct names (i.e. underscore substitution)

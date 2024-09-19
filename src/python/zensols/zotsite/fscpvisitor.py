@@ -21,7 +21,7 @@ class FileSystemCopyVisitor(Visitor):
         """Initialize the visitor object.
 
         :param lib: the object graph returned from
-                   ``DatabaseReader.get_library``.
+                    :meth:`.ZoteroDatabase.get_library`
 
         :param out_dir: the target directory to copy data
 

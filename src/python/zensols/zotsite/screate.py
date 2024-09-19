@@ -13,12 +13,13 @@ from io import TextIOBase
 import shutil
 from zensols.config import Settings, ConfigFactory
 from zensols.persist import persisted
-from zensols.zotsite import (
-    ZoteroApplicationError, DatabaseReader, RegexItemMapper, IdItemMapper,
+from . import (
+    ZoteroApplicationError, RegexItemMapper, IdItemMapper,
     Library, Walker,
     NavCreateVisitor, FileSystemCopyVisitor, PruneVisitor, PrintVisitor,
     BetterBibtexVisitor,
 )
+from .db import ZoteroDatabase
 
 logger = logging.getLogger(__name__)
 
@@ -40,7 +41,7 @@ class SiteCreator(object):
     site_resource: Path = field()
     """The (resource) path the static site files."""
 
-    db: DatabaseReader = field()
+    db: ZoteroDatabase = field()
     """The database access object."""
 
     prune_visitor: PruneVisitor = field()
@@ -194,6 +195,3 @@ class SiteCreator(object):
         self._copy_static()
         self._create_tree_data()
         self._copy_storage()
-
-    def tmp(self):
-        print(self.package)

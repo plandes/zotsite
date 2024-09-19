@@ -1,5 +1,4 @@
 from .domain import *
-from .dbreader import *
 from .itemmap import *
 from .navvisitor import *
 from .fscpvisitor import *

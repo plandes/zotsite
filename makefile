@@ -65,7 +65,7 @@ testprintcol:
 				--collection $(COLL_ARGS) $(PY_CLI_ARGS) | \
 				diff - test-resources/integration/export-coll.txt || \
 				exit 1
-			@echo "Print collection integration test ... ok"
+			@echo "print collection integration test ... ok"
 
 # all integration tests
 .PHONY:			testintegration

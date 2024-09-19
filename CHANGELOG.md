@@ -8,6 +8,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ## [Unreleased]
 
 
+### Changed
+- Refactored the database (`zensols.zotsite.db`) module by separating SQL into
+  resource file and use connection pooling with the [zensols.dbutil] package.
+
 ### Removed
 - The command line render (`show` option) to render the website after export.
 
@@ -247,6 +251,7 @@ Downstream moderate risk update release.
 [BetterBibtex]: https://github.com/retorquere/zotero-better-bibtex
 [ZotFile]: http://zotfile.com
 [zensols.util]: https://github.com/plandes/util
-[zensols.showfile]: https://github.com/plandes/showfile
+[zensols.showfile]: https://github.com/plandes/rend
+[zensols.dbutil]: https://github.com/plandes/dbutil
 [DataTables]: https://datatables.net
 [issue 20]: https://github.com/plandes/zotsite/issues/20#issuecomment-1321320667

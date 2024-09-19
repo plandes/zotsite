@@ -206,7 +206,7 @@ class Library(Container):
     """Represents the top level object that contains the root level collections.
 
     """
-    def __init__(self, data_dir, library_id, collections):
+    def __init__(self, data_dir: Path, library_id: int, collections):
         self.data_dir = data_dir
         self.library_id = library_id
         self.storage_dirname = 'storage'

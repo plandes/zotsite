@@ -10,9 +10,25 @@ import logging
 import sys
 import json
 from pathlib import Path
-from . import ZoteroApplicationError, SiteCreator, CiteDatabase
+from zensols.config import ConfigFactory
+from . import ZoteroApplicationError, SiteCreator, ZoteroDatabase, CiteDatabase
 
 logger = logging.getLogger(__name__)
+
+
+@dataclass
+class Resource(object):
+    """Zotsite first class objects.
+
+    """
+    zotero_db: ZoteroDatabase = field()
+    """The database access object."""
+
+    cite_db: CiteDatabase = field()
+    """Maps Zotero keys to BetterBibtex citekeys."""
+
+    site_creator: SiteCreator = field()
+    """Creates the Zotero content web site."""
 
 
 @dataclass
@@ -20,11 +36,15 @@ class ExportApplication(object):
     """This project exports your local Zotero library to a usable HTML website.
 
     """
-    site_creator: SiteCreator = field()
-    """Creates the Zotero content web site."""
+    resource: Resource = field()
+    """Zotsite first class objects."""
 
     prune_pattern: str = field(default=None)
     """A regular expression used to filter ``Collection`` nodes."""
+
+    @property
+    def site_creator(self) -> SiteCreator:
+        return self.resource.site_creator
 
     def _prepare_creator(self, output_dir: Path) -> Path:
         if output_dir is not None:
@@ -59,8 +79,8 @@ class CiteApplication(object):
     """Map Zotero keys to BetterBibtex citekeys.
 
     """
-    db: CiteDatabase = field()
-    """Maps Zotero keys to BetterBibtex citekeys."""
+    resource: Resource = field()
+    """Zotsite first class objects."""
 
     def lookup(self, format: str = '{itemKey}={citationKey}', key: str = None):
         """Look up a citation key and print out BetterBibtex field(s).
@@ -71,7 +91,7 @@ class CiteApplication(object):
         :param format: the format of the output or ``json`` for all fields
 
         """
-        entries: Dict[str, Dict[str, Any]] = self.db.entries
+        entries: Dict[str, Dict[str, Any]] = self.resource.cite_db.entries
         if key is None:
             keys = map(lambda s: s.strip(), sys.stdin.readlines())
         elif key == 'all':
@@ -93,8 +113,10 @@ class CiteApplication(object):
 class PrototypeApplication(object):
     CLI_META = {'is_usage_visible': False}
 
+    config_factory: ConfigFactory = field()
     export_app: ExportApplication = field()
     cite_app: CiteApplication = field()
 
     def proto(self):
-        self.cite_app.db.tmp()
+        lib = self.export_app.resource.zotero_db.get_library()
+        print(lib)
