@@ -32,5 +32,8 @@ jobs:
       - name: Prepare tests
         run: 'make info deps'
 
+      - name: Install test resoiurces
+        run: 'pip install plac'
+
       - name: Run tests
         run: 'make testall'
