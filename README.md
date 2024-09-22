@@ -5,8 +5,8 @@
 [![Python 3.11][python311-badge]][python311-link]
 [![Build Status][build-badge]][build-link]
 
-This project exports your local [Zotero] library to a usable HTML website.
-This generated website has the following features:
+This project exports your local [Zotero] library to a usable HTML website with
+following features:
 
 * Easily access your papers, site snapshots, notes from a navigation tree.
 * Provides metadata from collections and attachments (i.e. referenes etc).
@@ -18,20 +18,43 @@ This generated website has the following features:
 * [BetterBibtex] integration.
 * Snazzy look and feel from the latest [Bootstrap] CSS/Javascript library.
 
+<!-- markdown-toc start - Don't edit this section. Run M-x markdown-toc-refresh-toc -->
+## Table of Contents
+
+- [Documentation](#documentation)
+- [Obtaining](#obtaining)
+- [Process](#process)
+- [Sample Site Demonstration](#sample-site-demonstration)
+- [Requirements](#requirements)
+- [Usage](#usage)
+    - [Command Line](#command-line)
+    - [API](#api)
+    - [Configuration File](#configuration-file)
+- [Screenshot](#screenshot)
+- [Ubuntu and Linux Systems with Python 3.5 or Previous Version](#ubuntu-and-linux-systems-with-python-35-or-previous-version)
+- [Attribution](#attribution)
+- [Todo](#todo)
+- [Zotero Plugin Listing](#zotero-plugin-listing)
+- [Changelog](#changelog)
+- [Community](#community)
+- [License](#license)
+
+<!-- markdown-toc end -->
+
 
 ## Documentation
 
 See the [full documentation](https://plandes.github.io/zotsite/index.html).
+The [API reference](https://plandes.github.io/zotsite/api.html) is also
+available.
 
 
 ## Obtaining
 
-The easist way to install the command line program is via the `pip` installer:
+The library can be installed with pip from the [pypi] repository:
 ```bash
 pip3 install zensols.zotsite
 ```
-
-Binaries are also available on [pypi].
 
 
 ## Process
