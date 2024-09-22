@@ -145,6 +145,13 @@ See the test [configuration file] for an example and inline comments for more
 detail on how and what can be configured.
 
 
+## Screenshot
+
+Also see the [live demo].
+
+![Screenshot][screenshot]
+
+
 ## Ubuntu and Linux Systems with Python 3.5 or Previous Version
 
 Please [read this issue](https://github.com/plandes/zotsite/issues/4) if you
@@ -164,20 +171,11 @@ This software uses:
 * [Copy to Clipboard] function
 
 
-## Screenshot
-
-Also see the [live demo].
-
-![Screenshot][screenshot]
-
-
 ## Todo
 
 * Make the site portion a proper Javascript site.  Right now, all the `min`s
   are added in the distribution to same directory as
   the [main navigation/content](resources/site/src/js/zotero.js) file.
-* Add functionality to the disabled *View* button that drills down in a paper
-  and finds a PDF or site to view withouth the user having to do this.
 * Use something like zotxt to make this work with a plugin rather than directly
   against the SQLite DB.
 
