@@ -123,7 +123,9 @@ The following example come from [this working script](example/showpaper.py).
 # get a mapping from item key (sans library ID) to the attachment path
 >>> paths: Dict[str, Path] = resource.zotero_db.item_paths
 # create BetterBibtex citation key to item key mapping
->>> bib2item: Dict[str, str] = dict(map(lambda e: (e['citationKey'], e['itemKey']), entries.values()))
+>>> bib2item: Dict[str, str] = dict(map(
+...     lambda e: (e['citationKey'], e['itemKey']),
+...     entries.values()))
 # get the item key from the citation key
 >>> itemKey: str = bib2item['landesCALAMRComponentALignment2024']
 # get the path using the Zotero DB item key
