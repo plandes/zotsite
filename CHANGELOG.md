@@ -22,6 +22,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - An API and command line to give attachment (paper document) paths based on an
   item key.  This can be combined with the item ID to citation ID mapping if
   starting with a BetterBibtex citation ID.
+- An example of using finding and displaying papers using the new API.
 
 
 ## [0.9.1] - 2024-01-02

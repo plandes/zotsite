@@ -60,6 +60,12 @@ please [create an issue](CONTRIBUTING.md).
 
 ## Usage
 
+The library is typically used from the command line to create websites, but it
+can also be used as an API from Python.
+
+
+### Command Line
+
 The command line program has two modes: show configuration (a good first step)
 and to create the web site.  You can see what the program is parsing from your
 [Zotero] library:
@@ -74,15 +80,59 @@ To create the stand-alone site, run the program (without the angle brackets):
 zotsite export
 ```
 
-If your library is not in the default $HOME/zotero directory you will need to change that path by making a zotsite.conf config file:
+If your library is not in the default `~/zotero` directory you will need to
+change that path by making a zotsite.conf config file.  This will create the
+html files in the directory `./zotsite`:
 
 ```bash
 zotsite export --collection zotsite.conf
 ```
 
-This will create the html files in the directory ./zotsite
+A mapping of BetterBibtex citation keys to Zotero's database unique *item keys*
+can be useful to scripts:
+```bash
+zotsite citekey -k all
+```
 
-See [usage](doc/usage.md) for more information.
+The tool also provides a means of finding where papers are by *item key*:
+```bash
+zotsite docpath -k all
+```
+
+See [usage](doc/usage.md) for more information.  Command line usage as provided
+with the `--help` option.
+
+
+### API
+
+The API provides access to a Python object that creates the website, can
+resolve BetterBibtex citation keys to Zotero unique identifier *item keys* and
+provide paths of item attachments (such as papers).
+
+The following example come from [this working script](example/showpaper.py).
+
+```python
+>>> from typing import Dict, Any
+>>> from pathlib import Path
+>>> from zensols.zotsite import Resource, ApplicationFactory
+# get the resource facade objects, which provides access to create the site,
+# citation and path lookup methods
+>>> resource: Resource = ApplicationFactory.get_resource()
+# get a mapping from <library ID>_<item key> to entry dictionaries
+>>> entries: Dict[str, Dict[str, Any]] = resource.cite_db.entries
+# get a mapping from item key (sans library ID) to the attachment path
+>>> paths: Dict[str, Path] = resource.zotero_db.item_paths
+# create BetterBibtex citation key to item key mapping
+>>> bib2item: Dict[str, str] = dict(map(lambda e: (e['citationKey'], e['itemKey']), entries.values()))
+# get the item key from the citation key
+>>> itemKey: str = bib2item['landesCALAMRComponentALignment2024']
+# get the path using the Zotero DB item key
+>>> paper_path: Path = paths[itemKey]
+>>> print(paper_path)
+# display the paper (needs 'pip install zensols.rend')
+>>> from zensols.rend import ApplicationFactory as RendAppFactory
+>>> RendAppFactory.get_browser_manager()(paper_path)
+```
 
 
 ### Configuration File
@@ -98,35 +148,6 @@ detail on how and what can be configured.
 Please [read this issue](https://github.com/plandes/zotsite/issues/4) if you
 are installing a Ubuntu or any Linux system with Python 3.5 or previous
 version.
-
-
-## Command Line Help
-
-Command line usage as provided with the `--help` option:
-
-```bash
-Usage: zotsite [list|export|print] [options]:
-
-This project exports your local Zotero library to a usable HTML website.
-
-Options:
-  -h, --help [actions]                         show this help message and exit
-  --version                                    show the program version and exit
-  --level X                                    the application logger level, X is one of: debug, err, info, warn
-  -c, --config FILE                            the configuration file
-
-Actions:
-list                                           list all actions and help
-  --lstfmt <json|name|text>              text  the output format for the action listing
-
-export (default)                               generate and export the zotero website
-  --collection REGEX                           a regular expression used to filter "collection" nodes
-  -o, --outputdir DIR                          the directory to dump the site; default to configuration file
-  -s, --show                                   whether to browse to the created site (needs "pip install zensols.showfile")
-
-print                                          print (sub)collections and papers in those collections as a tree
-  --collection REGEX                           a regular expression used to filter "collection" nodes
-```
 
 
 ## Attribution
