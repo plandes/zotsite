@@ -12,6 +12,12 @@ fi
 echo "creating site in ${ZOT_DIR}"
 
 zotsite export -o ${ZOT_DIR}
+# bail when the generation fails (i.e. Zotero is running and DB is locked);
+# otherwise rsync will delete the deployed site
+if [ $? -ne 0 ] ; then
+    echo "website generation error"
+    exit 1
+fi
 rsync -rltpgoDuv --delete ${ZOT_DIR}/ ${TARG}
 
 if [ -d ${ZOT_DIR} ] ; then
