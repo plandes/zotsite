@@ -9,8 +9,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 
 ## [1.0.0] - 2024-09-22
-Minor feature release to add BetterBibtex citation and item attachment (paper)
-lookup.
+Somewhat minor feature release to add BetterBibtex citation and item attachment
+(paper) lookup.
 
 ### Changed
 - Refactored the database (`zensols.zotsite.db`) module by separating SQL into
