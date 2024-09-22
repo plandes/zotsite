@@ -1,0 +1,4 @@
+4A5CQFNI=test-resources/db/storage/W5EAEJUB/Vaswani et al. - 2017 - Attention is All you Need.pdf
+FWSUJ5PW=test-resources/db/storage/VTH245KQ/Pennington et al. - 2014 - GloVe Global Vectors for Word Representation.pdf
+VZ63MTAR=test-resources/db/storage/T274NHZC/Wu et al. - 2018 - Word Mover's Embedding From Word2Vec to Document Embedding.pdf
+WBUM8G2G=test-resources/db/storage/VBAMCMJX/Andoni et al. - Earth Mover Distance over High-Dimensional Spaces.pdf

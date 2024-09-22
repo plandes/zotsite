@@ -32,13 +32,31 @@ class Resource(object):
 
 
 @dataclass
-class ExportApplication(object):
-    """This project exports your local Zotero library to a usable HTML website.
-
-    """
+class _Application(object):
     resource: Resource = field()
     """Zotsite first class objects."""
 
+    def _get_keys(self, key: str, default: Iterable[str]) -> Iterable[str]:
+        if key is None:
+            keys = map(lambda s: s.strip(), sys.stdin.readlines())
+        elif key == 'all':
+            keys = default
+        else:
+            keys = [key]
+        return keys
+
+    def _format(self, format: str, entry: Dict[str, str]):
+        if format == 'json':
+            return json.dumps(entry)
+        else:
+            return format.format(**entry)
+
+
+@dataclass
+class ExportApplication(_Application):
+    """This project exports your local Zotero library to a usable HTML website.
+
+    """
     prune_pattern: str = field(default=None)
     """A regular expression used to filter ``Collection`` nodes."""
 
@@ -75,52 +93,55 @@ class ExportApplication(object):
 
 
 @dataclass
-class QueryApplication(object):
+class QueryApplication(_Application):
     """Query the Zotero database.
 
     """
-    resource: Resource = field()
-    """Zotsite first class objects."""
+    def find_path(self, format: str = None, key: str = None):
+        """Output paths with default ``{itemKey}={path}`` for ``format``.
 
-    def find_path(self, key: str = None):
-        """Output paths in the form ``<item key>=<path>``.
+        :param format: the format of the output or ``json`` for all fields
 
         :param key: key in format ``<library ID>_<item key>``, standard input
                     if not given, or ``all`` for every entry
 
         """
         def strip_lib_id(s: str) -> str:
-            """See TODO in :obj:`.ZoteroDatabase.paths`."""
-            return re.sub(r'^1_', '', s)
+            m: re.Match = lib_id_regex.match(s)
+            if m is None:
+                raise ZoteroApplicationError(f'Bad item key format: {key}')
+            lib_id: int = int(m.group(1))
+            if lib_id != cur_lib_id:
+                raise ZoteroApplicationError(
+                    f'Mismatch of configured library ({cur_lib_id}) ' +
+                    f'and requested in key: {lib_id}')
+            return re.sub(lib_id_rm_regex, '', s)
 
-        paths: Dict[str, str] = self.resource.zotero_db.paths
-        keys: Iterable[str]
-        if key is None:
-            keys = map(lambda s: s.strip(), sys.stdin.readlines())
-            keys = map(strip_lib_id)
-        elif key == 'all':
-            keys = paths.keys()
-        else:
-            keys = [strip_lib_id(key)]
-        if len(keys) == 1:
-            print(paths[keys[0]])
-        else:
-            key: str
-            for key in keys:
-                path: Path = paths[key]
-                print(f'{key}={path}')
+        cur_lib_id: int = self.resource.zotero_db.library_id
+        lib_id_regex: re.Pattern = re.compile(r'^(\d+)_.+')
+        lib_id_rm_regex: re.Pattern = re.compile(r'^\d+_')
+        paths: Dict[str, str] = self.resource.zotero_db.item_paths
+        format = '{itemKey}={path}' if format is None else format
+        dkeys: Iterable[str] = map(lambda k: f'{cur_lib_id}_{k}', paths.keys())
+        for key in map(strip_lib_id, self._get_keys(key, dkeys)):
+            if key not in paths:
+                raise ZoteroApplicationError(
+                    f'No item: {key} in Zotero database')
+            entry: Dict[str, Any] = {
+                'libraryID': cur_lib_id,
+                'itemKey': key,
+                'path': str(paths[key])}
+            print(self._format(format, entry))
 
 
 @dataclass
-class CiteApplication(object):
+class CiteApplication(_Application):
     """Map Zotero keys to BetterBibtex citekeys.
 
     """
-    resource: Resource = field()
-    """Zotsite first class objects."""
-
-    def lookup(self, format: str = '{itemKey}={citationKey}', key: str = None):
-        """Look up a citation key and print out BetterBibtex field(s).
+    def citekey(self, format: str = None, key: str = None):
+        """Look up a citation key and print out BetterBibtex field(s) with
+        default ``{itemKey}={citationKey}`` for ``format``.
 
         :param key: key in format ``<library ID>_<item key>``, standard input
                     if not given, or ``all`` for every entry
@@ -129,21 +150,13 @@ class CiteApplication(object):
 
         """
         entries: Dict[str, Dict[str, Any]] = self.resource.cite_db.entries
-        if key is None:
-            keys = map(lambda s: s.strip(), sys.stdin.readlines())
-        elif key == 'all':
-            keys = entries.keys()
-        else:
-            keys = [key]
-        for key in keys:
+        format = '{itemKey}={citationKey}' if format is None else format
+        for key in self._get_keys(key, entries.keys()):
             if key not in entries:
                 raise ZoteroApplicationError(
                     f"No such entry: '{key}' in BetterBibtex database")
             entry: Dict[str, Any] = entries[key]
-            if format == 'json':
-                print(json.dumps(entry))
-            else:
-                print(format.format(**entry))
+            print(self._format(format, entry))
 
 
 @dataclass
@@ -153,4 +166,4 @@ class PrototypeApplication(object):
     config_factory: ConfigFactory = field()
 
     def proto(self):
-        self.config_factory('qapp').find_path(item_key='1_VBAMCMJX')
+        self.config_factory('qapp').find_path(key='all')

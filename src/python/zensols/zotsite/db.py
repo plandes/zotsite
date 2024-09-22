@@ -3,13 +3,17 @@
 """
 __author__ = 'Paul Landes'
 
-from typing import Tuple, List, Dict, Any, Union, Optional
+from typing import Tuple, List, Iterable, Dict, Any, Union, Optional
 from dataclasses import dataclass, field
 import logging
 import re
 from pathlib import Path
+from zensols.persist import persisted
 from zensols.db import DbPersister
-from . import Collection, Library, Item, Note, Name, ZoteroApplicationError
+from . import (
+    ZoteroApplicationError, ZoteroObject, Collection, Library, Item, Note, Name,
+    CollectionVisitor, UnsortedWalker
+)
 
 
 logger = logging.getLogger(__name__)
@@ -31,6 +35,10 @@ class ZoteroDatabase(object):
 
     _library_id: int = field()
     """The DB ide of the library to export."""
+
+    @property
+    def library_id(self) -> int:
+        return self._library_id
 
     def _select(self, name: str, *params) -> Tuple[Dict[str, Any], ...]:
         return self._persister.execute_by_name(
@@ -179,6 +187,7 @@ class ZoteroDatabase(object):
             fcolls.append(fcoll)
         return Library(self._data_dir, self._library_id, fcolls)
 
+    @persisted('_library')
     def get_library(self) -> Library:
         """Get an object graph representing the data in the Zotero database.
 
@@ -191,22 +200,40 @@ class ZoteroDatabase(object):
             # deallocate pooled connection (configured in ``obj.conf``)
             self._persister.conn_manager.dispose_all()
 
+    def _get_items(self) -> Iterable[Item]:
+        def filter_items(obj: ZoteroObject):
+            return isinstance(obj, Item)
+
+        if logger.isEnabledFor(logging.DEBUG):
+            logger.debug(f'collecting items for library: {self._library_id}')
+        lib: Library = self.get_library()
+        cv = CollectionVisitor(filter_items)
+        walker = UnsortedWalker()
+        walker.walk(lib, cv)
+        return cv.collection
+
     @property
-    def paths(self) -> Dict[str, Path]:
-        """The paths of items by key.
+    def item_paths(self) -> Dict[str, Path]:
+        """Get paths only for this library.
+
+        :see: :obj:`paths`
 
         """
-        def map_row(r: Tuple[Any, ...]) -> Tuple[str, Path]:
-            key: str = r['key']
-            path: Path = storage_dir / key / re.sub(pat, '', r['path'])
-            return key, path
+        def find_child_path(i: Item) -> Path:
+            paths = tuple(map(lambda c: c.path, filter(
+                lambda i: isinstance(i, Item) and i.path is not None,
+                item.children)))
+            if len(paths) > 0:
+                pdf_paths = tuple(filter(lambda p: p.suffix == '.pdf', paths))
+                if len(pdf_paths) == 1:
+                    return pdf_paths[0]
+                else:
+                    return paths[0]
 
-        pat: re.Pattern = re.compile(r'^storage:')
-        storage_dir: Path = self._data_dir / 'storage'
-        try:
-            # TODO: add library and collection_like to params and SQL
-            rows: Tuple[Dict[str, Any], ...] = self._select('item_paths')
-            return dict(map(map_row, rows))
-        except Exception as e:
-            raise ZoteroApplicationError(
-                f'Could not access Zotero database: {e}') from e
+        paths: Dict[str, Path] = {}
+        item: Item
+        for item in filter(lambda i: len(i.children) > 0, self._get_items()):
+            path = find_child_path(item)
+            if path is not None:
+                paths[item.sel['key']] = path
+        return paths

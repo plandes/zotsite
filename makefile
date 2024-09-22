@@ -67,9 +67,27 @@ testprintcol:
 				exit 1
 			@echo "print collection integration test ... ok"
 
+# test BetterBibtex citation key lookup
+.PHONY:			testcitekey
+testcitekey:
+			@$(ENTRY) citekey --level warn -k all | \
+				sort | \
+				diff - test-resources/integration/citekey.txt || \
+				exit 1
+			@echo "BetterBibtex citekey integration test ... ok"
+
+# test paper document (PDF) path lookup
+.PHONY:			testdocpath
+testdocpath:
+			@$(ENTRY) docpath --level warn -k all | \
+				sort | \
+				diff - test-resources/integration/docpath.txt || \
+				exit 1
+			@echo "document path lookup integration test ... ok"
+
 # all integration tests
 .PHONY:			testintegration
-testintegration:	testprintall testprintcol
+testintegration:	testprintall testprintcol testcitekey testdocpath
 
 # create the demo site
 .PHONY:			demo

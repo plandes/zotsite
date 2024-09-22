@@ -39,15 +39,3 @@ select c.firstName, c.lastName
   where ic.creatorID = c.creatorID and
         ic.itemID = ?
   order by ic.orderIndex;
-
--- name=select_item_paths
-select it.key, ia.path
-  from items it, itemTypes iy
-      left join itemAttachments ia on it.itemId = ia.itemId
-      left join collectionItems ci on ci.itemId = it.itemId
-      left join collections c on c.collectionId = ci.collectionId
-      left join itemNotes itn on it.itemId = itn.itemId
-  where it.itemTypeId = iy.itemTypeId and
-        it.itemId not in (select itemId from deletedItems) and
-        path is not null
-  order by ci.orderIndex;

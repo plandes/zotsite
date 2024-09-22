@@ -1,0 +1,4 @@
+4A5CQFNI=vaswaniAttentionAllYou2017
+FWSUJ5PW=penningtonGloVeGlobalVectors2014
+VZ63MTAR=wuWordMoversEmbedding2018
+WBUM8G2G=andoniEarthMoverDistance

@@ -3,7 +3,7 @@
 """
 __author__ = 'Paul Landes'
 
-from typing import Callable
+from typing import List, Callable
 import logging
 from abc import ABC, abstractmethod
 import re
@@ -186,8 +186,8 @@ class Container(ZoteroObject):
 
 
 class Collection(Container):
-    """Represents a (sub)collection, which is a container for other collections and
-    items.
+    """Represents a (sub)collection, which is a container for other collections
+    and items.
 
     """
     def __init__(self, sel, items, collections):
@@ -282,6 +282,25 @@ class PrintVisitor(Visitor):
 
     def leave_parent(self, parent: ZoteroObject):
         self.depth -= 1
+
+
+class CollectionVisitor(Visitor):
+    """A visitor that prints items for debugging.
+
+    """
+    def __init__(self, predicate: Callable):
+        self.predicate = predicate
+        self.collection: List[ZoteroObject] = []
+
+    def enter_parent(self, parent: ZoteroObject):
+        pass
+
+    def visit_child(self, child: ZoteroObject):
+        if self.predicate(child):
+            self.collection.append(child)
+
+    def leave_parent(self, parent: ZoteroObject):
+        pass
 
 
 class Walker(ABC):
