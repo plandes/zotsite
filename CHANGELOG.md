@@ -8,6 +8,14 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ## [Unreleased]
 
 
+## [1.1.0] - 2025-01-11
+### Removed
+- Support for Python 3.10.
+
+### Changed
+- Upgraded to [zensols.util] version 1.15.
+
+
 ## [1.0.0] - 2024-09-22
 Somewhat minor feature release to add BetterBibtex citation and item attachment
 (paper) lookup.
@@ -230,7 +238,8 @@ Downstream moderate risk update release.
 - Initial version
 
 
-[Unreleased]: https://github.com/plandes/zotsite/compare/v1.0.0...HEAD
+[Unreleased]: https://github.com/plandes/zotsite/compare/v1.1.0...HEAD
+[1.1.0]: https://github.com/plandes/zotsite/compare/v1.0.0...v1.1.0
 [1.0.0]: https://github.com/plandes/zotsite/compare/v0.9.1...v1.0.0
 [0.9.1]: https://github.com/plandes/zotsite/compare/v0.9.0...v0.9.1
 [0.9.0]: https://github.com/plandes/zotsite/compare/v0.8.2...v0.9.0

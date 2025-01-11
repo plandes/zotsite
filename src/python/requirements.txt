@@ -1,2 +1,1 @@
-zensols.util~=1.14.0
-zensols.db~=1.3.2
+zensols.db~=1.4.0
