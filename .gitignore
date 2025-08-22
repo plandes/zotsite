@@ -2,3 +2,6 @@
 *_flymake.py
 /target
 /zotero-site
+# pixi environments
+.pixi
+/pyproject.toml

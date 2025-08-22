@@ -4,7 +4,7 @@ from zensols.cli import ConfigurationImporterCliHarness
 
 if (__name__ == '__main__'):
     harness = ConfigurationImporterCliHarness(
-        src_dir_name='src/python',
+        src_dir_name='src',
         app_factory_class='zensols.zotsite.ApplicationFactory',
         config_path='test-resources/zotsite.conf',
         proto_args='proto',

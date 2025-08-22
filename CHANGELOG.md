@@ -8,6 +8,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ## [Unreleased]
 
 
+### Changed
+- Switch build tools to [pixi].
+
+
 ## [1.1.0] - 2025-01-11
 ### Removed
 - Support for Python 3.10.
@@ -273,3 +277,4 @@ Downstream moderate risk update release.
 [zensols.dbutil]: https://github.com/plandes/dbutil
 [DataTables]: https://datatables.net
 [issue 20]: https://github.com/plandes/zotsite/issues/20#issuecomment-1321320667
+[pixi]: https://pixi.sh

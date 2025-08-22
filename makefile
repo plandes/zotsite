@@ -1,27 +1,40 @@
-## (@)Id: makefile automates the build and deployment for python projects
+#@meta {desc: "zotsite build and test automation", date: "2025-08-22"}
 
 
 ## Build config
 #
 # type of project
 PROJ_TYPE =		python
-PROJ_MODULES =		git python-resources python-cli python-doc python-doc-deploy
-INFO_TARGETS +=		appinfo
+PROJ_MODULES =		python/doc python/package python/deploy
 ADD_CLEAN +=		zotero-site
-# add app configuration to command line arguments
-PY_CLI_ARGS +=		-c test-resources/zotsite.conf
 # add integration tests to test run
-PY_TEST_DEPS +=		testintegration
+PY_TEST_ALL_TARGETS +=	testintegration
 
 
 # Project
 #
-COLL_ARGS =		"^(?:NLP|Earth).*"
+COLL_ARGS =		'^(?:NLP|Earth).*'
 ENTRY= 			./zotsite
 WEB_PKG_DIR=		$(MTARG)/site
 SITE_DEMO =		doc/demo
 PY_DOC_BUILD_HTML_DEPS += cpdemo
 
+
+## Commands
+#
+define zotsite
+	$(MAKE) $(PY_MAKE_ARGS) pyharn ARG="-c test-resources/zotsite.conf $(1)"
+endef
+
+define inttest
+	@$(call zotsite,$(1)) | diff - $(2) || exit 1
+	@printf "%s integration test ... ok\n" $(3)
+endef
+
+define inttestsort
+	@$(call zotsite,$(1)) | sort | diff - $(2) || exit 1
+	@printf "%s integration test ... ok\n" $(3)
+endef
 
 
 ## Includes
@@ -31,59 +44,43 @@ include ./zenbuild/main.mk
 
 ## Targets
 #
-.PHONY:			appinfo
-appinfo:
-			@echo "app-resources-dir: $(RESOURCES_DIR)"
-
-# export all
-.PHONY:			export
-export:
-			$(ENTRY) $(PY_CLI_ARGS)
-
 # export a subset of the collection
 .PHONY:			exportsubset
 exportsubset:
-			$(ENTRY) --collection $(COLL_ARGS) $(PY_CLI_ARGS)
+			@$(call zotsite,--collection $(COLL_ARGS))
 
 # print a collections metadata
 .PHONY:			print
 print:
-			$(ENTRY) print --collection $(COLL_ARGS) $(PY_CLI_ARGS)
+			@$(call zotsite,print --collection $(COLL_ARGS))
+
 
 # test metadata output for entire library
 .PHONY:			testprintall
 testprintall:
-			@$(ENTRY) print --level warn $(PY_CLI_ARGS) | \
-				diff - test-resources/integration/export-all.txt || \
-				exit 1
-			@echo "print all integration test ... ok"
+			@$(call inttest,print --level warn $(PY_CLI_ARGS), \
+			  test-resources/integration/export-all.txt,'print all')
 
 # test metadata output for a collection
 .PHONY:			testprintcol
 testprintcol:
-			@$(ENTRY) print --level warn \
-				--collection $(COLL_ARGS) $(PY_CLI_ARGS) | \
-				diff - test-resources/integration/export-coll.txt || \
-				exit 1
-			@echo "print collection integration test ... ok"
+			@$(call inttest,print --level warn \
+			  --collection $(COLL_ARGS) $(PY_CLI_ARGS), \
+			  test-resources/integration/export-coll.txt,'print collection')
 
 # test BetterBibtex citation key lookup
 .PHONY:			testcitekey
 testcitekey:
-			@$(ENTRY) citekey --level warn -k all | \
-				sort | \
-				diff - test-resources/integration/citekey.txt || \
-				exit 1
-			@echo "BetterBibtex citekey integration test ... ok"
+			@$(call inttestsort,citekey --level warn -k all, \
+			   test-resources/integration/citekey.txt, \
+			  'BetterBibtex citekey')
 
 # test paper document (PDF) path lookup
 .PHONY:			testdocpath
 testdocpath:
-			@$(ENTRY) docpath --level warn -k all | \
-				sort | \
-				diff - test-resources/integration/docpath.txt || \
-				exit 1
-			@echo "document path lookup integration test ... ok"
+			@$(call inttestsort,docpath --level warn -k all, \
+			  test-resources/integration/docpath.txt, \
+			  'document path lookup')
 
 # all integration tests
 .PHONY:			testintegration
@@ -93,9 +90,8 @@ testintegration:	testprintall testprintcol testcitekey testdocpath
 .PHONY:			demo
 demo:			clean
 			rm -fr $(SITE_DEMO)
-			$(ENTRY) $(PY_CLI_ARGS) \
-				export -o $(SITE_DEMO) \
-				--collection $(COLL_ARGS)
+			@$(call inttestsort,export -o $(SITE_DEMO) \
+				--collection $(COLL_ARGS))
 			touch $(SITE_DEMO)/.nojekyll
 
 # copy the demo site to the GitHub pages install location
