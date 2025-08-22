@@ -90,7 +90,7 @@ testintegration:	testprintall testprintcol testcitekey testdocpath
 .PHONY:			demo
 demo:			clean
 			rm -fr $(SITE_DEMO)
-			@$(call inttestsort,export -o $(SITE_DEMO) \
+			@$(call zotsite,export -o $(SITE_DEMO) \
 				--collection $(COLL_ARGS))
 			touch $(SITE_DEMO)/.nojekyll
 
