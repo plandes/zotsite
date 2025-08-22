@@ -2,7 +2,7 @@
 
 [![PyPI][pypi-badge]][pypi-link]
 [![Python 3.11][python311-badge]][python311-link]
-[![Python 3.12][python311-badge]][python312-link]
+[![Python 3.12][python312-badge]][python312-link]
 [![Build Status][build-badge]][build-link]
 
 This project exports your local [Zotero] library to a usable HTML website with
