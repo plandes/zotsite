@@ -27,9 +27,9 @@ following features:
 - [Sample Site Demonstration](#sample-site-demonstration)
 - [Requirements](#requirements)
 - [Usage](#usage)
-    - [Command Line](#command-line)
-    - [API](#api)
-    - [Configuration File](#configuration-file)
+  - [Command Line](#command-line)
+  - [API](#api)
+  - [Configuration File](#configuration-file)
 - [Screenshot](#screenshot)
 - [Ubuntu and Linux Systems with Python 3.5 or Previous Version](#ubuntu-and-linux-systems-with-python-35-or-previous-version)
 - [Attribution](#attribution)
@@ -216,14 +216,15 @@ An extensive changelog is available [here](CHANGELOG.md).
 ## Community
 
 Please star this repository and let me know how and where you use this API.
-Contributions as pull requests, feedback and any input is welcome.
+[Contributions](CONTRIBUTING.md) as pull requests, feedback, and any input is
+welcome.
 
 
 ## License
 
 [MIT License](LICENSE.md)
 
-Copyright (c) 2019 - 2025 Paul Landes
+Copyright (c) 2019 - 2026 Paul Landes
 
 
 <!-- links -->

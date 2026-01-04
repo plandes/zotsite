@@ -8,8 +8,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ## [Unreleased]
 
 
+## [1.2.0] - 2026-01-04
 ### Changed
 - Switch build tools to [pixi].
+- Add support for Python 3.13.
+- Upgrade [zensols.dbutil] to 1.5.0.
 
 
 ## [1.1.0] - 2025-01-11
@@ -242,7 +245,8 @@ Downstream moderate risk update release.
 - Initial version
 
 
-[Unreleased]: https://github.com/plandes/zotsite/compare/v1.1.0...HEAD
+[Unreleased]: https://github.com/plandes/zotsite/compare/v1.2.0...HEAD
+[1.2.0]: https://github.com/plandes/zotsite/compare/v1.1.0...v1.2.0
 [1.1.0]: https://github.com/plandes/zotsite/compare/v1.0.0...v1.1.0
 [1.0.0]: https://github.com/plandes/zotsite/compare/v0.9.1...v1.0.0
 [0.9.1]: https://github.com/plandes/zotsite/compare/v0.9.0...v0.9.1

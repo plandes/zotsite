@@ -335,7 +335,7 @@ class SortedWalker(Walker):
 
         :param key_fn: a function/callable used to sort the data that takes a
                        single argument to access compared data, which defaults
-                       to :function:`str`
+                       to :func:`str`
 
         :param reverse: whether or not to reverse the visited results
 
