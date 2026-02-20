@@ -100,7 +100,3 @@ cpdemo:
 			@echo "copy zotsite demo"
 			mkdir -p $(PY_DOC_BUILD_HTML)
 			cp -r $(SITE_DEMO) $(PY_DOC_BUILD_HTML)
-
-tmp:
-#			make pyharn ARG="citekey -k all"
-			make pyharn ARG="print"
