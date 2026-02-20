@@ -1,0 +1,5 @@
+/* code (`.. code-block:: python`) underline & subtle color change */
+.sphinx-codeautolink-a:hover {
+    border-bottom: 1px solid;
+    border-bottom-color: #0645AD;
+}

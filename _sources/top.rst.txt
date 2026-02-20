@@ -1,0 +1,21 @@
+Create an interactive HTML website from a Zotero library
+========================================================
+This program exports your local [Zotero] library to a usable HTML website with following features.
+
+.. toctree::
+   :maxdepth: 3
+   :glob:
+
+   Overview <index.md>
+   doc/*
+   API Reference <api.rst>
+   Contributing <CONTRIBUTING.md>
+   License <LICENSE.md>
+
+
+Indices and tables
+==================
+
+* :ref:`genindex`
+* :ref:`modindex`
+* :ref:`search`

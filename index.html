@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+
+<html class="no-js" data-content_root="./" lang="en">
+<head><meta charset="utf-8"/>
+<meta content="width=device-width,initial-scale=1" name="viewport"/>
+<meta content="light dark" name="color-scheme"/><meta content="width=device-width, initial-scale=1" name="viewport">
+<link href="genindex.html" rel="index" title="Index"/><link href="search.html" rel="search" title="Search"/><link href="doc/usage.html" rel="next" title="Usage"/><link href="top.html" rel="prev" title="Create an interactive HTML website from a Zotero library"/>
+<!-- Generated with Sphinx 7.4.7 and Furo 2025.12.19 -->
+<title>Zotsite: A Zotero Export Utility - Create an interactive HTML website from a Zotero library 1.3.0 documentation</title>
+<link href="_static/pygments.css?v=03e43079" rel="stylesheet" type="text/css">
+<link href="_static/styles/furo.css?v=7bdb33bb" rel="stylesheet" type="text/css">
+<link href="_static/copybutton.css?v=76b2166b" rel="stylesheet" type="text/css">
+<link href="_static/sphinx-codeautolink.css?v=b2176991" rel="stylesheet" type="text/css">
+<link href="_static/graphviz.css" rel="stylesheet" type="text/css"/>
+<link href="_static/styles/furo-extensions.css?v=8dab3a3b" rel="stylesheet" type="text/css"/>
+<link href="_static/codeautolink.css?v=57550ae3" rel="stylesheet" type="text/css"/>
+<style>
+  body {
+    --color-code-background: #eeffcc;
+  --color-code-foreground: black;
+  
+  }
+  @media not print {
+    body[data-theme="dark"] {
+      --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  
+    }
+    @media (prefers-color-scheme: dark) {
+      body:not([data-theme="light"]) {
+        --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  
+      }
+    }
+  }
+</style></link></link></link></link></meta></head>
+<body>
+<script>
+      document.body.dataset.theme = localStorage.getItem("theme") || "auto";
+    </script>
+<svg style="display: none;" xmlns="http://www.w3.org/2000/svg">
+<symbol id="svg-toc" viewbox="0 0 24 24">
+<title>Contents</title>
+<svg fill="currentColor" stroke="currentColor" stroke-width="0" viewbox="0 0 1024 1024">
+<path d="M408 442h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8zm-8 204c0 4.4 3.6 8 8 8h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56zm504-486H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zm0 632H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zM115.4 518.9L271.7 642c5.8 4.6 14.4.5 14.4-6.9V388.9c0-7.4-8.5-11.5-14.4-6.9L115.4 505.1a8.74 8.74 0 0 0 0 13.8z"></path>
+</svg>
+</symbol>
+<symbol id="svg-menu" viewbox="0 0 24 24">
+<title>Menu</title>
+<svg class="feather-menu" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+<line x1="3" x2="21" y1="12" y2="12"></line>
+<line x1="3" x2="21" y1="6" y2="6"></line>
+<line x1="3" x2="21" y1="18" y2="18"></line>
+</svg>
+</symbol>
+<symbol id="svg-arrow-right" viewbox="0 0 24 24">
+<title>Expand</title>
+<svg class="feather-chevron-right" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+<polyline points="9 18 15 12 9 6"></polyline>
+</svg>
+</symbol>
+<symbol id="svg-sun" viewbox="0 0 24 24">
+<title>Light mode</title>
+<svg class="feather-sun" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+<circle cx="12" cy="12" r="5"></circle>
+<line x1="12" x2="12" y1="1" y2="3"></line>
+<line x1="12" x2="12" y1="21" y2="23"></line>
+<line x1="4.22" x2="5.64" y1="4.22" y2="5.64"></line>
+<line x1="18.36" x2="19.78" y1="18.36" y2="19.78"></line>
+<line x1="1" x2="3" y1="12" y2="12"></line>
+<line x1="21" x2="23" y1="12" y2="12"></line>
+<line x1="4.22" x2="5.64" y1="19.78" y2="18.36"></line>
+<line x1="18.36" x2="19.78" y1="5.64" y2="4.22"></line>
+</svg>
+</symbol>
+<symbol id="svg-moon" viewbox="0 0 24 24">
+<title>Dark mode</title>
+<svg class="icon-tabler-moon" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+<path d="M0 0h24v24H0z" fill="none" stroke="none"></path>
+<path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z"></path>
+</svg>
+</symbol>
+<symbol id="svg-sun-with-moon" viewbox="0 0 24 24">
+<title>Auto light/dark, in light mode</title>
+<svg class="icon-custom-derived-from-feather-sun-and-tabler-moon" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+<path d="M 5.411 14.504 C 5.471 14.504 5.532 14.504 5.591 14.504 C 3.639 16.319 4.383 19.569 6.931 20.352 C 7.693 20.586 8.512 20.551 9.25 20.252 C 8.023 23.207 4.056 23.725 2.11 21.184 C 0.166 18.642 1.702 14.949 4.874 14.536 C 5.051 14.512 5.231 14.5 5.411 14.5 L 5.411 14.504 Z" style="opacity: 50%"></path>
+<line x1="14.5" x2="14.5" y1="3.25" y2="1.25"></line>
+<line x1="14.5" x2="14.5" y1="15.85" y2="17.85"></line>
+<line x1="10.044" x2="8.63" y1="5.094" y2="3.68"></line>
+<line x1="19" x2="20.414" y1="14.05" y2="15.464"></line>
+<line x1="8.2" x2="6.2" y1="9.55" y2="9.55"></line>
+<line x1="20.8" x2="22.8" y1="9.55" y2="9.55"></line>
+<line x1="10.044" x2="8.63" y1="14.006" y2="15.42"></line>
+<line x1="19" x2="20.414" y1="5.05" y2="3.636"></line>
+<circle cx="14.5" cy="9.55" r="3.6"></circle>
+</svg>
+</symbol>
+<symbol id="svg-moon-with-sun" viewbox="0 0 24 24">
+<title>Auto light/dark, in dark mode</title>
+<svg class="icon-custom-derived-from-feather-sun-and-tabler-moon" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+<path d="M 8.282 7.007 C 8.385 7.007 8.494 7.007 8.595 7.007 C 5.18 10.184 6.481 15.869 10.942 17.24 C 12.275 17.648 13.706 17.589 15 17.066 C 12.851 22.236 5.91 23.143 2.505 18.696 C -0.897 14.249 1.791 7.786 7.342 7.063 C 7.652 7.021 7.965 7 8.282 7 L 8.282 7.007 Z"></path>
+<line style="opacity: 50%" x1="18" x2="18" y1="3.705" y2="2.5"></line>
+<line style="opacity: 50%" x1="18" x2="18" y1="11.295" y2="12.5"></line>
+<line style="opacity: 50%" x1="15.316" x2="14.464" y1="4.816" y2="3.964"></line>
+<line style="opacity: 50%" x1="20.711" x2="21.563" y1="10.212" y2="11.063"></line>
+<line style="opacity: 50%" x1="14.205" x2="13.001" y1="7.5" y2="7.5"></line>
+<line style="opacity: 50%" x1="21.795" x2="23" y1="7.5" y2="7.5"></line>
+<line style="opacity: 50%" x1="15.316" x2="14.464" y1="10.184" y2="11.036"></line>
+<line style="opacity: 50%" x1="20.711" x2="21.563" y1="4.789" y2="3.937"></line>
+<circle cx="18" cy="7.5" r="2.169" style="opacity: 50%"></circle>
+</svg>
+</symbol>
+<symbol id="svg-pencil" viewbox="0 0 24 24">
+<svg class="icon-tabler-pencil-code" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+<path d="M4 20h4l10.5 -10.5a2.828 2.828 0 1 0 -4 -4l-10.5 10.5v4"></path>
+<path d="M13.5 6.5l4 4"></path>
+<path d="M20 21l2 -2l-2 -2"></path>
+<path d="M17 17l-2 2l2 2"></path>
+</svg>
+</symbol>
+<symbol id="svg-eye" viewbox="0 0 24 24">
+<svg class="icon-tabler-eye-code" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+<path d="M0 0h24v24H0z" fill="none" stroke="none"></path>
+<path d="M10 12a2 2 0 1 0 4 0a2 2 0 0 0 -4 0"></path>
+<path d="M11.11 17.958c-3.209 -.307 -5.91 -2.293 -8.11 -5.958c2.4 -4 5.4 -6 9 -6c3.6 0 6.6 2 9 6c-.21 .352 -.427 .688 -.647 1.008"></path>
+<path d="M20 21l2 -2l-2 -2"></path>
+<path d="M17 17l-2 2l2 2"></path>
+</svg>
+</symbol>
+</svg>
+<input aria-label="Toggle site navigation sidebar" class="sidebar-toggle" id="__navigation" name="__navigation" type="checkbox"/>
+<input aria-label="Toggle table of contents sidebar" class="sidebar-toggle" id="__toc" name="__toc" type="checkbox"/>
+<label class="overlay sidebar-overlay" for="__navigation"></label>
+<label class="overlay toc-overlay" for="__toc"></label>
+<a class="skip-to-content muted-link" href="#furo-main-content">Skip to content</a>
+<div class="page">
+<header class="mobile-header">
+<div class="header-left">
+<label class="nav-overlay-icon" for="__navigation">
+<span class="icon"><svg><use href="#svg-menu"></use></svg></span>
+</label>
+</div>
+<div class="header-center">
+<a href="top.html"><div class="brand">Create an interactive HTML website from a Zotero library 1.3.0 documentation</div></a>
+</div>
+<div class="header-right">
+<div class="theme-toggle-container theme-toggle-header">
+<button aria-label="Toggle Light / Dark / Auto color theme" class="theme-toggle">
+<svg class="theme-icon-when-auto-light"><use href="#svg-sun-with-moon"></use></svg>
+<svg class="theme-icon-when-auto-dark"><use href="#svg-moon-with-sun"></use></svg>
+<svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+<svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+</button>
+</div>
+<label class="toc-overlay-icon toc-header-icon" for="__toc">
+<span class="icon"><svg><use href="#svg-toc"></use></svg></span>
+</label>
+</div>
+</header>
+<aside class="sidebar-drawer">
+<div class="sidebar-container">
+<div class="sidebar-sticky"><a class="sidebar-brand" href="top.html">
+<span class="sidebar-brand-text">Create an interactive HTML website from a Zotero library 1.3.0 documentation</span>
+</a><form action="search.html" class="sidebar-search-container" method="get" role="search">
+<input aria-label="Search" class="sidebar-search" name="q" placeholder="Search"/>
+<input name="check_keywords" type="hidden" value="yes"/>
+<input name="area" type="hidden" value="default"/>
+</form>
+<div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
+<ul class="current">
+<li class="toctree-l1 current current-page"><a class="current reference internal" href="#">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="doc/usage.html">Usage</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="api.html">API Reference</a><input aria-label="Toggle navigation of API Reference" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"><label for="toctree-checkbox-1"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="api/zensols.zotsite.html">zensols.zotsite package</a></li>
+</ul>
+</input></li>
+<li class="toctree-l1"><a class="reference internal" href="CONTRIBUTING.html">Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="LICENSE.html">License</a></li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+</aside>
+<div class="main">
+<div class="content">
+<div class="article-container">
+<a class="back-to-top muted-link" href="#">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+<path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12z"></path>
+</svg>
+<span>Back to top</span>
+</a>
+<div class="content-icon-container">
+<div class="view-this-page">
+<a class="muted-link" href="_sources/index.md.txt" title="View this page">
+<svg><use href="#svg-eye"></use></svg>
+<span class="visually-hidden">View this page</span>
+</a>
+</div>
+<div class="theme-toggle-container theme-toggle-content">
+<button aria-label="Toggle Light / Dark / Auto color theme" class="theme-toggle">
+<svg class="theme-icon-when-auto-light"><use href="#svg-sun-with-moon"></use></svg>
+<svg class="theme-icon-when-auto-dark"><use href="#svg-moon-with-sun"></use></svg>
+<svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+<svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+</button>
+</div>
+<label class="toc-overlay-icon toc-content-icon" for="__toc">
+<span class="icon"><svg><use href="#svg-toc"></use></svg></span>
+</label>
+</div>
+<article id="furo-main-content" role="main">
+<section id="zotsite-a-zotero-export-utility">
+<h1>Zotsite: A Zotero Export Utility<a class="headerlink" href="#zotsite-a-zotero-export-utility" title="Link to this heading">¶</a></h1>
+<p><a class="reference external" href="https://pypi.python.org/pypi/zensols.zotsite"><img alt="PyPI" src="https://img.shields.io/pypi/v/zensols.zotsite.svg"/></a>
+<a class="reference external" href="https://www.python.org/downloads/release/python-3110"><img alt="Python 3.11" src="https://img.shields.io/badge/python-3.11-blue.svg"/></a>
+<a class="reference external" href="https://www.python.org/downloads/release/python-3120"><img alt="Python 3.12" src="https://img.shields.io/badge/python-3.11-blue.svg"/></a>
+<a class="reference external" href="https://github.com/plandes/zotsite/actions"><img alt="Build Status" src="https://github.com/plandes/zotsite/workflows/CI/badge.svg"/></a></p>
+<p>This project exports your local <a class="reference external" href="https://www.zotero.org">Zotero</a> library to a usable HTML website with
+following features:</p>
+<ul class="simple">
+<li><p>Easily access your papers, site snapshots, notes from a navigation tree.</p></li>
+<li><p>Provides metadata from collections and attachments (i.e. referenes etc).</p></li>
+<li><p>Display PDF papers and website snapshot (the latter as framed).</p></li>
+<li><p>Search function dynamically narrows down the papers you’re looking for.</p></li>
+<li><p>Embed links to a specific collection, article, item, note etc.</p></li>
+<li><p>Export only a portion of your collection with regular expressions using the
+collection name.</p></li>
+<li><p><a class="reference external" href="https://github.com/retorquere/zotero-better-bibtex">BetterBibtex</a> integration.</p></li>
+<li><p>Snazzy look and feel from the latest <a class="reference external" href="https://getbootstrap.com">Bootstrap</a> CSS/Javascript library.</p></li>
+</ul>
+<!-- markdown-toc start - Don't edit this section. Run M-x markdown-toc-refresh-toc --><section id="table-of-contents">
+<h2>Table of Contents<a class="headerlink" href="#table-of-contents" title="Link to this heading">¶</a></h2>
+<ul class="simple">
+<li><p><a class="reference external" href="#documentation">Documentation</a></p></li>
+<li><p><a class="reference external" href="#obtaining">Obtaining</a></p></li>
+<li><p><a class="reference external" href="#process">Process</a></p></li>
+<li><p><a class="reference external" href="#sample-site-demonstration">Sample Site Demonstration</a></p></li>
+<li><p><a class="reference external" href="#requirements">Requirements</a></p></li>
+<li><p><a class="reference external" href="#usage">Usage</a></p>
+<ul>
+<li><p><a class="reference external" href="#command-line">Command Line</a></p></li>
+<li><p><a class="reference external" href="#api">API</a></p></li>
+<li><p><a class="reference external" href="#configuration-file">Configuration File</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference external" href="#screenshot">Screenshot</a></p></li>
+<li><p><a class="reference external" href="#ubuntu-and-linux-systems-with-python-35-or-previous-version">Ubuntu and Linux Systems with Python 3.5 or Previous Version</a></p></li>
+<li><p><a class="reference external" href="#attribution">Attribution</a></p></li>
+<li><p><a class="reference external" href="#todo">Todo</a></p></li>
+<li><p><a class="reference external" href="#zotero-plugin-listing">Zotero Plugin Listing</a></p></li>
+<li><p><a class="reference external" href="#changelog">Changelog</a></p></li>
+<li><p><a class="reference external" href="#community">Community</a></p></li>
+<li><p><a class="reference external" href="#license">License</a></p></li>
+</ul>
+<!-- markdown-toc end --></section>
+<section id="documentation">
+<h2>Documentation<a class="headerlink" href="#documentation" title="Link to this heading">¶</a></h2>
+<p>See the <a class="reference external" href="https://plandes.github.io/zotsite/index.html">full documentation</a>.
+The <a class="reference external" href="https://plandes.github.io/zotsite/api.html">API reference</a> is also
+available.</p>
+</section>
+<section id="obtaining">
+<h2>Obtaining<a class="headerlink" href="#obtaining" title="Link to this heading">¶</a></h2>
+<p>The library can be installed with pip from the <a class="reference external" href="https://pypi.org/project/zensols.zotsite/">pypi</a> repository:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pip3<span class="w"> </span>install<span class="w"> </span>zensols.zotsite
+</pre></div>
+</div>
+</section>
+<section id="process">
+<h2>Process<a class="headerlink" href="#process" title="Link to this heading">¶</a></h2>
+<p>The tool does the following:</p>
+<ol class="simple">
+<li><p>Exports the meta data (directory structure, references, notes, etc) from
+your <a class="reference external" href="https://www.zotero.org">Zotero</a> library.  On MacOS, this is done by querying the file system
+SQLite DB files.</p></li>
+<li><p>Copies a static site that enables traversal of the exported data.</p></li>
+<li><p>Copies your <a class="reference external" href="https://www.zotero.org">Zotero</a> stored papers, snapshot (sites) etc.</p></li>
+<li><p>Generates a navigation tree to easily find your papers/content.</p></li>
+</ol>
+</section>
+<section id="sample-site-demonstration">
+<h2>Sample Site Demonstration<a class="headerlink" href="#sample-site-demonstration" title="Link to this heading">¶</a></h2>
+<p>See the <a class="reference external" href="https://plandes.github.io/zotsite/demo/index.html">live demo</a>, which provides a variety of resources found in my own
+library.  <em>Note:</em> To my knowledge, all of these resources are free to
+distribute and violate no laws.  If I’ve missed one,
+please <a class="reference internal" href="CONTRIBUTING.html"><span class="doc">create an issue</span></a>.</p>
+</section>
+<section id="requirements">
+<h2>Requirements<a class="headerlink" href="#requirements" title="Link to this heading">¶</a></h2>
+<p><a class="reference external" href="https://github.com/retorquere/zotero-better-bibtex">BetterBibtex</a> plugin for Zotero.</p>
+</section>
+<section id="usage">
+<h2>Usage<a class="headerlink" href="#usage" title="Link to this heading">¶</a></h2>
+<p>The library is typically used from the command line to create websites, but it
+can also be used as an API from Python.</p>
+<section id="command-line">
+<h3>Command Line<a class="headerlink" href="#command-line" title="Link to this heading">¶</a></h3>
+<p>The command line program has two modes: show configuration (a good first step)
+and to create the web site.  You can see what the program is parsing from your
+<a class="reference external" href="https://www.zotero.org">Zotero</a> library:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>zotsite<span class="w"> </span>print
+</pre></div>
+</div>
+<p>To create the stand-alone site, run the program (without the angle brackets):</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>zotsite<span class="w"> </span><span class="nb">export</span>
+</pre></div>
+</div>
+<p>If your library is not in the default <code class="docutils literal notranslate"><span class="pre">~/zotero</span></code> directory you will need to
+change that path by making a zotsite.conf config file.  This will create the
+html files in the directory <code class="docutils literal notranslate"><span class="pre">./zotsite</span></code>:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>zotsite<span class="w"> </span><span class="nb">export</span><span class="w"> </span>--collection<span class="w"> </span>zotsite.conf
+</pre></div>
+</div>
+<p>A mapping of BetterBibtex citation keys to Zotero’s database unique <em>item keys</em>
+can be useful to scripts:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>zotsite<span class="w"> </span>citekey<span class="w"> </span>-k<span class="w"> </span>all
+</pre></div>
+</div>
+<p>The tool also provides a means of finding where papers are by <em>item key</em>:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>zotsite<span class="w"> </span>docpath<span class="w"> </span>-k<span class="w"> </span>all
+</pre></div>
+</div>
+<p>See <a class="reference internal" href="doc/usage.html"><span class="doc">usage</span></a> for more information.  Command line usage as provided
+with the <code class="docutils literal notranslate"><span class="pre">--help</span></code> option.</p>
+</section>
+<section id="api">
+<h3>API<a class="headerlink" href="#api" title="Link to this heading">¶</a></h3>
+<p>The API provides access to a Python object that creates the website, can
+resolve BetterBibtex citation keys to Zotero unique identifier <em>item keys</em> and
+provide paths of item attachments (such as papers).</p>
+<p>The following example come from <a class="reference external" href="example/showpaper.py">this working script</a>.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><a class="sphinx-codeautolink-a" href="https://docs.python.org/3/library/typing.html#module-typing" title="typing"><span class="nn">typing</span></a><span class="w"> </span><span class="kn">import</span> <a class="sphinx-codeautolink-a" href="https://docs.python.org/3/library/typing.html#typing.Dict" title="typing.Dict"><span class="n">Dict</span></a><span class="p">,</span> <a class="sphinx-codeautolink-a" href="https://docs.python.org/3/library/typing.html#typing.Any" title="typing.Any"><span class="n">Any</span></a>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><a class="sphinx-codeautolink-a" href="https://docs.python.org/3/library/pathlib.html#module-pathlib" title="pathlib"><span class="nn">pathlib</span></a><span class="w"> </span><span class="kn">import</span> <span class="n">Path</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><a class="sphinx-codeautolink-a" href="api/zensols.zotsite.html#module-zensols.zotsite" title="zensols.zotsite"><span class="nn">zensols.zotsite</span></a><span class="w"> </span><span class="kn">import</span> <a class="sphinx-codeautolink-a" href="api/zensols.zotsite.html#zensols.zotsite.app.Resource" title="zensols.zotsite.app.Resource"><span class="n">Resource</span></a><span class="p">,</span> <a class="sphinx-codeautolink-a" href="api/zensols.zotsite.html#zensols.zotsite.cli.ApplicationFactory" title="zensols.zotsite.cli.ApplicationFactory"><span class="n">ApplicationFactory</span></a>
+<span class="go"># get the resource facade objects, which provides access to create the site,</span>
+<span class="go"># citation and path lookup methods</span>
+<span class="gp">&gt;&gt;&gt; </span><a class="sphinx-codeautolink-a" href="api/zensols.zotsite.html#zensols.zotsite.app.Resource" title="zensols.zotsite.app.Resource"><span class="n">resource</span></a><span class="p">:</span> <a class="sphinx-codeautolink-a" href="api/zensols.zotsite.html#zensols.zotsite.app.Resource" title="zensols.zotsite.app.Resource"><span class="n">Resource</span></a> <span class="o">=</span> <a class="sphinx-codeautolink-a" href="api/zensols.zotsite.html#zensols.zotsite.cli.ApplicationFactory.get_resource" title="zensols.zotsite.cli.ApplicationFactory.get_resource"><span class="n">ApplicationFactory</span><span class="o">.</span><span class="n">get_resource</span></a><span class="p">()</span>
+<span class="go"># get a mapping from &lt;library ID&gt;_&lt;item key&gt; to entry dictionaries</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">entries</span><span class="p">:</span> <a class="sphinx-codeautolink-a" href="https://docs.python.org/3/library/typing.html#typing.Dict" title="typing.Dict"><span class="n">Dict</span></a><span class="p">[</span><a class="sphinx-codeautolink-a" href="https://docs.python.org/3/library/stdtypes.html#str" title="str"><span class="nb">str</span></a><span class="p">,</span> <a class="sphinx-codeautolink-a" href="https://docs.python.org/3/library/typing.html#typing.Dict" title="typing.Dict"><span class="n">Dict</span></a><span class="p">[</span><a class="sphinx-codeautolink-a" href="https://docs.python.org/3/library/stdtypes.html#str" title="str"><span class="nb">str</span></a><span class="p">,</span> <a class="sphinx-codeautolink-a" href="https://docs.python.org/3/library/typing.html#typing.Any" title="typing.Any"><span class="n">Any</span></a><span class="p">]]</span> <span class="o">=</span> <span class="n">resource</span><span class="o">.</span><span class="n">cite_db</span><span class="o">.</span><span class="n">entries</span>
+<span class="go"># get a mapping from item key (sans library ID) to the attachment path</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">paths</span><span class="p">:</span> <a class="sphinx-codeautolink-a" href="https://docs.python.org/3/library/typing.html#typing.Dict" title="typing.Dict"><span class="n">Dict</span></a><span class="p">[</span><a class="sphinx-codeautolink-a" href="https://docs.python.org/3/library/stdtypes.html#str" title="str"><span class="nb">str</span></a><span class="p">,</span> <span class="n">Path</span><span class="p">]</span> <span class="o">=</span> <span class="n">resource</span><span class="o">.</span><span class="n">zotero_db</span><span class="o">.</span><span class="n">item_paths</span>
+<span class="go"># create BetterBibtex citation key to item key mapping</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">bib2item</span><span class="p">:</span> <a class="sphinx-codeautolink-a" href="https://docs.python.org/3/library/typing.html#typing.Dict" title="typing.Dict"><span class="n">Dict</span></a><span class="p">[</span><a class="sphinx-codeautolink-a" href="https://docs.python.org/3/library/stdtypes.html#str" title="str"><span class="nb">str</span></a><span class="p">,</span> <a class="sphinx-codeautolink-a" href="https://docs.python.org/3/library/stdtypes.html#str" title="str"><span class="nb">str</span></a><span class="p">]</span> <span class="o">=</span> <a class="sphinx-codeautolink-a" href="https://docs.python.org/3/library/stdtypes.html#dict" title="dict"><span class="nb">dict</span></a><span class="p">(</span><a class="sphinx-codeautolink-a" href="https://docs.python.org/3/library/functions.html#map" title="map"><span class="nb">map</span></a><span class="p">(</span>
+<span class="gp">... </span>    <span class="k">lambda</span> <span class="n">e</span><span class="p">:</span> <span class="p">(</span><span class="n">e</span><span class="p">[</span><span class="s1">'citationKey'</span><span class="p">],</span> <span class="n">e</span><span class="p">[</span><span class="s1">'itemKey'</span><span class="p">]),</span>
+<span class="gp">... </span>    <span class="n">entries</span><span class="o">.</span><span class="n">values</span><span class="p">()))</span>
+<span class="go"># get the item key from the citation key</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">itemKey</span><span class="p">:</span> <a class="sphinx-codeautolink-a" href="https://docs.python.org/3/library/stdtypes.html#str" title="str"><span class="nb">str</span></a> <span class="o">=</span> <span class="n">bib2item</span><span class="p">[</span><span class="s1">'landesCALAMRComponentALignment2024'</span><span class="p">]</span>
+<span class="go"># get the path using the Zotero DB item key</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">paper_path</span><span class="p">:</span> <span class="n">Path</span> <span class="o">=</span> <span class="n">paths</span><span class="p">[</span><span class="n">itemKey</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><a class="sphinx-codeautolink-a" href="https://docs.python.org/3/library/functions.html#print" title="print"><span class="nb">print</span></a><span class="p">(</span><span class="n">paper_path</span><span class="p">)</span>
+<span class="go"># display the paper (needs 'pip install zensols.rend')</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">zensols.rend</span><span class="w"> </span><span class="kn">import</span> <span class="n">ApplicationFactory</span> <span class="k">as</span> <span class="n">RendAppFactory</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">RendAppFactory</span><span class="o">.</span><span class="n">get_browser_manager</span><span class="p">()(</span><span class="n">paper_path</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="configuration-file">
+<h3>Configuration File<a class="headerlink" href="#configuration-file" title="Link to this heading">¶</a></h3>
+<p>Either an environment variable <code class="docutils literal notranslate"><span class="pre">ZOTSITERC</span></code> must be set or a <code class="docutils literal notranslate"><span class="pre">-c</span></code> configuration
+option must be given and point to a file to customize how the program works.
+See the test <a class="reference external" href="test-resources/zotsite.conf">configuration file</a> for an example and inline comments for more
+detail on how and what can be configured.</p>
+</section>
+</section>
+<section id="screenshot">
+<h2>Screenshot<a class="headerlink" href="#screenshot" title="Link to this heading">¶</a></h2>
+<p>Also see the <a class="reference external" href="https://plandes.github.io/zotsite/demo/index.html">live demo</a>.</p>
+<p><img alt="Screenshot" src="https://raw.githubusercontent.com/plandes/zotsite/master/doc/snapshot.png"/></p>
+</section>
+<section id="ubuntu-and-linux-systems-with-python-3-5-or-previous-version">
+<h2>Ubuntu and Linux Systems with Python 3.5 or Previous Version<a class="headerlink" href="#ubuntu-and-linux-systems-with-python-3-5-or-previous-version" title="Link to this heading">¶</a></h2>
+<p>Please <a class="reference external" href="https://github.com/plandes/zotsite/issues/4">read this issue</a> if you
+are installing a Ubuntu or any Linux system with Python 3.5 or previous
+version.</p>
+</section>
+<section id="attribution">
+<h2>Attribution<a class="headerlink" href="#attribution" title="Link to this heading">¶</a></h2>
+<p>This software uses:</p>
+<ul class="simple">
+<li><p>Python 3</p></li>
+<li><p><a class="reference external" href="https://jquery.com">jQuery</a> version 3</p></li>
+<li><p><a class="reference external" href="https://datatables.net">DataTables</a> version 1.12</p></li>
+<li><p><a class="reference external" href="https://getbootstrap.com">Bootstrap</a> version 4</p></li>
+<li><p><a class="reference external" href="https://github.com/jonmiles/bootstrap-treeview">Tree View</a> for Bootstrap</p></li>
+<li><p><a class="reference external" href="https://popper.js.org">Popper</a> for tooltips</p></li>
+<li><p><a class="reference external" href="https://ourcodeworld.com/articles/read/143/how-to-copy-text-to-clipboard-with-javascript-easily">Copy to Clipboard</a> function</p></li>
+</ul>
+</section>
+<section id="todo">
+<h2>Todo<a class="headerlink" href="#todo" title="Link to this heading">¶</a></h2>
+<ul class="simple">
+<li><p>Make the site portion a proper Javascript site.  Right now, all the <code class="docutils literal notranslate"><span class="pre">min</span></code>s
+are added in the distribution to same directory as
+the <a class="reference external" href="resources/site/src/js/zotero.js">main navigation/content</a> file.</p></li>
+<li><p>Use something like zotxt to make this work with a plugin rather than directly
+against the SQLite DB.</p></li>
+</ul>
+</section>
+<section id="zotero-plugin-listing">
+<h2>Zotero Plugin Listing<a class="headerlink" href="#zotero-plugin-listing" title="Link to this heading">¶</a></h2>
+<p>This is listed as a <a class="reference external" href="https://www.zotero.org/support/plugins#website_integration">plugin</a> on the Zotero site.</p>
+</section>
+<section id="changelog">
+<h2>Changelog<a class="headerlink" href="#changelog" title="Link to this heading">¶</a></h2>
+<p>An extensive changelog is available <a class="reference external" href="https://docs.python.org/3/whatsnew/changelog.html#changelog" title="(in Python v3.14)"><a class="reference external" href="CHANGELOG">here</a></a>.</p>
+</section>
+<section id="community">
+<h2>Community<a class="headerlink" href="#community" title="Link to this heading">¶</a></h2>
+<p>Please star this repository and let me know how and where you use this API.
+<a class="reference internal" href="CONTRIBUTING.html"><span class="doc">Contributions</span></a> as pull requests, feedback, and any input is
+welcome.</p>
+</section>
+<section id="license">
+<h2>License<a class="headerlink" href="#license" title="Link to this heading">¶</a></h2>
+<p><a class="reference internal" href="LICENSE.html"><span class="doc">MIT License</span></a></p>
+<p>Copyright (c) 2019 - 2026 Paul Landes</p>
+<!-- links --></section>
+</section>
+</article>
+</div>
+<footer>
+<div class="related-pages">
+<a class="next-page" href="doc/usage.html">
+<div class="page-info">
+<div class="context">
+<span>Next</span>
+</div>
+<div class="title">Usage</div>
+</div>
+<svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
+</a>
+<a class="prev-page" href="top.html">
+<svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
+<div class="page-info">
+<div class="context">
+<span>Previous</span>
+</div>
+<div class="title">Home</div>
+</div>
+</a>
+</div>
+<div class="bottom-of-page">
+<div class="left-details">
+<div class="copyright">
+                Copyright © 2026 Paul Landes
+            </div>
+            Made with <a href="https://www.sphinx-doc.org/">Sphinx</a> and <a class="muted-link" href="https://pradyunsg.me">@pradyunsg</a>'s
+            
+            <a href="https://github.com/pradyunsg/furo">Furo</a>
+</div>
+<div class="right-details">
+</div>
+</div>
+</footer>
+</div>
+<aside class="toc-drawer">
+<div class="toc-sticky toc-scroll">
+<div class="toc-title-container">
+<span class="toc-title">
+            On this page
+          </span>
+</div>
+<div class="toc-tree-container">
+<div class="toc-tree">
+<ul>
+<li><a class="reference internal" href="#">Zotsite: A Zotero Export Utility</a><ul>
+<li><a class="reference internal" href="#table-of-contents">Table of Contents</a></li>
+<li><a class="reference internal" href="#documentation">Documentation</a></li>
+<li><a class="reference internal" href="#obtaining">Obtaining</a></li>
+<li><a class="reference internal" href="#process">Process</a></li>
+<li><a class="reference internal" href="#sample-site-demonstration">Sample Site Demonstration</a></li>
+<li><a class="reference internal" href="#requirements">Requirements</a></li>
+<li><a class="reference internal" href="#usage">Usage</a><ul>
+<li><a class="reference internal" href="#command-line">Command Line</a></li>
+<li><a class="reference internal" href="#api">API</a></li>
+<li><a class="reference internal" href="#configuration-file">Configuration File</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#screenshot">Screenshot</a></li>
+<li><a class="reference internal" href="#ubuntu-and-linux-systems-with-python-3-5-or-previous-version">Ubuntu and Linux Systems with Python 3.5 or Previous Version</a></li>
+<li><a class="reference internal" href="#attribution">Attribution</a></li>
+<li><a class="reference internal" href="#todo">Todo</a></li>
+<li><a class="reference internal" href="#zotero-plugin-listing">Zotero Plugin Listing</a></li>
+<li><a class="reference internal" href="#changelog">Changelog</a></li>
+<li><a class="reference internal" href="#community">Community</a></li>
+<li><a class="reference internal" href="#license">License</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</aside>
+</div>
+</div><script src="_static/documentation_options.js?v=1f29e9d3"></script>
+<script src="_static/doctools.js?v=9a2dae69"></script>
+<script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+<script src="_static/scripts/furo.js?v=46bd48cc"></script>
+<script src="_static/clipboard.min.js?v=a7894cd8"></script>
+<script src="_static/copybutton.js?v=f281be69"></script>
+</body>
+</html>
