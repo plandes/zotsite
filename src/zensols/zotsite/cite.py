@@ -18,9 +18,6 @@ class CiteDatabase(object):
     _persister: DbPersister = field()
     """The persister used to get the data."""
 
-    _sql: str = field()
-    """The SQL used to query the BetterBibtex database."""
-
     @property
     def entries(self) -> Dict[str, Dict[str, Any]]:
         """Get all entries from the BetterBibtex database with
@@ -33,7 +30,8 @@ class CiteDatabase(object):
             return key, data
 
         try:
-            rows: Tuple[Tuple[str]] = self._persister.execute(self._sql)
+            rows: tuple[tuple[str]] = self._persister.\
+                execute_by_name('select_citekey')
         except OperationalError as e:
             raise ZoteroApplicationError(
                 f'Could not access BetterBibtex database: {e}') from e

@@ -39,3 +39,13 @@ select c.firstName, c.lastName
   where ic.creatorID = c.creatorID and
         ic.itemID = ?
   order by ic.orderIndex;
+
+
+-- name=select_citekey
+select i.libraryId as libraryId, i.key AS itemKey, v.value AS citationKey
+  from items i
+  join itemData d on d.itemID = i.itemID
+  join fields f on f.fieldID = d.fieldID
+  join itemDataValues v on v.valueID = d.valueID
+  where f.fieldName = 'citationKey';
+

@@ -6,12 +6,11 @@ __author__ = 'Paul Landes'
 from typing import Tuple, List, Iterable, Dict, Any, Union, Optional
 from dataclasses import dataclass, field
 import logging
-import re
 from pathlib import Path
 from zensols.persist import persisted
 from zensols.db import DbPersister
 from . import (
-    ZoteroApplicationError, ZoteroObject, Collection, Library, Item, Note, Name,
+    ZoteroObject, Collection, Library, Item, Note, Name,
     CollectionVisitor, UnsortedWalker
 )
 

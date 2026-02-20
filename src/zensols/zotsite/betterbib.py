@@ -12,6 +12,16 @@ from zensols.zotsite import ZoteroObject, Item, Visitor, Library
 
 logger = logging.getLogger(__name__)
 
+_CITEKEY_QUERY: str = """
+select i.itemID, v.value AS citationKey
+    from items i
+    join itemData d        ON d.itemID = i.itemID
+    join fields f          ON f.fieldID = d.fieldID
+    join itemDataValues v  ON v.valueID = d.valueID
+    where f.fieldName = 'citationKey' and
+          i.libraryID = ?;
+"""
+
 
 class BetterBibtexMapper(object):
     """Read the BetterBibtex database and create a mapping from item DB ids to
@@ -24,18 +34,12 @@ class BetterBibtexMapper(object):
     @property
     @persisted('_mapping')
     def mapping(self) -> Dict[str, Any]:
-        path: Path = self.lib.data_dir / 'better-bibtex.sqlite'
+        path: Path = self.lib.data_dir / 'zotero.sqlite'
         if logger.isEnabledFor(logging.INFO):
             logger.info(f'reading bibtex DB at {path}')
-        conn = sqlite3.connect(':memory:')
-        conn.execute('ATTACH DATABASE ? AS betterbibtex', (str(path),))
+        conn = sqlite3.connect(path)
         try:
-            return dict(conn.execute(
-                """\
-select itemID, citationKey
-        from betterbibtex.`citationkey`
-        where libraryID = ?""",
-                [self.lib.library_id]))
+            return dict(conn.execute(_CITEKEY_QUERY, [self.lib.library_id]))
         finally:
             conn.close()
 
