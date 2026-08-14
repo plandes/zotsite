@@ -1,0 +1,364 @@
+/* Font sizes */
+*[zoteroFontSize=medium] #zotero-tb-search, *[zoteroFontSize=large] #zotero-tb-search,
+*[zoteroFontSize=medium] zoterotagselector textbox, *[zoteroFontSize=large] zoterotagselector textbox
+{
+	font-size: 1em !important;
+}
+
+*[zoteroFontSize=medium] treechildren::-moz-tree-row
+{
+	height: 1.5em;
+}
+
+*[zoteroFontSize=large] treechildren::-moz-tree-row
+{
+	height: 1.5em;
+}
+
+*[zoteroFontSize=large] .treecol-text
+{
+	margin:0;
+	padding:0;
+}
+
+/* Bindings */
+textbox[multiline="true"][type="timed"]
+{
+	-moz-binding: url('chrome://zotero/content/bindings/timedtextarea.xml#timed-textarea');
+}
+
+textbox[type="styled"]
+{
+	-moz-binding: url('chrome://zotero/content/bindings/styled-textbox.xml#styled-textbox');
+}
+
+zoteroattachmentbox
+{
+	-moz-binding: url('chrome://zotero/content/bindings/attachmentbox.xml#attachment-box');
+}
+
+zoterostoragefilebox
+{
+	-moz-binding: url('chrome://zotero/content/bindings/storagefilebox.xml#storage-file-box');
+}
+
+zoteronoteeditor
+{
+	-moz-binding: url('chrome://zotero/content/bindings/noteeditor.xml#note-editor');
+}
+
+linksbox
+{
+	-moz-binding: url('chrome://zotero/content/bindings/noteeditor.xml#links-box');
+}
+
+tagsbox
+{
+	-moz-binding: url('chrome://zotero/content/bindings/tagsbox.xml#tags-box');
+}
+
+tagsbox row
+{
+	-moz-box-align:center;
+}
+
+customcolorpicker {
+	-moz-binding: url(chrome://zotero/content/bindings/customcolorpicker.xml#custom-colorpicker);
+}
+
+customcolorpicker[type=button] {
+	-moz-binding: url(chrome://zotero/content/bindings/customcolorpicker.xml#custom-colorpicker-button);
+}
+
+relatedbox
+{
+	-moz-binding: url('chrome://zotero/content/bindings/relatedbox.xml#related-box');
+	-moz-user-focus: ignore;
+}
+
+zoterosearch
+{
+	-moz-binding: url('chrome://zotero/content/bindings/zoterosearch.xml#search-box');
+}
+
+zoterotagselector
+{
+	-moz-binding: url('chrome://zotero/content/bindings/tagselector.xml#tag-selector');
+}
+
+
+zoterosearchcondition
+{
+	-moz-binding: url('chrome://zotero/content/bindings/zoterosearch.xml#search-condition');
+}
+
+zoterosearchtextbox
+{
+	-moz-binding: url('chrome://zotero/content/bindings/zoterosearch.xml#search-textbox');
+}
+
+
+zoterosearchagefield
+{
+	-moz-binding: url('chrome://zotero/content/bindings/zoterosearch.xml#search-in-the-last');
+}
+
+zoteroitembox {
+	-moz-binding: url('chrome://zotero/content/bindings/itembox.xml#item-box');
+}
+
+zoteromergegroup {
+	-moz-binding: url('chrome://zotero/content/bindings/merge.xml#merge-group');
+}
+
+zoteromergepane {
+	-moz-binding: url('chrome://zotero/content/bindings/merge.xml#merge-pane');
+}
+
+dialog[resizable="true"]
+{
+	-moz-binding: url('chrome://zotero/content/bindings/resizabledialog.xml#resizabledialog');
+}
+
+zoteroguidancepanel
+{
+	-moz-binding: url('chrome://zotero/content/bindings/guidancepanel.xml#guidancepanel');
+}
+
+zoterofilesyncstatus {
+	-moz-binding: url('chrome://zotero/content/bindings/filesyncstatus.xml#file-sync-status');
+}
+
+label.zotero-text-link {
+	-moz-binding: url('chrome://zotero/content/bindings/text-link.xml#text-link');
+	-moz-user-focus: normal;
+	color: -moz-nativehyperlinktext;
+	text-decoration: underline;
+	border: 1px solid transparent;
+	cursor: pointer;
+	color: -moz-nativehyperlinktext;
+}
+
+.zotero-clicky
+{	
+	border-radius: 6px;
+	border: 1px solid transparent;
+}
+
+/* Minus and plus buttons with clicky glow effect */
+.zotero-clicky-minus, .zotero-clicky-plus
+{
+	color: transparent !important;
+	padding: 0 !important;
+	margin: 0 5px 0 0 !important;
+	width: 18px;
+	height: 18px;
+}
+
+.zotero-clicky-minus {
+	background: url(chrome://zotero/skin/minus.png) center/auto 18px no-repeat !important;
+	border: 0px !important;
+}
+
+.zotero-clicky-plus {
+	background: url(chrome://zotero/skin/plus.png) center/auto 18px no-repeat !important;
+	border: 0px !important;
+}
+
+.zotero-clicky-minus[disabled=true], .zotero-clicky-plus[disabled=true] {
+	opacity: .5;
+}
+
+.zotero-clicky-minus:not([disabled=true]):active {
+	background-image: url('chrome://zotero/skin/minus-active.png') !important;
+}
+
+.zotero-clicky-plus:not([disabled=true]):active {
+	background-image: url('chrome://zotero/skin/plus-active.png') !important;
+}
+
+.zotero-clicky:not([disabled=true]):hover
+{
+	background: rgb(187, 206, 241);
+	border: 1px solid rgb(109, 149, 224);
+}
+
+.zotero-clicky:not([disabled=true]):active,
+.zotero-clicky[selected="true"]
+{
+	color: white;
+	background: rgb(89, 139, 236);
+}
+
+.zotero-message-error
+{
+	font-weight: bold;
+}
+
+#zotero-progress-box
+{
+	border: 2px solid #7a0000;
+	margin: 0;
+	min-height: 50px;
+	width: 250px;
+	padding: 3px 0 3px 0;
+}
+
+#zotero-progress-text-headline
+{
+	font-weight: bold;
+	margin-bottom: 2px;
+}
+
+.zotero-progress-icon-headline {
+	width: 16px;
+	height: 16px;
+}
+
+.zotero-progress-item-icon
+{
+	width: 16px;
+	height: 16px;
+}
+
+.zotero-progress-item-hbox
+{
+	padding-left: 5px;
+	margin-top: 0;
+	margin-bottom: 0;
+}
+
+.zotero-progress-item-hbox[parent]
+{
+	margin-top: 3px;
+}
+
+.zotero-progress-item-label
+{
+	width: 210px;
+	margin-left: 5px;
+}
+
+#zotero-progress-box description
+{
+	width: 220px;
+}
+
+#zotero-progress-box description label
+{
+	margin: 0;
+}
+
+.zotero-scrape-popup-library
+{
+	list-style-image: url('chrome://zotero/skin/treesource-library.png');
+}
+
+.zotero-scrape-popup-collection
+{
+	list-style-image: url('chrome://zotero/skin/treesource-collection.png');
+}
+
+.zotero-warning {
+  font-weight: bold;
+  font-size: 1.25em;
+  margin-bottom: 1em;
+}
+
+.zotero-small-progress-indicator {
+	list-style-image: url(chrome://global/skin/icons/notloading_16.png);
+	margin-left: -2px;
+	margin-right: -2px;
+}
+
+.zotero-small-progress-indicator[status=animate] {
+	list-style-image: url(chrome://global/skin/icons/loading_16.png);
+}
+
+#zotero-note-window {
+	padding-bottom: 4px;
+}
+
+#zotero-captcha-description {
+	max-width: 300px;
+	padding-bottom: 4px;
+	text-align: justify;
+}
+
+#zotero-captcha-error {
+	max-width: 300px;
+	padding-bottom: 4px;
+	padding-top: 4px;
+	font-weight: bold;
+	color: red;
+	text-align: center;
+}
+
+#zotero-advanced-search-dialog #zotero-search-box-controls {
+	padding: 3px;
+}
+
+#zotero-advanced-search-dialog #zotero-items-tree
+{
+	min-height: 250px;
+}
+
+#zotero-advanced-search-dialog #zotero-search-buttons
+{
+	margin: 3px 0;
+}
+
+#zotero-attach-uri-container
+{
+	width: 30em;
+	max-width: 30em;
+}
+
+#zotero-attach-uri-message
+{
+	width: 29.5em;
+	max-width: 29.5em;
+}
+
+.zotero-advanced-options>.zotero-advanced-options-label>dropmarker {
+	list-style-image: url("chrome://browser/skin/toolbarbutton-dropdown-arrow.png");
+	transform: rotate(270deg);
+}
+
+.zotero-advanced-options[state=open]>.zotero-advanced-options-label>dropmarker {
+	transform: none;
+}
+
+#zotero-feed-settings grid hbox:first-child {
+	-moz-box-pack: end;
+}
+
+.zotero-spinner-14 {
+	list-style-image: url(chrome://zotero/skin/spinner-14px.png);
+	height: 14px;
+	width: 14px;
+	margin-right: 2px;
+}
+
+.zotero-spinner-16 {
+	list-style-image: url(chrome://zotero/skin/spinner-16px.png);
+	height: 16px;
+	width: 16px;
+}
+
+#zotero-edit-bibliography-dialog #item-list .listcell-icon {
+	max-width: 16px;
+}
+
+
+/* BEGIN 2X BLOCK -- DO NOT EDIT MANUALLY -- USE 2XIZE */
+@media (min-resolution: 1.25dppx) {
+	.zotero-clicky-minus  { background: url(chrome://zotero/skin/minus@2x.png) center/auto 18px no-repeat !important; }
+	.zotero-clicky-plus  { background: url(chrome://zotero/skin/plus@2x.png) center/auto 18px no-repeat !important; }
+	.zotero-clicky-minus:not([disabled=true]):active  { background-image: url('chrome://zotero/skin/minus-active@2x.png') !important; }
+	.zotero-clicky-plus:not([disabled=true]):active  { background-image: url('chrome://zotero/skin/plus-active@2x.png') !important; }
+	.zotero-scrape-popup-library { list-style-image: url('chrome://zotero/skin/treesource-library@2x.png'); }
+	.zotero-scrape-popup-collection { list-style-image: url('chrome://zotero/skin/treesource-collection@2x.png'); }
+	.zotero-spinner-14  { list-style-image: url(chrome://zotero/skin/spinner-14px@2x.png); }
+	.zotero-spinner-16  { list-style-image: url(chrome://zotero/skin/spinner-16px@2x.png); }
+}
