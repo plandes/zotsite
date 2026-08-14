@@ -1,9 +1,12 @@
-# Zotsite: A Zotero Export Utility
+# Zotsite
+
+**Create an Interactive Website from Your Zotero Library**
 
 [![PyPI][pypi-badge]][pypi-link]
-[![Python 3.11][python311-badge]][python311-link]
-[![Python 3.12][python312-badge]][python312-link]
-[![Build Status][build-badge]][build-link]
+[![CI][ci-badge]][ci-link]
+[![Documentation][docs-badge]][docs-link]
+[![Python 3.12+][python-badge]][python-link]
+[![MIT License][license-badge]][license-link]
 
 This project exports your local [Zotero] library to a usable HTML website with
 following features:
@@ -228,19 +231,19 @@ Copyright (c) 2019 - 2026 Paul Landes
 
 
 <!-- links -->
-[pypi]: https://pypi.org/project/zensols.zotsite/
-[pypi-link]: https://pypi.python.org/pypi/zensols.zotsite
-[pypi-badge]: https://img.shields.io/pypi/v/zensols.zotsite.svg
-[python311-badge]: https://img.shields.io/badge/python-3.11-blue.svg
-[python311-link]: https://www.python.org/downloads/release/python-3110
-[python312-badge]: https://img.shields.io/badge/python-3.11-blue.svg
-[python312-link]: https://www.python.org/downloads/release/python-3120
-[build-badge]: https://github.com/plandes/zotsite/workflows/CI/badge.svg
-[build-link]: https://github.com/plandes/zotsite/actions
-[gitter-link]: https://gitter.im/zoterosite/zotsite
-[gitter-badge]: https://badges.gitter.im/zoterosite/gitter.png
+[pypi]: https://pypi.org/project/zensols.lmtask/
+[pypi-link]: https://pypi.org/project/zensols.lmtask/
+[pypi-badge]: https://img.shields.io/pypi/v/zensols.lmtask.svg
+[ci-link]: https://github.com/plandes/lmtask/actions/workflows/test.yml
+[ci-badge]: https://github.com/plandes/lmtask/actions/workflows/test.yml/badge.svg
+[docs-link]: https://plandes.github.io/lmtask/index.html
+[docs-badge]: https://img.shields.io/badge/docs-latest-blue.svg
+[python-link]: https://www.python.org/
+[python-badge]: https://img.shields.io/badge/python-3.12%2B-blue.svg
+[license-link]: LICENSE.md
+[license-badge]: https://img.shields.io/badge/license-MIT-green.svg
 
-[live demo]: https://plandes.github.io/zotsite/demo/index.html
+[live demo]: https://plandes.github.io/zotsite/doc/demo/index.html
 [screenshot]: https://raw.githubusercontent.com/plandes/zotsite/master/doc/snapshot.png
 
 [Zotero]: https://www.zotero.org
